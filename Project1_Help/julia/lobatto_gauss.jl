@@ -8,39 +8,39 @@
 #---------------------------------------------------------------------#
 function lobatto_gauss(P::Integer)
 
-xgl=zeros(P)
-wgl=zeros(P)
+    xgl=zeros(P)
+    wgl=zeros(P)
 
-p=P-1; #Order of the Polynomials
-ph=floor(typeof(P), (p+1)/2 )
+    p=P-1; #Order of the Polynomials
+    ph=floor(typeof(P), (p+1)/2 )
 
-for i=1:ph
-   x=cos( (2*i-1)*pi/(2*p+1) )
-   for k=1:20
-      (L0,L0_1,L0_2)=legendre_poly(p,x); #Compute Nth order Derivatives of Legendre Polys
-      #Get new Newton Iteration
-      dx=-(1-x^2)*L0_1/(-2*x*L0_1 + (1-x^2)*L0_2)
-      x=x+dx
-      if (abs(dx) .< 1.0e-20)
-         break
-      end
-   end
-   xgl[p+2-i]=x
-   wgl[p+2-i]=2/(p*(p+1)*L0^2)
-end
+    for i=1:ph
+        x=cos( (2*i-1)*pi/(2*p+1) )
+        for k=1:20
+            (L0,L0_1,L0_2)=legendre_poly(p,x); #Compute Nth order Derivatives of Legendre Polys
+            #Get new Newton Iteration
+            dx=-(1-x^2)*L0_1/(-2*x*L0_1 + (1-x^2)*L0_2)
+            x=x+dx
+            if (abs(dx) < 1.0e-20)
+                break
+            end
+        end
+        xgl[p+2-i]=x
+        wgl[p+2-i]=2/(p*(p+1)*L0^2)
+    end
 
-#Check for Zero Root
-if (p+1 != 2*ph)
-   x=0
-   (L0,L0_1,L0_2)=legendre_poly(p,x)
-   xgl[ph+1]=x
-   wgl[ph+1]=2/(p*(p+1)*L0^2)
-end
+    #Check for Zero Root
+    if (p+1 != 2*ph)
+        x=0
+        (L0,L0_1,L0_2)=legendre_poly(p,x)
+        xgl[ph+1]=x
+        wgl[ph+1]=2/(p*(p+1)*L0^2)
+    end
 
-#Find remainder of roots via symmetry
-for i=1:ph
-   xgl[i]=-xgl[p+2-i]
-   wgl[i]=+wgl[p+2-i]
-end
-return xgl,wgl
+    #Find remainder of roots via symmetry
+    for i=1:ph
+        xgl[i]=-xgl[p+2-i]
+        wgl[i]=+wgl[p+2-i]
+    end
+    return xgl,wgl
 end #function

@@ -1,20 +1,18 @@
 #---------------------------------------------------------------------#
-#This code computes the Chebyshev points & weights
-#Written by F.X. Giraldo on 7/2014
+#This code computes the Equispaced points & weights
+#Written by F.X. Giraldo on 4/2008
 #           Department of Applied Mathematics
 #           Naval Postgraduate School
 #           Monterey; CA 93943-5216
 #---------------------------------------------------------------------#
-function chebyshev_gauss(P::Integer)
+function equispaced_points(P::Integer)
 
     #Initialize arrays
     xgl=zeros(P)
     wgl=zeros(P)
 
-    #Construct arrays
-    for i=1:P
-        xgl[P+1-i]=cos( (2*i-1)*pi/(2*P) );
-        wgl[P+1-i]=pi/P
-    end
-    return (xgl,wgl)
+    #Construct array of points
+    xgl=range(-1, length=P, stop=+1)
+
+    return xgl,wgl
 end #function
