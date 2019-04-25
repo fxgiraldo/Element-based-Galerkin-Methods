@@ -49,7 +49,7 @@ function create_grid(Np,Npoin_cg,Npoin_dg,Ne,x,DFloat)
     for e=1:Ne, i=1:Np
         Icg=intma_cg[i,e]
         Idg=intma_dg[i,e]
-   #     coord_dg[Idg]=coord_cg[Icg]
+        coord_dg[Idg]=coord_cg[Icg]
     end
 
     #Generate Periodicity_DG array
