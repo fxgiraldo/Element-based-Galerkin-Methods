@@ -5,7 +5,7 @@
 %           Naval Postgraduate School 
 %           Monterey, CA 93943-5216
 %---------------------------------------------------------------------%
-function qe = exact_solution(coord,npoin,time,icase)
+function [qe,u] = exact_solution(coord,npoin,time,icase)
 
 %Set some constants
 w=1;
@@ -19,6 +19,7 @@ sigma0=0.125;
 rc=0.125;
 sigma=sqrt( sigma0^2 + 2*visc*time );
 u=w*xl;
+u=1.0;
 icase;
 
 %Initialize

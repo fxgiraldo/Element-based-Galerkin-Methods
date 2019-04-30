@@ -6,7 +6,7 @@
 %           Monterey; CA 93943-5216
 %---------------------------------------------------------------------%
 
-function [q0] = ti_SSP(q0,u,Dhat,intma,periodicity,time,ntime,dt,stages)
+function [q0] = ti_SSP(q0,u,Dhat,Fhat,intma,periodicity,time,ntime,dt,stages)
 
 %Initialize RK coefficients
 a0=zeros(stages,1);
@@ -33,9 +33,8 @@ for itime=1:ntime
     %RK Stages
     for s=1:stages
         %Create RHS Matrix
-        R=Dhat*qp;
-%            R=create_rhs(qp,u,Dhat,Fhat,intma,DFloat)
-
+        %R = create_rhs(qp,u,Dhat,Fhat,intma);
+        R=Dhat*qp*u;
         %Solve System
         for I=1:Npoin
             qp(I)=a0(s)*q0(I) + a1(s)*q1(I) + dt*beta(s)*R(I);
@@ -46,8 +45,6 @@ for itime=1:ntime
         %Update
         q1 = qp;
     end %s
-    %disp([" itime = ",itime," time = ",time," qmax = ",maximum(qp)," qmin = ",minimum(qp)])
-
     %Update Q
     q0 = qp;
 end %itime

@@ -20,14 +20,14 @@ nop=4;    %Interpolation Order
 stages=3; %RK2, RK3, RK34
 dt=0.00125; %time-step, fraction of one revolution
 Courant_max=0.3;
-time_final=1.0; %final time in revolutions
+time_final=0.001; %final time in revolutions
 nplots=50; %plotting variable - Ignore
 iplot_solution=1; %Switch to Plot or Not.
 iplot_matrices=0;
 integration_points=1; %=1 for LGL and =2 for LG
 integration_type=2; %=1 is inexact and =2 is exact
-space_method_type=1; %=1 for CG and =2 for DG
-
+space_method_type=2; %=1 for CG and =2 for DG
+ti_type=2; %1=SSP and 2=LSRK
 icase=1; %case number: 1 is a Gaussian, 2 is a square wave, 3 is
          %Gaussian with source and 4 is square wave with source.
 xmu=0.0; %filtering strength: 1 is full strength and 0 is no filter
@@ -81,46 +81,31 @@ elseif space_method_type == 2
 end
 main_text=[method_text ': ' integration_text];
 
+%Compute Exact Solution
+time=0;
+[qe,u] = exact_solution(coord,npoin,time,icase);
+fe = source_function(coord,npoin,time,icase);
+
+%Compute Courant Number
+u
 dx=coord(2)-coord(1);
-u=2;
 dt=Courant_max*dx/u;
 ntime=round(time_final/dt)
 dt=time_final/ntime
 Courant=u*dt/dx
 
-%Compute Exact Solution
-time=0;
-qe = exact_solution(coord,npoin,time,icase);
-fe = source_function(coord,npoin,time,icase);
+%Create Element Matrices
+%[Me, Dwe, Fe] = element_matrices(psi,dpsi,ngl,nq,wnq);
 
-%Create Local/Element Mass and Differentiation Matrices
-mass = create_mass(intma,coord,nelem,ngl,nq,wnq,psi);
-diff_matrix = create_diff_matrix(ngl,nq,wnq,psi,dpsi);
-
-%Form Global Mass and Differentiation Matrices
-Mmatrix=zeros(npoin,npoin);
-Dmatrix=zeros(npoin,npoin);
-Fmatrix=zeros(npoin,npoin);
-for e=1:nelem
-    for i=1:ngl
-        ip=periodicity(intma(i,e));
-        for j=1:ngl
-            jp=periodicity(intma(j,e));
-            Mmatrix(ip,jp)=Mmatrix(ip,jp) + mass(i,j,e);
-            Dmatrix(ip,jp)=Dmatrix(ip,jp) + u*diff_matrix(i,j);
-        end
-    end
-end
-if space_method_type == 1
-    Mmatrix(npoin,npoin)=1;
-elseif space_method_type == 2
-    Fmatrix = create_Fmatrix_dg(intma,npoin,nelem,ngl,u,diss);
-end
-Rmatrix=Dmatrix - Fmatrix;
+%Create Global Matrices
+%[M,Dw,F] = global_matrices(Me,Dwe,Fe,intma,coord,npoin,nelem,ngl,periodicity);
 
 %Left-Multiply by Inverse Mass Matrix
-Dmatrix_hat=Mmatrix\Rmatrix;
-    
+% Dhat=M\Dw;
+% Fhat=M\F;
+Dhat=zeros(npoin,npoin)
+Fhat=zeros(npoin,npoin)
+
 %Initialize State Vector
 q1=qe;
 q0=qe;
@@ -128,10 +113,10 @@ qp=qe;
 iplot=round(ntime/nplots);
 
 %Time Integration
-[q0] = ti_SSP(q0,u,Dmatrix_hat,intma,periodicity,time,ntime,dt,stages);
+[q0] = time_integration(q0,u,Dhat,Fhat,intma,periodicity,time,ntime,dt,stages,ti_type);
 
 %Compute Exact Solution
-qe = exact_solution(coord,npoin,time,icase);
+[qe,u] = exact_solution(coord,npoin,time,icase);
 
 %Compute Norm
 top=0;
@@ -146,7 +131,6 @@ npoin
 nelem
 ngl
 nq
-
 
 %Plot Solution
 if (iplot_solution == 1)
