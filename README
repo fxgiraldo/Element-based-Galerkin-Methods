@@ -3,7 +3,7 @@ This repo stores the Matlab m-files and Julia jl-files for the book
 "An Introduction to Element-based Galerkin Methods on Tensor-Product Bases: Analysis, Algorithms, and Applications"
 by Francis X. Giraldo
 
-You can reach the other by writing to him at frank.giraldo@gmail.com
+You can reach the author by writing to him at frank.giraldo@gmail.com
 
 The folders are organized as follows:
 Chapters: contains some of the source code used in each chapter.
