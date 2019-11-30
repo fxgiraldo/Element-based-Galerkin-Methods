@@ -1,0 +1,6 @@
+%-------------------------------------------------------------------------------------------------%
+This folder contains the following two sub-folder:
+
+1D_Advection_Diffusion: contains the files to construct an arbitrary order time-integrator from Sigal Gottlieb (for linear problems only) and various combinations of dissipation mechanisms (filters, diffusion, numerical flux for DG) for both the CG and DG method for the 1D advection-diffusion equation.
+Filters: compares the weighting function for various choices of filters.
+%-------------------------------------------------------------------------------------------------%

@@ -1,0 +1,16 @@
+%-------------------------------------------------------------------------------------------------%
+This Project folder contains the files that should be given to the student in order for them to be able to complete the projects in a timely manner. Of course, you could also ask them to build these data structures but since the emphasis of the projects is for the student to learn how to implement Element-Based Galerkin methods, it makes sense to focus on this topic.  
+
+The following sub-folders are included:
+
+Project1: contains the files for learning about interpolation and integration in 1D. The solutions are also provided since the students will need this to continue the remainder of the projects.
+
+Project2: contains the files that the student needs to solve the second project on solving the 1D advection equation.  
+
+Project3: contains the files that the student needs to solve the third project on solving the 1D shallow water equations. 
+
+Project4: contains the files that the student needs to solve the fourth project on solving the 2D Poisson equation. 
+
+Project5: contains the files that the student needs to solve the fifth project on solving the 2D wave equation. There are sub-folders with files on animation files, data structures, filters, and rotation of the grid to check if the student algorithms are general and do not assume that the reference element coordinate are not aligned with the physical coordinate system.
+
+%-------------------------------------------------------------------------------------------------%

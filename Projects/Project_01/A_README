@@ -1,0 +1,12 @@
+%-------------------------------------------------------------------------------------------------%
+This folder contains the files (matlab and julia) for Project 1 (1D Interpolation and Integration) in the book
+"An Introduction to Element-based Galerkin Methods on Tensor-Product Bases: Analysis, Algorithms, and Applications"
+by Francis X. Giraldo
+
+The directories:
+For_Instructors contains the project solution and
+For_Students contains the files that the students should have in order to do the project.
+A sample Project description is given in the PDF Project1.pdf
+
+You can reach the other by writing to him at frank.giraldo@gmail.com
+%-------------------------------------------------------------------------------------------------%

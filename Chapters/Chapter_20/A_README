@@ -1,0 +1,12 @@
+%-------------------------------------------------------------------------------------------------%
+This folder contains the following two sub-folder:
+
+Non-Autonomous_Multirate_vs_Split-Explicit: solves a non-autonomous ODE (meaning that the ODE is also a function of independent variable - time is the independent variable in this case) using various time-integrators including explicit Runge-Kutta methods (standard Butcher tableau), low-storage RK methods (in Williamson storage), and some SSP RK methods (in Shu-Osher form).
+The source code is given in both julia and matlab.
+
+RK_stability_analysis: contains the files needed to construct analytically the stability regions of various Runge-Kutta methods.
+
+The file:
+A_Main_Driver_RK_Symbolic_Stability_Polynomials: builds the symbolic stability region which can then be used in A_Main_Driver_RK_stability to plot it. 
+
+%————————————————————————————————————————————————%

@@ -1,0 +1,11 @@
+%-------------------------------------------------------------------------------------------------%
+This folder contains the following main drivers that all solve the 1D wave equation using both CG and DG:
+
+A_Main_Driver_ALL_Explicit_Global_Matrices_General_IRK: uses a variety of explicit Runge-Kutta methods.
+
+A_Main_Driver_ALL_Implicit_Global_Matrices_General_IRK: uses a variety of implicit Runge-Kutta methods.
+
+A_Main_Driver_ALL_Space_Convergence_Implicit_Global_Matrices: computes the spatial convergence rates for a given time-integration method.
+
+A_Main_Driver_ALL_Time_Convergence_Implicit_Global_Matrices: computes the temporal convergence rates for a given time-integrator and spatial configuration.
+%————————————————————————————————————————————————%

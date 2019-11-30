@@ -1,0 +1,11 @@
+%-------------------------------------------------------------------------------------------------%
+This folder contains the files (matlab and julia) for Project 4 (2D Elliptic Equation) in the book
+"An Introduction to Element-based Galerkin Methods on Tensor-Product Bases: Analysis, Algorithms, and Applications"
+by Francis X. Giraldo
+
+The directory:
+For_Students contains the files that the students should have in order to do the project.
+A sample Project description is given in the PDF Project4.pdf
+
+You can reach the other by writing to him at frank.giraldo@gmail.com
+%-------------------------------------------------------------------------------------------------%

@@ -1,0 +1,5 @@
+%-------------------------------------------------------------------------------------------------%
+These files contain the following main matlab m-files:
+A_Main_Driver_CG_DG_Nodal_Global_Matrices_Disperison_visc: runs the 1D Advection-Diffusion equation
+A_Main_Driver_Dispersion_Dissipation_Analysis_CG_DG: plots the dispersion and dissipation curves
+%-------------------------------------------------------------------------------------------------%

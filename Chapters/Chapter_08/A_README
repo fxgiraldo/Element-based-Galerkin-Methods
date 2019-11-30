@@ -1,0 +1,4 @@
+%-------------------------------------------------------------------------------------------------%
+These files contain the following main matlab m-files:
+A_Main_Driver_CG_DG_Elliptic: runs the unified CGDG method for solving the 1D Poisson equation (elliptic operator).
+%-------------------------------------------------------------------------------------------------%

@@ -1,0 +1,9 @@
+%-------------------------------------------------------------------------------------------------%
+The files in the folder 2D_data_structures contains the necessary data structures to construct the metric terms for both the CG and DG methods.  The main driver is:
+A_Main_Driver_Data_Structures: which shows how to call each of the functions.
+
+In addition, the file:
+metrics: builds the metric terms such as the covariant and contravariant metrics, including the volume Jacobians.  
+create_face: creates the data structure “face” which stores the face/edge/side of the 2D mesh that is required for both DG and for imposing weak form boundary conditions in CG.  
+compute_normals: builds the normal vectors 
+%-------------------------------------------------------------------------------------------------%

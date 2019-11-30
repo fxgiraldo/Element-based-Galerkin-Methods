@@ -1,0 +1,4 @@
+%-------------------------------------------------------------------------------------------------%
+These files contain the matlab m-file and julia-jl files to compute the stability region
+of the numerical methods used in this chapter.
+%-------------------------------------------------------------------------------------------------%

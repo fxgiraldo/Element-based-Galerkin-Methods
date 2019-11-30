@@ -1,0 +1,9 @@
+%-------------------------------------------------------------------------------------------------%
+This folder contains the following two sub-folder:
+
+1D_Wave_CGDG_Nodal_Lobatto_Hrefinement: contains the files to solve the 1D wave equation using the unified nodal CGDG method with Lobatto points in conjunction with the h-refinement adaptive mesh refinement algorithm.
+
+1D_Wave_CGDG_Nodal_Lobatto_Prefinement: contains the files to solve the 1D wave equation using the unified nodal CGDG method with Lobatto points in conjunction with the p-refinement adaptive mesh refinement algorithm.
+
+1D_Wave_DG_Modal_Prefinement: contains the files to solve the 1D wave equation using the modal DG method in conjunction with the p-refinement adaptive mesh refinement algorithm.
+%————————————————————————————————————————————————%
