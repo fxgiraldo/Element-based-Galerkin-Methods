@@ -1,7 +1,8 @@
 %-------------------------------------------------------------------------------------------------%
-This repo stores the Matlab m-files and Julia jl-files for the book
+This repo stores the Matlab m-files and Julia jl-files for the textbook
 "An Introduction to Element-based Galerkin Methods on Tensor-Product Bases: Analysis, Algorithms, and Applications"
 by Francis X. Giraldo
+A PDF of the table of contents can be found in the present folder.
 
 You can reach the author by writing to him at frank.giraldo@gmail.com
 
@@ -10,6 +11,6 @@ Chapters: contains some of the source code used in each chapter.
 Projects: contains the source code that the student should be given in order to complete the project.
 
 Note: The main driver in each folder is entitled “A_Main_Driver_…” where “…” change with each folder.  
-Each folder contains an A_README file that explains what is contained in that folder.
+Each folder contains a README file that explains what is contained in that folder.
  
 %-------------------------------------------------------------------------------------------------%
