@@ -1,0 +1,5 @@
+%-------------------------------------------------------------------------------------------------%
+These files contain the following main matlab m-files:
+A_Main_Driver_CG_DG_inexact_TensorProduct_Convergence_Rates_Ch_17: runs the 2D Advection  equation using a combined CG/DG method and computes the convergence rates.
+A_Main_Driver_CG_DG_inexact_TensorProduct: runs the 2D Advection equation using CG/DG for a specific choice of polynomial order and number of elements.
+%-------------------------------------------------------------------------------------------------%

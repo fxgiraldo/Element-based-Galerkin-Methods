@@ -1,0 +1,5 @@
+%-------------------------------------------------------------------------------------------------%
+These files contain the following main matlab m-files:
+A_Maim_Driver_CG_DG_Unified_Elliptic_Convergence_Rates: runs the convergence rates for both CG and DG.
+A_Main_Driver_CG_DG_Unified_Elliptic: runs unified CG/DG for a specific choice of polynomial order and number of elements.
+%-------------------------------------------------------------------------------------------------%
