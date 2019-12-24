@@ -2,8 +2,8 @@
 %This subroutine builds the FLUX vector for the Strong Form DGM-SEM
 %on Quadrilateral Elements for the 2D Euler Equations.
 %Written by Francis X. Giraldo on 1/2001
-%           Naval Postgraduate School
 %           Department of Applied Mathematics
+%           Naval Postgraduate School
 %           Monterey, CA 93943-5216
 %----------------------------------------------------------------------%
 function rhs = compute_flux_SIP(rhs,q,psideh,nx,ny,jac_side,jac,psi,dpsi,...

@@ -2,9 +2,9 @@
 %This subroutine builds the Normals for a 
 %Spectral Element Quads
 %Written by Francis X. Giraldo on 1/01 (from Brown University)
-%           Naval Research Laboratory
-%           Global Modeling Section
-%           Monterey, CA 93943-5502
+%           Department of Applied Mathematics
+%           Naval Postgraduate School 
+%           Monterey, CA 93943-5216
 %----------------------------------------------------------------------%
 function [nx,ny,jac_side]=compute_normals(psideh,intma,coord,...
                           nside,ngl,nq,wnq,psi,dpsi)

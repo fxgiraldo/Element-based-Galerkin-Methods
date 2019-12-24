@@ -1,8 +1,8 @@
 %----------------------------------------------------------------------!
 %This subroutine builds Periodic BCs along the 4 edges of a rectangular domain
 %Written by Francis X. Giraldo on 2/2007
-%           Naval Postgraduate School
 %           Department of Applied Mathematics
+%           Naval Postgraduate School
 %           Monterey, CA 93943-5216
 %
 % INPUT LIST: iside = face information

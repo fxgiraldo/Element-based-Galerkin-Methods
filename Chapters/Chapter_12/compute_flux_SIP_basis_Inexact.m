@@ -1,8 +1,8 @@
 %----------------------------------------------------------------------%
 %This subroutine interpolates basis functions onto Quadrature Points 
 %Written by Francis X. Giraldo on 8/2015
-%           Naval Postgraduate School
 %           Department of Applied Mathematics
+%           Naval Postgraduate School
 %           Monterey, CA 93943-5216
 %----------------------------------------------------------------------%
 function [psi_x, psi_y] = compute_flux_SIP_basis_Inexact(psi,dpsi,ngl,nq,...

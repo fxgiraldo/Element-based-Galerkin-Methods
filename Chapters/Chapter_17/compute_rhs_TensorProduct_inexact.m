@@ -2,8 +2,8 @@
 %This subroutine builds the RHS vector for the Strong Form DGM-SEM
 %on Quadrilateral Elements for the 2D Euler Equations.
 %Written by Francis X. Giraldo on 1/2001
-%           Naval Postgraduate School
 %           Department of Applied Mathematics
+%           Naval Postgraduate School
 %           Monterey, CA 93943-5502
 %----------------------------------------------------------------------%
 function rhs = compute_rhs_TensorProduct_inexact(q,u,v,ksi_x,ksi_y,eta_x,eta_y,jac,...

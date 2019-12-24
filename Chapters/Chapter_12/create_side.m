@@ -2,8 +2,8 @@
 %This subroutine creates the array ISIDE which stores all of
 %the information concerning the sides of all the elements.
 %Written by Francis X. Giraldo on 1/01
-%           Naval Postgraduate School
 %           Department of Applied Mathematics
+%           Naval Postgraduate School
 %           Monterey, CA 93943-5216
 %----------------------------------------------------------------------%
 function [iside,jeside] = create_side(intma,bsido,npoin,nelem,nboun,nside,ngl)

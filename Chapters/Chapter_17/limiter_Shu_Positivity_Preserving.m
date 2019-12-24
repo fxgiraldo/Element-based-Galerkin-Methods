@@ -3,6 +3,9 @@
 %by Xing, Zhang, and Shu in Positivity preserving high 
 %order well balanced discontinuous Galerkin methods for 
 %the shallow water equations (2010)
+%           Department of Applied Mathematics
+%           Naval Postgraduate School 
+%           Monterey, CA 93943-5216
 %-------------------------------------------------------
 function [qp] = limiter_Shu_Positivity_Preserving(qp,nelem,psi,ngl,nq,wnq)
 qlocal = zeros(ngl,ngl);

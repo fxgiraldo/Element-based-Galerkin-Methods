@@ -2,8 +2,8 @@
 %This subroutine interpolates edge values onto Quadrature Points and builds 
 %derivatives of the function at the edges 
 %Written by Francis X. Giraldo on 8/2015
-%           Naval Postgraduate School
 %           Department of Applied Mathematics
+%           Naval Postgraduate School
 %           Monterey, CA 93943-5216
 %----------------------------------------------------------------------%
 function [q_k, q_x, q_y] = compute_flux_SIP_qterms(q,psi,dpsi,ngl,nq,...

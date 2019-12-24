@@ -2,8 +2,8 @@
 %This subroutine builds the FLUX term for the Weak Form LDG
 %on Quadrilateral Elements.
 %Written by Francis X. Giraldo on 1/2001
-%           Naval Postgraduate School
 %           Department of Applied Mathematics
+%           Naval Postgraduate School
 %           Monterey, CA 93943-5216
 %----------------------------------------------------------------------%
 function rhs = compute_flux_LDG(q,psideh,nx,ny,jac_side,psi,npoin,...
