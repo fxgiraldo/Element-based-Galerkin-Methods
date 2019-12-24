@@ -1,8 +1,12 @@
 %----------------------------------------------------%
+%This function constructs the L2 Projection
 %Originally written by Michal Kopera.
 %Rewritten by F.X. Giraldo based on Notes in
 %Notebook #46 P. 3.31.16.6
-%----------------------------------------------------%
+%           Department of Applied Mathematics
+%           Naval Postgraduate School
+%           Monterey, CA 93943-5216
+%---------------------------------------------------------------------%
 function [P1g,P2g,P1s,P2s] = L2_Projection_1D_fxg(ngl,nq)
 
 [xgl,wgl] = legendre_gauss_lobatto(ngl);

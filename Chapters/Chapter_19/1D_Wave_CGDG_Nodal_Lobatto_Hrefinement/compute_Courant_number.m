@@ -1,6 +1,7 @@
 %---------------------------------------------------------------------%
 %This function computes the Courant number.
 %Written by F.X. Giraldo on 10/2003
+%           Department of Applied Mathematics
 %           Naval Postgraduate School
 %           Monterey, CA 93943
 %---------------------------------------------------------------------%
