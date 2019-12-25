@@ -1,8 +1,9 @@
 %---------------------------------------------------------------------%
 %This function computes the LGL grid and elements.
-%Written by F.X. Giraldo on 10/2003
-%           Naval Research Laboratory 
-%           Monterey, CA 93943-5502
+%Written by F.X. Giraldo on 5/2008
+%           Department of Applied Mathematics
+%           Naval Postgraduate School 
+%           Monterey, CA 93943-5216
 %---------------------------------------------------------------------%
 function rhs = create_rhs_volume(qp,intma,coord,npoin,nelem,ngl,nq,wnq,psi,dpsi,alpha)
 

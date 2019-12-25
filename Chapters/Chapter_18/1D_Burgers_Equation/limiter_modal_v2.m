@@ -1,6 +1,7 @@
 %---------------------------------------------------------------------%
 %This function uses the Krividonova (Moment) Limiter
-%Written by F.X. Giraldo on 1/2011
+%Written by F.X. Giraldo on 5/2008
+%           Department of Applied Mathematics
 %           Naval Postgraduate School 
 %           Monterey, CA 93943-5216
 %---------------------------------------------------------------------%
