@@ -1,5 +1,5 @@
 %---------------------------------------------------------------------%
-%This code computes the 2D Advection Equation using the CG/DG methods
+%This code computes the 2D Advection Equation using the DG method
 %with 2nd/3rd Order RK and tensor product of 1D basis function with 
 %Inexact Integration (Inexact Integration and Tensor-Product basis
 %functions) with non-conforming h-refinement AMR
@@ -19,7 +19,7 @@ nel=2; %Number of Elements
 
 nop=4;    %Interpolation Order
 noq=nop; %DO NOT CHANGE!
-space_method='dg'; %CG or DG => only works for DG
+space_method='dg'; %DO NOT CHANGE! => only works for DG 
 kstages=3;  %2=RK2, 3=RK3
 dt=1; %time-step, Changes automatically to keep Courant_max fixed!
 Courant_max=0.5;
