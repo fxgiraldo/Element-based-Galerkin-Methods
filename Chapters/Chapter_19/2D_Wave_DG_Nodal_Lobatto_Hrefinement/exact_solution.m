@@ -26,6 +26,7 @@ ym=0.5*(ymax+ymin);
 xc=xmin + 0.25*xl;
 yc=ymin + 0.5*yl;
 sigma0=0.125*0.5;
+sigma0=1.0/16.0;
 rc=0.25;
 sigma=sqrt( sigma0^2 + 2*visc*time );
 a=0.5*1/(1 + 2*visc*time/sigma0^2);
@@ -45,6 +46,7 @@ for ip=1:npoin
    if (icase == 1)  %Gaussian in CCW direction
       ue(ip)=+w*(y-ym);
       ve(ip)=-w*(x-xm);
+      qe(ip)=exp( - 128*(xx^2 + yy^2 ) );
    elseif (icase == 2) %Gaussian along X
       xx=x - 0*xc;%xx=x-2*time;
 %       if(xx<xmin)

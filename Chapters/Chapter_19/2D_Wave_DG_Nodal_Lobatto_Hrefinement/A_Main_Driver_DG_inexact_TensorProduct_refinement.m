@@ -1,5 +1,5 @@
 %---------------------------------------------------------------------%
-%This code computes the 2D Advection Equation using the DG method
+%This code computes the 2D Advection Equation using the CG/DG methods
 %with 2nd/3rd Order RK and tensor product of 1D basis function with 
 %Inexact Integration (Inexact Integration and Tensor-Product basis
 %functions) with non-conforming h-refinement AMR
@@ -19,7 +19,7 @@ nel=2; %Number of Elements
 
 nop=4;    %Interpolation Order
 noq=nop; %DO NOT CHANGE!
-space_method='dg'; %DO NOT CHANGE! => only works for DG 
+space_method='dg'; %only works for DG
 kstages=3;  %2=RK2, 3=RK3
 dt=1; %time-step, Changes automatically to keep Courant_max fixed!
 Courant_max=0.5;
@@ -36,7 +36,7 @@ iplot_grid = 1; %plot grid (1) or not (0)
 iplot_result = 1;
 inorm = 1;
 
-maxlev = 3;
+maxlev = 4;
 iadapt = 1;
 icoarse = 1;
 ref_threshold = [0.001, 0.001, 0.001, 0.001, 0.001];
@@ -251,6 +251,8 @@ for is=1:nsfc
 end
 title_text=['Exact Solution For: Ne = ' num2str(nelemT) ', N = ' num2str(nop) ', Q = ' num2str(noq)];
 title([title_text],'FontSize',18);
+xlabel('X','FontSize',18);
+ylabel('Y','FontSize',18);
 end
 
 %Create Mass Matrix
@@ -556,7 +558,8 @@ while time<time_final
             hold on;
             view([1 -1 1]);
             axis([-1 +1 -1 +1 0 1]);
-            
+            xlabel('X','FontSize',18);
+            ylabel('Y','FontSize',18);
         end
         hold off;
         if iplot_grid==1
@@ -578,7 +581,7 @@ while time<time_final
                         x(3)=coord(i3,1); y(3)=coord(i3,2);
                         x(4)=coord(i4,1); y(4)=coord(i4,2);
                         x(5)=coord(i1,1); y(5)=coord(i1,2);
-                        plot_handle=plot(x,y,'-r');
+                        plot_handle=plot(x,y,':r');
                         set(plot_handle,'LineWidth',1.5);
                     end
                 end
@@ -668,8 +671,10 @@ for is=1:nsfc
     h5 = surf(x1,y1,qq);
     view(3);
 end
-title_text=['Solution For: Ne = ' num2str(nelemT) ', N = ' num2str(nop) ', Q = ' num2str(noq) ', time' time];
+title_text=['Solution For: Ne = ' num2str(nelemT) ', N = ' num2str(nop) ', Q = ' num2str(noq) ', time' num2str(time)];
 title([title_text],'FontSize',18);
+xlabel('X','FontSize',18);
+ylabel('Y','FontSize',18);
 end
 
 if (store_movie == 1)

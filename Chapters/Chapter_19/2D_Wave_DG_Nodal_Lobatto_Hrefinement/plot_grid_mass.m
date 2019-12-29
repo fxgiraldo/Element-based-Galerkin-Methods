@@ -27,7 +27,7 @@ if (iplot_grid == 1)
                     x(3)=coord(i3,1); y(3)=coord(i3,2);
                     x(4)=coord(i4,1); y(4)=coord(i4,2);
                     x(5)=coord(i1,1); y(5)=coord(i1,2);
-                    plot_handle=plot(x,y,'-r');
+                    plot_handle=plot(x,y,':r');
                     set(plot_handle,'LineWidth',1.5);
                 end
             end
