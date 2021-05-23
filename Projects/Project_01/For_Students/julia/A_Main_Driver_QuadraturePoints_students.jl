@@ -2,8 +2,6 @@ using Plots
 
 include("QuadraturePoints_students.jl")
 
-N=1
-
 function main()
 
     #Some Constants
@@ -49,7 +47,7 @@ function main()
     #    plot_handle=plot(ξarray,ωarray,xlabel="Root",ylabel="Weight",legend=true,lw=3,label=["Chebyshev" "Legendre" "Lobatto" "Equispaced"],title="Roots and Weights",seriestype=:scatter)
     plot_handle=plot(ξarray,ωarray,xlabel="Root",ylabel="Weight",legend=true,lw=3,label=["Chebyshev" "Legendre" "Lobatto" "Equispaced"],title="Roots and Weights")
     display(plot_handle)
-    savefig(plot_handle,"QuadraturePoints.png")
+    #savefig(plot_handle,"QuadraturePoints.png")
 
     #Plot Interpolation
     println("Done") #output
