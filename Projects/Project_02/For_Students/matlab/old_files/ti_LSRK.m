@@ -5,7 +5,7 @@
 %           Naval Postgraduate School
 %           Monterey; CA 93943-5216
 %---------------------------------------------------------------------%
-function [q0] = ti_LSRK(q0,u,Dhat,periodicity,time,ntime,dt)
+function [q0] = ti_LSRK(q0,u,Dhat,Fhat,intma,periodicity,time,ntime,dt)
 
 %Initialize RK coefficients
 RKA = [(0), 
@@ -37,7 +37,8 @@ for itime=1:ntime
     %RK Stages
     for s = 1:stages
         %Create RHS Matrix
-        R=Dhat*qp; %only valid for CG
+        %R = create_rhs(qp,u,Dhat,Fhat,intma);
+        R=Dhat*qp*u;
         %Solve System
         for I=1:Npoin
             dq(I) = RKA(s)*dq(I) + dt*R(I);

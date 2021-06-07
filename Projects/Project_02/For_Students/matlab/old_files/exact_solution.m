@@ -19,6 +19,7 @@ sigma0=0.125;
 rc=0.125;
 sigma=sqrt( sigma0^2 + 2*visc*time );
 u=w*xl;
+u=1.0;
 icase;
 
 %Initialize
@@ -35,7 +36,8 @@ for i=1:npoin
   end	 
   r=x-xbar;
   if (icase == 1)
-      qe(i)=exp( -64.0*(x-xbar)^2 ); %IC used in Fig 5.9
+      qe(i)=sigma0/sigma*exp( -(x-xbar)^2/(4*sigma^2) );
+%            qe(i,ie)=sigma0/sigma*exp( -(x-xbar)^2/(sigma^2) );
   elseif (icase == 2)
      if ( abs(r) <= rc )
         qe(i)=1;
