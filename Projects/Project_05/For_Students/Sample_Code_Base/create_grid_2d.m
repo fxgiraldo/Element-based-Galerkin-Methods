@@ -8,14 +8,13 @@
 function [coord,intma,bsido,iperiodic] = create_grid_2d(npoin,nelem,nboun,nelx,nely,ngl,xgl)
 
 %Initialize Global Arrays
-coord=zeros(npoin,2);
-intma=zeros(nelem,ngl,ngl);
-bsido=zeros(nboun,4);
+coord=zeros(2,npoin);
+intma=zeros(ngl,ngl,nelem);
+bsido=zeros(4,nboun);
 iperiodic=zeros(npoin,1);
 
 %Initialize Local Arrays
 node=zeros(npoin,npoin);
-ibc=zeros(npoin);
 
 %Set some constants
 xmin=-1;
@@ -59,8 +58,8 @@ for k=1:nely
             ii=ii + 1;
             ip=ip + 1;
             x=( xgl(j)+1 )*dx/2 + x0;
-            coord(ip,1)=x;
-            coord(ip,2)=y;
+            coord(1,ip)=x;
+            coord(2,ip)=y;
             node(ii,jj)=ip;
          end %j
    
@@ -69,16 +68,16 @@ for k=1:nely
 end %k
 
 %GENERATE INTMA
-ie=0;
+e=0;
 for k=1:nely
    for i=1:nelx
-      ie=ie+1;
+      e=e+1;
       for l=1:ngl
          jj=(ngl-1)*(k-1) + l;
          for j=1:ngl
             ii=(ngl-1)*(i-1) + j;
             ip=node(ii,jj);
-            intma(ie,j,l)=ip;
+            intma(j,l,e)=ip;
          end %j
       end %l
    end %i   
@@ -87,58 +86,58 @@ end %k
 %Generate BSIDO
 ib=0;
 for i=1:nelx
-    ie=i;
+    e=i;
     ib=ib+1;
     i1=(i-1)*(ngl-1) + 1;
     i2=(i-1)*(ngl-1) + ngl;
     ip1=node(i1,1);
     ip2=node(i2,1);
-    bsido(ib,1)=ip1;
-    bsido(ib,2)=ip2;
-    bsido(ib,3)=ie;
-    bsido(ib,4)=6;
+    bsido(1,ib)=ip1;
+    bsido(2,ib)=ip2;
+    bsido(3,ib)=e;
+    bsido(4,ib)=6;
 end
 
 %Right Boundary
 for i=1:nely
-    ie=(nelx)*(i);
+    e=(nelx)*(i);
     ib=ib+1;
     i1=(i-1)*(ngl-1) + 1;
     i2=(i-1)*(ngl-1) + ngl;
     ip1=node(nx,i1);
     ip2=node(nx,i2);
-    bsido(ib,1)=ip1;
-    bsido(ib,2)=ip2;
-    bsido(ib,3)=ie;
-    bsido(ib,4)=6;
+    bsido(1,ib)=ip1;
+    bsido(2,ib)=ip2;
+    bsido(3,ib)=e;
+    bsido(4,ib)=6;
 end 
 
 %Top Boundary
 for i=nelx:-1:1 
-    ie=nelem - (nelx - i);
+    e=nelem - (nelx - i);
     ib=ib+1;
     i1=(i-1)*(ngl-1) + ngl;
     i2=(i-1)*(ngl-1) + 1;
     ip1=node(i1,ny);
     ip2=node(i2,ny);
-    bsido(ib,1)=ip1;
-    bsido(ib,2)=ip2;
-    bsido(ib,3)=ie;
-    bsido(ib,4)=6;
+    bsido(1,ib)=ip1;
+    bsido(2,ib)=ip2;
+    bsido(3,ib)=e;
+    bsido(4,ib)=6;
 end 
 
 %Left Boundary
 for i=nely:-1:1
-    ie=(nelx)*(i-1) + 1;
+    e=(nelx)*(i-1) + 1;
     ib=ib+1;
     i1=(i-1)*(ngl-1) + ngl;
     i2=(i-1)*(ngl-1) + 1;
     ip1=node(1,i1);
     ip2=node(1,i2);
-    bsido(ib,1)=ip1;
-    bsido(ib,2)=ip2;
-    bsido(ib,3)=ie;
-    bsido(ib,4)=6;
+    bsido(1,ib)=ip1;
+    bsido(2,ib)=ip2;
+    bsido(3,ib)=e;
+    bsido(4,ib)=6;
 end
 
 %Periodicity

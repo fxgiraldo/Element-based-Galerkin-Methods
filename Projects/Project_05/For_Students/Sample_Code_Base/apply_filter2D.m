@@ -17,7 +17,7 @@ for e=1:nelem
    %Store Values in Tensor-Product Form
    for j=1:ngl
        for i=1:ngl
-           I=iperiodic(intma(e,i,j));
+           I=iperiodic(intma(i,j,e));
            q_e(i,j)=qp(I);
        end
    end
@@ -26,8 +26,8 @@ for e=1:nelem
    %Store Values in Long-Vector Form
    for j=1:ngl
        for i=1:ngl
-           wq=wnq(i)*wnq(j)*jac(e,i,j);
-           I=iperiodic(intma(e,i,j));
+           wq=wnq(i)*wnq(j)*jac(i,j,e);
+           I=iperiodic(intma(i,j,e));
            rhs(I)=rhs(I) + wq*q_f(i,j);
        end
    end

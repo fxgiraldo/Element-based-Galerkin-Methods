@@ -20,19 +20,19 @@ ibot=zeros(nboun/4,1);
 nleft=0; nright=0; ntop=0; nbot=0;
 
 %Find Extrema of Domain
-xmax=max(coord(:,1)); xmin=min(coord(:,1));
-ymax=max(coord(:,2)); ymin=min(coord(:,2));
+xmax=max(coord(1,:)); xmin=min(coord(1,:));
+ymax=max(coord(2,:)); ymin=min(coord(2,:));
 
 %loop thru sides and extract Left, Right, Bot, and Top
 for is=1:nface
 
     %Check for Periodicity Edges
-    ier=face(is,4);
+    ier=face(4,is);
     if (ier == -6) 
 
-        i1=iside(is,1); i2=iside(is,2);
-        xm=0.5*( coord(i1,1) + coord(i2,1) );
-        ym=0.5*( coord(i1,2) + coord(i2,2) );
+        i1=iside(1,is); i2=iside(2,is);
+        xm=0.5*( coord(1,i1) + coord(1,i2) );
+        ym=0.5*( coord(2,i1) + coord(2,i2) );
 
         %check Grid Point
         if ( abs(xm - xmin) < tol ) %left boundary
@@ -61,20 +61,20 @@ end %is
 %First: Do Left and Right
 for i=1:nleft
     isl=ileft(i);
-    i1=iside(isl,1);
-    yl1=coord(i1,2);
+    i1=iside(1,isl);
+    yl1=coord(2,i1);
 
     %Search for Corresponding Right Edge
     for j=1:nright
         isr=iright(j);
-        i2=iside(isr,2);
-        yr2=coord(i2,2);
+        i2=iside(2,isr);
+        yr2=coord(2,i2);
         if ( abs(yl1-yr2) < tol ) %they match
-           face(isl,2)=face(isr,1);
-           face(isl,4)=face(isr,3);
-           face(isr,3)=-6; %means skip it due to Periodicity
-           iside(isl,4)=iside(isr,3);
-           iside(isr,3)=-6;
+           face(2,isl)=face(1,isr);
+           face(4,isl)=face(3,isr);
+           face(3,isr)=-6; %means skip it due to Periodicity
+           iside(4,isl)=iside(3,isr);
+           iside(3,isr)=-6;
            break;
         end %if
     end %j   
@@ -83,20 +83,20 @@ end %i
 %Second: Do Top and Bottom
 for i=1:nbot
     isl=ibot(i);
-    i1=iside(isl,1);
-    xl1=coord(i1,1);
+    i1=iside(1,isl);
+    xl1=coord(1,i1);
 
     %Search for Corresponding Top Edge
     for j=1:ntop
         isr=itop(j);
-        i2=iside(isr,2);
-        xr2=coord(i2,1);
+        i2=iside(2,isr);
+        xr2=coord(1,i2);
         if ( abs(xl1-xr2) < tol ) %they match
-           face(isl,2)=face(isr,1);
-           face(isl,4)=face(isr,3);
-           face(isr,3)=-6; %means skip it due to Periodicity
-           iside(isl,4)=iside(isr,3);
-           iside(isr,3)=-6;
+           face(2,isl)=face(1,isr);
+           face(4,isl)=face(3,isr);
+           face(3,isr)=-6; %means skip it due to Periodicity
+           iside(4,isl)=iside(3,isr);
+           iside(3,isr)=-6;
            break;
         end %if
      end %j   

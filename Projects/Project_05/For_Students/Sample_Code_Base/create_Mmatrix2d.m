@@ -15,8 +15,8 @@ for e=1:nelem
    %Do LGL Integration
     for j=1:ngl
         for i=1:ngl 
-            I=iperiodic(intma(e,i,j));
-            wq=wnq(i)*wnq(j)*jac(e,i,j);
+            I=iperiodic(intma(i,j,e));
+            wq=wnq(i)*wnq(j)*jac(i,j,e);
             Mmatrix(I)=Mmatrix(I) + wq;
         end %i
     end %j

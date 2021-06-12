@@ -1,6 +1,6 @@
 %----------------------------------------------------------------------%
 %This subroutine constructs the Side Information for a High Order 
-%Spectal Element Quads
+%CG/DG on Quads
 %Written by Francis X. Giraldo 
 %           Department of Applied Mathematics
 %           Naval Postgraduate School
@@ -9,9 +9,9 @@
 function [face,mapL,mapR]=create_face(iside,intma,nface,ngl)
 
 %global arrays
-face=zeros(nface,4);
-mapL=zeros(4,2,ngl);
-mapR=zeros(4,2,ngl);
+face=zeros(4,nface);
+mapL=zeros(2,ngl,4);
+mapR=zeros(2,ngl,4);
 
 %local arrays
 inode=zeros(4,1);
@@ -31,37 +31,37 @@ jnode(4)=ngl;
 for l=1:ngl
 
    %eta=-1
-   mapL(1,1,l)=l;
-   mapL(1,2,l)=1;
-   mapR(1,1,l)=ngl+1-l;
-   mapR(1,2,l)=1;
+   mapL(1,l,1)=l;
+   mapL(2,l,1)=1;
+   mapR(1,l,1)=ngl+1-l;
+   mapR(2,l,1)=1;
 
    %ksi=+1
-   mapL(2,1,l)=ngl;
-   mapL(2,2,l)=l;
-   mapR(2,1,l)=ngl;
-   mapR(2,2,l)=ngl+1-l;
+   mapL(1,l,2)=ngl;
+   mapL(2,l,2)=l;
+   mapR(1,l,2)=ngl;
+   mapR(2,l,2)=ngl+1-l;
 
    %eta=+1
-   mapL(3,1,l)=ngl+1-l;
-   mapL(3,2,l)=ngl;
-   mapR(3,1,l)=l;
-   mapR(3,2,l)=ngl;
+   mapL(1,l,3)=ngl+1-l;
+   mapL(2,l,3)=ngl;
+   mapR(1,l,3)=l;
+   mapR(2,l,3)=ngl;
 
    %ksi=-1
-   mapL(4,1,l)=1;
-   mapL(4,2,l)=ngl+1-l;
-   mapR(4,1,l)=1;
-   mapR(4,2,l)=l;
+   mapL(1,l,4)=1;
+   mapL(2,l,4)=ngl+1-l;
+   mapR(1,l,4)=1;
+   mapR(2,l,4)=l;
 end %l
 
 %loop thru the sides
 for i=1:nface
 
-   ip1=iside(i,1);
-   ip2=iside(i,2);
-   iel=iside(i,3);
-   ier=iside(i,4);
+   ip1=iside(1,i);
+   ip2=iside(2,i);
+   iel=iside(3,i);
+   ier=iside(4,i);
 
    %check for position on Left Element
    for j=1:4
@@ -70,11 +70,11 @@ for i=1:nface
       if (j2 > 4) 
          j2=1;
       end %j2   
-      jp1=intma(iel,inode(j1),jnode(j1));
-      jp2=intma(iel,inode(j2),jnode(j2));
+      jp1=intma(inode(j1),jnode(j1),iel);
+      jp2=intma(inode(j2),jnode(j2),iel);
 
       if (ip1 == jp1 && ip2 == jp2) 
-         face(i,1)=j;
+         face(1,i)=j;
          break; %leave J loop
       end %ip1
    end %j
@@ -87,19 +87,19 @@ for i=1:nface
          if (j2 > 4) 
             j2=1;
          end %j2   
-         jp1=intma(ier,inode(j1),jnode(j1));
-         jp2=intma(ier,inode(j2),jnode(j2));
+         jp1=intma(inode(j1),jnode(j1),ier);
+         jp2=intma(inode(j2),jnode(j2),ier);
 
          if (ip1 == jp2 && ip2 == jp1) 
-            face(i,2)=j;
+            face(2,i)=j;
             break;          %leave J loop
          end %ip1
       end %j
    end %ier
    
    %Store Elements into FACE
-   face(i,3)=iel;
-   face(i,4)=ier;
+   face(3,i)=iel;
+   face(4,i)=ier;
 end %i
 
 

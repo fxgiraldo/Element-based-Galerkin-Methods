@@ -15,10 +15,6 @@ eta_y=zeros(nq,nq,nelem);
 jac=zeros(nq,nq,nelem);
 
 %Initialize Local Arrays
-% x_ksi=zeros(nq,nq);
-% x_eta=zeros(nq,nq);
-% y_ksi=zeros(nq,nq);
-% y_eta=zeros(nq,nq);
 x=zeros(ngl,ngl);
 y=zeros(ngl,ngl);
 
@@ -46,7 +42,8 @@ for e=1:nelem
         ksi_y(i,j,e)=-1.0/xjac*x_eta(i,j);
         eta_x(i,j,e)=-1.0/xjac*y_ksi(i,j);
         eta_y(i,j,e)=+1.0/xjac*x_ksi(i,j);
-        jac(i,j,e)=wnq(i)*wnq(j)*abs(xjac);
+        %jac(i,j,e)=wnq(i)*wnq(j)*abs(xjac);
+        jac(i,j,e)=abs(xjac);
     end %i
     end %j
 end %e

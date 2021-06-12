@@ -155,7 +155,7 @@ if (plot_grid == 1)
                 x(4)=coord(1,i4); y(4)=coord(2,i4);
                 x(5)=coord(1,i1); y(5)=coord(2,i1);
                 plot_handle=plot(x,y,'-r');
-                set(plot_handle,'LineWidth',1.5);
+                set(plot_handle,'LineWidth',1);
             end
         end
         i1=intma(1,1,e);

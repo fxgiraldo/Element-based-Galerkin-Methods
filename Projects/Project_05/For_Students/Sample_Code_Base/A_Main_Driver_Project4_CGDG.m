@@ -13,20 +13,18 @@ close all;
 tic
 
 %Input Data
+%-------------------------Only Change These Lines------------------%
 nel=4; %Number of Elements
 nop=8;    %Interpolation Order
+space_method='cg'; %=cg for CG or =dg for DG
+flux_method='rusanov'; %rusanov or centered
 
-%--------------------------------%
-kstages=4;  %4=RK4 DO NOT CHANGE
-%--------------------------------%
-dt=1; %time-step, Changes automatically to keep Courant_max fixed!
 Courant_max=0.5;
 time_final=0.25; %final time in revolutions
 nplots=4; %Number of Frames in movie
-plot_movie=0;
+plot_movie=1;
 plot_solution=1;
 store_movie=0;
-space_method='cg'; %=cg for CG or =dg for DG
 icase=1; %case number: 1 is a Gaussian in CW;
          %2 is a Gaussian along x;
          %3 is a Gaussian along y;
@@ -35,7 +33,7 @@ icase=1; %case number: 1 is a Gaussian in CW;
          %6 is a Square along x
 xmu=0.05; %filtering strength: 1 is full strength and 0 is no filter
 ifilter=0; %time-step frequency that the filter is applied.
-flux_method='rusanov'; %rusanov or centered
+%-------------------------Only Change These Lines------------------%
 
 %Store Constants
 if (icase ==1)
@@ -51,8 +49,6 @@ elseif (icase ==5)
 elseif (icase ==6)
     c=1;
 end
-%ntime=time_final/dt;
-dt=dt*c;
 time_final=time_final*c;
 nelx=nel;
 nely=nel;
@@ -61,16 +57,14 @@ ngl=nop + 1;
 npts=ngl*ngl;
 npoin_CG=(nop*nelx + 1)*(nop*nely + 1);
 npoin_DG=npts*nelem;
-
 nboun=2*nelx + 2*nely;
 nface=2*nelem + nelx + nely;
-ntime=time_final/dt;
 
 %Compute LGL Points
 [xgl,wgl]=legendre_gauss_lobatto(ngl);
 noq=nop;
 nq=noq + 1;
-main_text=[space_method];
+main_text=space_method;
 
 %Compute Legendre Cardinal functions and derivatives
 [psi,dpsi,xnq,wnq] = lagrange_basis(ngl,nq,xgl);
@@ -90,9 +84,9 @@ f = filter_init(ngl,xgl,xmu);
 [ksi_x,ksi_y,eta_x,eta_y,jac] = metrics(coord_CG,intma_CG,psi,dpsi,nelem,ngl,nq);
 
 %Compute Face/Side/Edge Information
-[iside,jeside] = create_side(intma_CG,bsido_CG,npoin_CG,nelem,nboun,nface,ngl);
+[iside,~] = create_side(intma_CG,bsido_CG,npoin_CG,nelem,nboun,nface,ngl);
 [face,mapL,mapR] = create_face(iside,intma_CG,nface,ngl);
-[nx,ny,jac_face] = compute_normals(face,intma_CG,coord_CG,...
+[normals,jac_face] = compute_normals(face,intma_CG,coord_CG,...
                    nface,ngl,nq,psi,dpsi); 
 %Impose Face Periodicity
 face=create_face_periodicity(iside,face,coord_CG,nface,nboun);
@@ -102,10 +96,10 @@ time=0;
 [qe,ue,ve]=exact_solution(coord,npoin,time,icase);
 
 %Plot Exact Solution
-xmin=min(coord_CG(:,1)); xmax=max(coord_CG(:,1));
-ymin=min(coord_CG(:,2)); ymax=max(coord_CG(:,2));
-xe=coord_CG(:,1);
-ye=coord_CG(:,2);
+xmin=min(coord_CG(1,:)); xmax=max(coord_CG(1,:));
+ymin=min(coord_CG(2,:)); ymax=max(coord_CG(2,:));
+xe=coord_CG(1,:);
+ye=coord_CG(2,:);
 nxx=200; nyy=200;
 dx=(xmax-xmin)/nxx;
 dy=(ymax-ymin)/nyy;
@@ -115,22 +109,20 @@ dy=(ymax-ymin)/nyy;
 Mmatrix = create_Mmatrix2d(jac,wnq,intma,iperiodic,npoin,nelem,ngl);
 
 %Compute Courant Number
-[~,vel,ds,dt] = compute_Courant(ue,ve,intma,coord,nelem,ngl,dt,Courant_max);
+[~,vel,ds,dt] = compute_Courant(ue,ve,intma,coord,nelem,ngl,Courant_max);
 ntime=round(time_final/dt);
 dt=time_final/ntime;
 Courant=vel*dt/ds;
-%pause(3);
 
 %Initialize State Vector
-q1=qe;
-q0=qe;
 qp=qe;
 iplot=round(ntime/nplots);
 iframe=0;
 
 %Compute RK Time-Integration Coefficients
-[a0,a1,beta] = compute_ti_coefficients(kstages);
-rhs_rk4=zeros(npoin,4);
+[RKA,RKB,RKC] = compute_ti_LSRK_tableau();
+dq=zeros(npoin,1);
+stages=length(RKA);
 
 %Time Integration
 for itime=1:ntime
@@ -138,43 +130,28 @@ for itime=1:ntime
     time=time + dt;
     timec=time/(c);
     timec;
-
     if (mod(itime,iplot) == 0 )
         disp(['itime time courant = ',num2str(itime),' ',num2str(timec),' ',num2str(Courant)]);
     end
     
-    for ik=1:kstages
+    for s=1:stages
        
         %------------Students Add Your Routines Here---------------%
-        %------------Students Add Your Routines Here---------------%
-        %Construct RHS vector
-        rhs = construct_RHS_vector(qp,ue,ve,ksi_x,ksi_y,eta_x,eta_y,jac,...
-        wnq,dpsi,intma,iperiodic,Mmatrix,face,nx,ny,jac_face,...
-        mapL,mapR,npoin,nelem,nface,ngl,space_method,flux_method);
-        %------------Students Add Your Routines Here---------------%
+%         %Construct RHS vector
+%         rhs = construct_RHS_vector(qp,ue,ve,ksi_x,ksi_y,eta_x,eta_y,jac,...
+%         wnq,dpsi,intma,iperiodic,Mmatrix,face,normals,jac_face,...
+%         mapL,mapR,npoin,nelem,nface,ngl,space_method,flux_method);
         %------------Students Add Your Routines Here---------------%
 
         %Evolve forward in Time
-        qp=a0(ik)*q0 + a1(ik)*q1 + dt*beta(ik)*rhs;
-        
+        dq = RKA(s)*dq + dt*rhs;
+        qp = qp + RKB(s)*dq;
+                
         %Filter Solution
         if (mod(itime,ifilter) == 0)
-          qp = apply_filter2D(qp,f,intma,iperiodic,jac,wnq,Mmatrix,npoin,nelem,ngl);
+            qp = apply_filter2D(qp,f,intma,iperiodic,jac,wnq,Mmatrix,npoin,nelem,ngl);
         end
-        
-        %Update
-        rhs_rk4(:,ik)=rhs(:);
-        q1=qp;
-    end %ik
-
-    %Do RK4 Solution
-    if (kstages == 4)
-        qp(:)=q0(:) + dt/6.0*( rhs_rk4(:,1) + 2*rhs_rk4(:,2)...
-                    + 2*rhs_rk4(:,3) + rhs_rk4(:,4) );
-    end
-   
-    %Update Q
-    q0=qp;
+    end %s
 
     %PLOT Solution for MOVIES
     if (mod(itime,iplot) == 0 || itime == ntime)
@@ -184,7 +161,7 @@ for itime=1:ntime
         lhowm=zeros(npoin_CG,1);
         for i=1:npoin
             ip_CG=iperiodic_CG(DG_to_CG(i));
-            q_sol(ip_CG)=q_sol(ip_CG) + q0(i);
+            q_sol(ip_CG)=q_sol(ip_CG) + qp(i);
             lhowm(ip_CG)=lhowm(ip_CG)+1;
         end %i
         for i=1:npoin_CG
@@ -200,7 +177,7 @@ end %itime
 [qe,ue,ve] = exact_solution(coord,npoin,time,icase);
 
 %Compute Norm
-l2_norm=norm(q0-qe)/norm(qe);
+l2_norm=norm(qp-qe)/norm(qe);
 
 %Compute gridpoint solution
 q_sol=zeros(npoin_CG,1);
@@ -208,7 +185,7 @@ qe_sol=zeros(npoin_CG,1);
 lhowm=zeros(npoin_CG,1);
 for i=1:npoin
     ip_CG=iperiodic_CG(DG_to_CG(i));
-    q_sol(ip_CG)=q_sol(ip_CG) + q0(i);
+    q_sol(ip_CG)=q_sol(ip_CG) + qp(i);
     qe_sol(ip_CG)=qe_sol(ip_CG) + qe(i);
     lhowm(ip_CG)=lhowm(ip_CG)+1;
 end %i
@@ -222,7 +199,6 @@ if (plot_solution == 1)
     h=figure;
     figure(h);
     qi=griddata(xe,ye,q_sol,xi,yi,'cubic');
-    %[cl,h]=contourf(xi,yi,qi);
     mesh(xi,yi,qi);
     colorbar('SouthOutside');
     xlabel('X','FontSize',18);

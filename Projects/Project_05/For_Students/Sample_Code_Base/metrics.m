@@ -8,11 +8,11 @@
 function [ksi_x,ksi_y,eta_x,eta_y,jac] = metrics(coord,intma,psi,dpsi,nelem,ngl,nq)
 
 %Initialize Global Arrays
-ksi_x=zeros(nelem,nq,nq);
-ksi_y=zeros(nelem,nq,nq);
-eta_x=zeros(nelem,nq,nq);
-eta_y=zeros(nelem,nq,nq);
-jac=zeros(nelem,nq,nq);
+ksi_x=zeros(nq,nq,nelem);
+ksi_y=zeros(nq,nq,nelem);
+eta_x=zeros(nq,nq,nelem);
+eta_y=zeros(nq,nq,nelem);
+jac=zeros(nq,nq,nelem);
 
 %Initialize Local Arrays
 x=zeros(ngl,ngl);
@@ -24,9 +24,9 @@ for e=1:nelem
     %Store Element Variables
     for j=1:ngl
     for i=1:ngl
-       ip=intma(e,i,j);
-       x(i,j)=coord(ip,1);
-       y(i,j)=coord(ip,2);
+       I=intma(i,j,e);
+       x(i,j)=coord(1,I);
+       y(i,j)=coord(2,I);
     end %i  
     end %j
 
@@ -38,11 +38,11 @@ for e=1:nelem
     for j=1:nq
     for i=1:nq
         xjac=x_ksi(i,j)*y_eta(i,j) - x_eta(i,j)*y_ksi(i,j);
-        ksi_x(e,i,j)=+1.0/xjac*y_eta(i,j);
-        ksi_y(e,i,j)=-1.0/xjac*x_eta(i,j);
-        eta_x(e,i,j)=-1.0/xjac*y_ksi(i,j);
-        eta_y(e,i,j)=+1.0/xjac*x_ksi(i,j);
-        jac(e,i,j)=abs(xjac);
+        ksi_x(i,j,e)=+1.0/xjac*y_eta(i,j);
+        ksi_y(i,j,e)=-1.0/xjac*x_eta(i,j);
+        eta_x(i,j,e)=-1.0/xjac*y_ksi(i,j);
+        eta_y(i,j,e)=+1.0/xjac*x_ksi(i,j);
+        jac(i,j,e)=abs(xjac);
     end %i
     end %j
 end %ie

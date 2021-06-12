@@ -15,10 +15,10 @@ ve=zeros(npoin,1);
 %Set some constants
 w=1;
 visc=0;
-xmin=min(coord(:,1)); 
-xmax=max(coord(:,1));
-ymin=min(coord(:,2)); 
-ymax=max(coord(:,2));
+xmin=min(coord(1,:)); 
+xmax=max(coord(1,:));
+ymin=min(coord(2,:)); 
+ymax=max(coord(2,:));
 xl=xmax-xmin;
 yl=ymax-ymin;
 xm=0.5*(xmax+xmin);
@@ -32,8 +32,8 @@ timec=time - floor(time);
 
 %Generate Grid Points
 for ip=1:npoin
-   x=coord(ip,1);
-   y=coord(ip,2);
+   x=coord(1,ip);
+   y=coord(2,ip);
    r=sqrt( (x-xc)^2 + (y-yc)^2 );
    %if (r <= rc)
       xx=x - xc*cos(time) - yc*sin(time);

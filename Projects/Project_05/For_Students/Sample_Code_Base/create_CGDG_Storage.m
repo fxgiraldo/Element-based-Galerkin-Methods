@@ -9,19 +9,19 @@ function [coord,intma,iperiodic,DG_to_CG,npoin] = ...
     create_CGDG_Storage(storage_method,npoin_CG,npoin_DG,coord_CG,...
     intma_CG,iperiodic_CG,nelem,ngl)
 
-if (storage_method == 'cg')
+if strcmp(storage_method,'cg')
     npoin=npoin_CG;
-elseif (storage_method == 'dg')
+elseif strcmp(storage_method,'dg')
     npoin=npoin_DG;
 end
 DG_to_CG=zeros(npoin,1);
 
 %Initialize Global Arrays
-coord=zeros(npoin,2);
-intma=zeros(nelem,ngl,ngl);
+coord=zeros(2,npoin);
+intma=zeros(ngl,ngl,nelem);
 iperiodic=zeros(npoin,1);
 
-if (storage_method == 'cg')
+if strcmp(storage_method,'cg')
     coord=coord_CG;
     intma=intma_CG;
     iperiodic=iperiodic_CG;
@@ -29,7 +29,7 @@ if (storage_method == 'cg')
         DG_to_CG(i)=i;
     end
     
-elseif (storage_method == 'dg')
+elseif strcmp(storage_method,'dg')
     npoin=npoin_DG;
     i_DG=0;
 
@@ -38,8 +38,8 @@ elseif (storage_method == 'dg')
         for j=1:ngl
             for i=1:ngl
                 i_DG=i_DG + 1;
-                i_CG=intma_CG(e,i,j);
-                intma(e,i,j)=i_DG;
+                i_CG=intma_CG(i,j,e);
+                intma(i,j,e)=i_DG;
                 DG_to_CG(i_DG)=i_CG;
             end
         end
@@ -53,7 +53,7 @@ elseif (storage_method == 'dg')
     %Get COORD
     for i_DG=1:npoin_DG
         i_CG=DG_to_CG(i_DG);
-        coord(i_DG,:)=coord_CG(i_CG,:);
+        coord(:,i_DG)=coord_CG(:,i_CG);
     end
     
     %Get IPERIODIC
