@@ -1,6 +1,6 @@
 %---------------------------------------------------------------------%
 %This code computes the 1D Advection Equation using the 
-%CG and DG methods with SSP and LSRK time-integrators (controlled by STAGES).
+%CG and DG methods with LSRK 4th Order 5-stage time-integrator.
 %This version constructs the Global Matrices which are good for 
 %comparing CG and DG and looking at the eigen-values of the RHS matrix.
 %Written by F.X. Giraldo on April 22, 2021
@@ -14,29 +14,27 @@ close all;
 tic
 
 %Input Data
-nelem=10; %Number of Elements
+%-------------------------Only Change These Lines------------------%
+nelem=32; %Number of Elements
 nop=4;    %Interpolation Order
+integration_points=1; %=1 for LGL and =2 for LG
+integration_type=1; %=1 is inexact and =2 is exact
+space_method_type='cg'; %CG or DG
+flux_type=2; %1=centered flux and 2=upwind
 
-stages=3; %RK2, RK3, RK34
-dt=0.001; %time-step, fraction of one revolution
-Courant_max=0.3;
+Courant_max=0.1; %dt controlled by Courant_max
 time_final=1; %final time in revolutions
-nplots=50; %plotting variable - Ignore
 iplot_solution=1; %Switch to Plot or Not.
 iplot_matrices=0;
-integration_points=1; %=1 for LGL and =2 for LG
-integration_type=2; %=1 is inexact and =2 is exact
-space_method_type=2; %=1 for CG and =2 for DG
-ti_type=2; %1=SSP and 2=LSRK
+
 icase=1; %case number: 1 is a Gaussian, 2 is a square wave, 3 is
          %Gaussian with source and 4 is square wave with source.
-xmu=0.0; %filtering strength: 1 is full strength and 0 is no filter
-ifilter=0; %time-step frequency that the filter is applied.
-flux_type=2; %1=centered flux and 2=upwind
+xmu=0.05; %filtering strength: 1 is full strength and 0 is no filter
+ifilter=0; %time-step frequency that the filter is applied. 0=never, 1=every time-step
+%-------------------------Only Change These Lines------------------%
 
 %Store Constants
 ngl=nop + 1;
-ntime=time_final/dt;
 
 npoin_cg=nop*nelem + 1;
 npoin_dg=ngl*nelem;
@@ -66,50 +64,49 @@ end
 [coord_cg,coord_dg,intma_cg,intma_dg,periodicity_cg,periodicity_dg]=create_grid(ngl,nelem,npoin_cg,npoin_dg,xgl);
 
 %Form Global Matrix and Periodic BC Pointers
-if space_method_type == 1
-    method_text = ['CG'];
+if strcmp(space_method_type,'cg')
     npoin=npoin_cg;
     coord=coord_cg;
     intma=intma_cg;
     periodicity=periodicity_cg;
-elseif space_method_type == 2
-    method_text = ['DG'];
+elseif strcmp(space_method_type,'dg')
     npoin=npoin_dg;
     coord=coord_dg;
     intma=intma_dg;
     periodicity=periodicity_dg;
 end
-main_text=[method_text ': ' integration_text];
+main_text=[space_method_type ': ' integration_text];
 
 %Compute Exact Solution
 time=0;
 [qe,u] = exact_solution(coord,npoin,time,icase);
 
 %Compute Courant Number
-u
 dx=coord(2)-coord(1);
 dt=Courant_max*dx/u;
-ntime=round(time_final/dt)
-dt=time_final/ntime
-Courant=u*dt/dx
+ntime=round(time_final/dt);
+dt=time_final/ntime;
+Courant=u*dt/dx;
 q0=qe;
+disp(['Courant = ',num2str(Courant),' dt = ',num2str(dt),' ntime = ',num2str(ntime),' time_final = ',num2str(time_final)])
 
-%------------------------Students need to add these here-----------------%
-% %Create Local/Element Mass and Differentiation Matrices
+%------------------------Ask Students to add these functions---------%
+% % Create Local/Element Mass and Differentiation Matrices
 % Me = create_mass_matrix(intma,coord,nelem,ngl,nq,wnq,psi);
 % De = create_diff_matrix(ngl,nq,wnq,psi,dpsi);
-% %Form Global Mass, Differentiation, and Flux Matrices
+% %Form Global Mass and Differentiation Matrices
 % [Mmatrix,Dmatrix] = Matrix_DSS(Me,De,u,intma,periodicity,ngl,nelem,npoin);
-%------------------------Students need to add these here-----------------%
+%------------------------Ask Students to add these functions---------%
 
 %Apply BCs
-if space_method_type == 1
+if strcmp(space_method_type,'cg')
     Mmatrix(npoin,npoin)=1; 
-elseif space_method_type == 2
+    Fmatrix=zeros(npoin,npoin);
+elseif strcmp(space_method_type,'dg')
     if (flux_type == 1)
-        Fmatrix = Fmatrix_centered_flux(Fmatrix,intma,nelem,npoin,ngl,u);
+        Fmatrix = Fmatrix_centered_flux(intma,nelem,npoin,ngl,u);
     elseif (flux_type == 2)
-        Fmatrix = Fmatrix_upwind_flux(Fmatrix,intma,nelem,npoin,ngl,u);
+        Fmatrix = Fmatrix_upwind_flux(intma,nelem,npoin,ngl,u);
     end
 end
 Rmatrix=Dmatrix - Fmatrix;
@@ -121,27 +118,16 @@ Dmatrix_hat=Mmatrix\Rmatrix;
 q1=qe;
 q0=qe;
 qp=qe;
-iplot=round(ntime/nplots);
 
 %Time Integration
-[q0] = time_integration(q0,u,Dmatrix_hat,periodicity,time,ntime,dt,stages,ti_type);
+[q0,time] = time_integration(q0,Dmatrix_hat,periodicity,time,ntime,dt);
 
 %Compute Exact Solution
 [qe,u] = exact_solution(coord,npoin,time,icase);
 
 %Compute Norm
-top=0;
-bot=0;
-
-for i=1:npoin
-   top=top + (q0(i)-qe(i))^2;
-   bot=bot + qe(i)^2;
-end %i
-l2_norm=sqrt( top/bot )
-npoin
-nelem
-ngl
-nq
+l2_norm=norm(q0-qe,2)/norm(q0,2);
+disp(['L2 = ',num2str(l2_norm),' nop = ',num2str(nop),' nelem = ',num2str(nelem),' npoin = ',num2str(npoin)])
 
 %Plot Solution
 if (iplot_solution == 1)

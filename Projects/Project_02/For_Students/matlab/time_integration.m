@@ -5,10 +5,6 @@
 %           Naval Postgraduate School
 %           Monterey; CA 93943-5216
 %---------------------------------------------------------------------%
-function [q0] = time_integration(q0,u,Dhat,periodicity,time,ntime,dt,stages,ti_type)
-
-if (ti_type == 1)
-    q0 = ti_SSP(q0,u,Dhat,periodicity,time,ntime,dt,stages);
-elseif (ti_type == 2)
-    q0 = ti_LSRK(q0,u,Dhat,periodicity,time,ntime,dt);
-end
+function [q0,time] = time_integration(q0,Dhat,periodicity,time,ntime,dt)
+    
+[q0,time] = ti_LSRK(q0,Dhat,periodicity,time,ntime,dt);

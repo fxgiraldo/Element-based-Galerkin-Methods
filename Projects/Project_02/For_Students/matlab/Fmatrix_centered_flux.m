@@ -1,12 +1,14 @@
 %---------------------------------------------------------------------%
 %This function computes the LGL grid and elements.
-%Written by F.X. Giraldo on 10/2003
-%           Naval Postgraduate School 
+%Written by F.X. Giraldo on April 22, 2021
+%           Department of Applied Mathematics
+%           Naval Postgraduate School
 %           Monterey, CA 93943-5216
 %---------------------------------------------------------------------%
-function Fmatrix = Fmatrix_centered_flux(Fmatrix,intma,nelem,npoin,ngl,u)
+function Fmatrix = Fmatrix_centered_flux(intma,nelem,npoin,ngl,u)
 
-Fmatrix=0;
+Fmatrix=zeros(npoin,npoin);
+
 for e=1:nelem
       
     %Visit Left-most DOF of each element

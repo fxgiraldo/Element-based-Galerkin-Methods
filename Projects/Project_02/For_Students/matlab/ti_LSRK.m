@@ -5,7 +5,7 @@
 %           Naval Postgraduate School
 %           Monterey; CA 93943-5216
 %---------------------------------------------------------------------%
-function [q0] = ti_LSRK(q0,u,Dhat,periodicity,time,ntime,dt)
+function [q0,time] = ti_LSRK(q0,Dhat,periodicity,time,ntime,dt)
 
 %Initialize RK coefficients
 RKA = [(0), 
