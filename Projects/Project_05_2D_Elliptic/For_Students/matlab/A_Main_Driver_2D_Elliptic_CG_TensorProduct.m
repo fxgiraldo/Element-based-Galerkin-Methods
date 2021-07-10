@@ -47,7 +47,7 @@ eps=1e-8;
 [ksi_x,ksi_y,eta_x,eta_y,jac] = metrics(coord,intma,psi,dpsi,wnq,nelem,ngl,nq);
 
 %------------------------Ask Students to add these functions---------%
-% %Create Mass and Laplacian Matrices
+%Create Mass and Laplacian Matrices
 % Mmatrix = create_Mmatrix(intma,jac,wnq,psi,iperiodic,npoin,nelem,ngl,nq);
 % Lmatrix = create_Lmatrix(intma,jac,wnq,ksi_x,ksi_y,eta_x,eta_y,psi,dpsi,...
 %           iperiodic,npoin,nelem,ngl,nq);
