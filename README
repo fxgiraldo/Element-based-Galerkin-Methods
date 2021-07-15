@@ -2,7 +2,11 @@
 This repo stores the Matlab m-files and Julia jl-files for the textbook
 "An Introduction to Element-based Galerkin Methods on Tensor-Product Bases: Analysis, Algorithms, and Applications"
 by Francis X. Giraldo
-A PDF of the table of contents can be found in the present folder.
+A PDF of the table of contents of this textbook can be found in the present folder.
+
+How to cite this work: if you use any material on this site, please site it as follows: 
+Francis X. Giraldo, An Introduction to Element-based Galerkin Methods on Tensor-Product Bases: Analysis, Algorithms, 
+and Applications, Springer Nature (2020).
 
 You can reach the author by writing to him at frank.giraldo@gmail.com
 
@@ -11,8 +15,7 @@ Chapters: contains some of the source code used in each chapter.
 Projects: contains the source code that the student should be given in order to complete the project.
 For Students: These folders contain the sample code that I recommend giving to the student. This way they can concentrate 
 on what is most important in the course and to give them time to play with the codes and learn by experimentation.
-For Instructors: I have only added such a folder for Project 1. For those instructors that want the folders for the rest of the 
-projects, please write to me and let me know which course you are teaching. I will then provide you access to a Private Github Repo.
+For Instructors: I have now added the solutions to the projects in order to make it easier for the instructors.
 
 Note: The main driver in each folder is entitled “A_Main_Driver_…” where “…” change with each folder.  
 Each folder contains a README file that explains what is contained in that folder.
