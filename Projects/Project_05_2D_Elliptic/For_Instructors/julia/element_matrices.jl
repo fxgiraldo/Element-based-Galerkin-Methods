@@ -5,7 +5,7 @@
 #           Naval Postgraduate School
 #           Monterey; CA 93943-5216
 #---------------------------------------------------------------------#
-function element_matrices(ψ,dψ,ξ_x,ξ_y,η_x,η_y,jac,Ne,Np,Nq,DFloat)
+function element_matrices(ψ,dψ,ξ_x,ξ_y,η_x,η_y,jac,ωq,Ne,Np,Nq,DFloat)
 
     #Initialize Matrices
     M=zeros(DFloat,Np,Np,Np,Np,Ne)
@@ -14,7 +14,7 @@ function element_matrices(ψ,dψ,ξ_x,ξ_y,η_x,η_y,jac,Ne,Np,Nq,DFloat)
     #Construct Mass and Differentiation Matrices
     for e=1:Ne
         for l=1:Nq, k=1:Nq
-            wq=jac[k,l,e]
+            wq=ωq[k]*ωq[l]*jac[k,l,e]
             for j=1:Np, i=1:Np
                 Ψ_JK=ψ[i,k]*ψ[j,l] #h_ik*h_jl
                 dΨdx_JK=dψ[i,k]*ψ[j,l]*ξ_x[k,l,e] + ψ[i,k]*dψ[j,l]*η_x[k,l,e]

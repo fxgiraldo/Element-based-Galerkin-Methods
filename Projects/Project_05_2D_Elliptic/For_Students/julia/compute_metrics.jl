@@ -7,7 +7,7 @@ include("map_deriv.jl")
 #           Naval Postgraduate School
 #           Monterey; CA 93943-5216
 #---------------------------------------------------------------------#
-function compute_metrics(coord,intma,ψ,dψ,ωq,Ne,Np,Nq,DFloat)
+function compute_metrics(coord,intma,ψ,dψ,Ne,Np,Nq,DFloat)
 
     #Initialize Global Arrays
     ξ_x=zeros(DFloat,Nq,Nq,Ne)
@@ -44,7 +44,7 @@ function compute_metrics(coord,intma,ψ,dψ,ωq,Ne,Np,Nq,DFloat)
                 ξ_y[i,j,e]=-1.0/xjac*x_η[i,j]
                 η_x[i,j,e]=-1.0/xjac*y_ξ[i,j]
                 η_y[i,j,e]=+1.0/xjac*x_ξ[i,j]
-                jac[i,j,e]=ωq[i]*ωq[j]*abs(xjac)
+                jac[i,j,e]=abs(xjac)
             end #i
         end #j
     end #e

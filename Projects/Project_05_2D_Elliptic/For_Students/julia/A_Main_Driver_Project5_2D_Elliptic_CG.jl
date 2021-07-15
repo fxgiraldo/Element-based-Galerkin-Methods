@@ -88,14 +88,14 @@ function main()
     (coord,intma,iboun) = create_grid(Np,Npoin,Ne,Nboun,Nex,Ney,ξ,plot_grid,warp_grid,DFloat)
 
     #Construct Metric Terms
-    (ξ_x,ξ_y,η_x,η_y,jac) = compute_metrics(coord,intma,ψ,dψ,ωq,Ne,Np,Nq,DFloat)
+    (ξ_x,ξ_y,η_x,η_y,jac) = compute_metrics(coord,intma,ψ,dψ,Ne,Np,Nq,DFloat)
 
     #=
     ----------------------------------------------------------------------------------------------
     Students create these two functions below for the Element and Global mass and Laplacian matrices
     
     #Construct Element Matrices
-    (Me,Le) = element_matrices(ψ,dψ,ξ_x,ξ_y,η_x,η_y,jac,Ne,Np,Nq,DFloat)
+    (Me,Le) = element_matrices(ψ,dψ,ξ_x,ξ_y,η_x,η_y,jac,ωq,Ne,Np,Nq,DFloat)
 
     #Construct Global Matrices
     (M,L) = global_matrices(Me,Le,intma,Ne,Np,Npoin,DFloat)

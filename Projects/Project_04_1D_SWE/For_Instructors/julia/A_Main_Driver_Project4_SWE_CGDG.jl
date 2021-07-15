@@ -12,8 +12,8 @@ Naval Postgraduate School
 Monterey, CA 93943
 
 For time-integration, we use LSRK45 (4th order, 5-stage). 
-For CG it runs OK until Time=0.5. For CG, it will blow up after but for DG it works for
-quite a while longer.
+The linearized shallow water equations run indefinitely using either CG or DG. For the nonlinear 
+equations, we would need some form of stabilization.
 
 The interpolation points used are the following:
 #ipoints=1: Lobatto

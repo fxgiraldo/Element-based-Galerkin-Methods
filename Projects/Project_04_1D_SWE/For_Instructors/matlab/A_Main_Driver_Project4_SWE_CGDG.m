@@ -57,7 +57,7 @@ iplot=round(ntime/nplots);
 
 %Store Constants
 ngl=nop + 1;
-method_text = [space_method];
+method_text = space_method;
 
 %Compute i,e -> I pointer
 I=0;
@@ -72,7 +72,7 @@ end
 %Compute Interpolation and Integration Points
 [xgl,wgl]=legendre_gauss_lobatto(ngl);
 if (integration_points == 1)
-    integration_text=['LGL'];
+    integration_text='LGL';
     if (integration_type == 1)
         noq=nop;
     elseif (integration_type == 2)
@@ -81,7 +81,7 @@ if (integration_points == 1)
     nq=noq + 1;
     [xnq,wnq]=legendre_gauss_lobatto(nq);
 elseif (integration_points == 2)
-    integration_text=['LG'];
+    integration_text='LG';
     noq=nop;
     nq=noq + 1;
     [xnq,wnq]=legendre_gauss(nq);
@@ -185,9 +185,14 @@ for itime=1:ntime
    %LSRK45 Stages
    for s = 1:stages
        %Create RHS vector: volume, flux, and communicator
+       %----------------------------------------------------------------------------------------------%
+       %---------------------Students add these Functions---------------------------------------------%
        R = create_rhs_volume(qp,qb,intma,coord,npoin,nelem,ngl,nq,wnq,psi,dpsi,gravity,delta_nl);
        R = create_rhs_flux(R,qp,qb,intma,nelem,ngl,diss,gravity,delta_nl);
        R = create_rhs_communicator(R,space_method,intma,intma_cg,coord,Mmatrix,npoin,npoin_cg,nelem,ngl,nq,wnq,psi,periodicity,0);
+       %---------------------Students add these Functions---------------------------------------------%
+       %----------------------------------------------------------------------------------------------%
+
        %Solve System
        for I=1:npoin
            dq(I,:) = RKA(s)*dq(I,:) + dt*R(I,:);

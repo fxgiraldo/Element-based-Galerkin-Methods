@@ -44,7 +44,7 @@ eps=1e-8;
 [coord,intma,iboun,iperiodic]=create_grid(npoin,nelem,nboun,nelx,nely,ngl,xgl,plot_grid,rotate_grid);
 
 %Compute Metric Terms
-[ksi_x,ksi_y,eta_x,eta_y,jac] = metrics(coord,intma,psi,dpsi,wnq,nelem,ngl,nq);
+[ksi_x,ksi_y,eta_x,eta_y,jac] = metrics(coord,intma,psi,dpsi,nelem,ngl,nq);
 
 %------------------------Ask Students to add these functions---------%
 %Create Mass and Laplacian Matrices

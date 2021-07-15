@@ -5,7 +5,7 @@
 %           Naval Postgraduate School 
 %           Monterey, CA 93943-5216
 %---------------------------------------------------------------------%
-function [ksi_x,ksi_y,eta_x,eta_y,jac] = metrics(coord,intma,psi,dpsi,wnq,nelem,ngl,nq)
+function [ksi_x,ksi_y,eta_x,eta_y,jac] = metrics(coord,intma,psi,dpsi,nelem,ngl,nq)
 
 %Initialize Global Arrays
 ksi_x=zeros(nq,nq,nelem);
@@ -42,7 +42,6 @@ for e=1:nelem
         ksi_y(i,j,e)=-1.0/xjac*x_eta(i,j);
         eta_x(i,j,e)=-1.0/xjac*y_ksi(i,j);
         eta_y(i,j,e)=+1.0/xjac*x_ksi(i,j);
-        %jac(i,j,e)=wnq(i)*wnq(j)*abs(xjac);
         jac(i,j,e)=abs(xjac);
     end %i
     end %j
