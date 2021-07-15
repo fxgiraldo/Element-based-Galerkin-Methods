@@ -1,5 +1,5 @@
 %-------------------------------------------------------------------------------------------------%
-This folder contains the files (matlab and julia) for Project 2 (1D Wave Equation) in the book
+This folder contains the files (matlab and julia) for Project 3 (1D Burgers Equation) in the book
 "An Introduction to Element-based Galerkin Methods on Tensor-Product Bases: Analysis, Algorithms, and Applications"
 by Francis X. Giraldo
 
@@ -7,7 +7,7 @@ The directories:
 For_Instructors contains the project solution and
 For_Students contains the files that the students should have in order to do the project.
 
-A sample Project description is given in the PDF Project2.pdf
+No PDF file with instructions is given because this could be used as either a 2nd part to Project 2 or Project 3.
 
 You can reach the author by writing to him at frank.giraldo@gmail.com
 %-------------------------------------------------------------------------------------------------%
