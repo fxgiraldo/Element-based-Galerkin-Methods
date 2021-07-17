@@ -6,11 +6,11 @@
 #           Naval Postgraduate School
 #           Monterey; CA 93943-5216
 #---------------------------------------------------------------------#
-function lagrange_basis(P,Q,xgl,xnq)
+function lagrange_basis(P,Q,xgl,xnq,DFloat)
 
     #Initialize arrays
-    psi=zeros(P,Q)
-    dpsi=zeros(P,Q)
+    psi=zeros(DFloat,P,Q)
+    dpsi=zeros(DFloat,P,Q)
 
     #Perform Quadrature/Sample the Function
     for l=1:Q

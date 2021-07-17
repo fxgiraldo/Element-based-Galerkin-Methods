@@ -1,18 +1,18 @@
 %----------------------------------------------------------------------%
-%This subroutine builds the RHS vector for the Strong Form DGM-SEM
-%on Quadrilateral Elements for the 2D Euler Equations.
+%This subroutine builds the volume integral contribution using the Weak Form DGM-SEM
+%on Quadrilateral Elements.
 %Written by Francis X. Giraldo on 1/2001
 %           Naval Postgraduate School
 %           Department of Applied Mathematics
 %           Monterey, CA 93943-5502
 %----------------------------------------------------------------------%
-function rhs = compute_rhs_differentiation(q,u,v,ksi_x,ksi_y,eta_x,eta_y,jac,...
+function rhs = create_rhs_volume(q,u,v,ksi_x,ksi_y,eta_x,eta_y,jac,...
 		 wnq,dpsi,intma,iperiodic,npoin,nelem,ngl)
 
 %global arrays
 rhs=zeros(npoin,1);
 
-%Construct FEM-type Operators
+%Construct Volume Integral Contribution
 for e=1:nelem
 
     %Loop Integration Points

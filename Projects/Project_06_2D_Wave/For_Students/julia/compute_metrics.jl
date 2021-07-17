@@ -1,6 +1,10 @@
 #=
 ---------------------------------------------------------------------
 This function computes the Metric Terms for General 2D Quad Grids.
+
+The strategy follows Algorithm 12.3 in F.X. Giraldo's Introduction to Element-based 
+Galerkin Methods using Tensor-Product Bases: Analysis, Algorithms, and Applications.
+
 Written by F.X. Giraldo on 5/2019
            Department of Applied Mathematics
            Naval Postgraduate School

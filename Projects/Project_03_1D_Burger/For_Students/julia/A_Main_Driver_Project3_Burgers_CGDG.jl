@@ -6,6 +6,9 @@ Tensor-Product Bases: Analysis, Algorithms, and Applications.
 Note that it only requires the storage of a global mass matrix, inside of TI_LSRK, 
 the CREATE_RHS routine builds the RHS without using global matrices.
 
+The strategy followed is very similar to that described in Alg. 7.6 except that we do not build the 
+Flux matrix explicitly. This is all done in CREATE_RHS.jl.
+
 Written by F.X. Giraldo on July 6, 2021.
 Department of Applied Mathematics
 Naval Postgraduate School
@@ -16,14 +19,14 @@ For CG it runs OK until Time=0.5. For CG, it will blow up after but for DG it wo
 quite a while longer.
 
 The interpolation points used are the following:
-#ipoints=1: Lobatto
-#ipoints=2: Legendre
-#ipoints=3: Chebyshev
-#ipoints=4: Equi-spaced
+ipoints=1: Lobatto
+ipoints=2: Legendre
+ipoints=3: Chebyshev
+ipoints=4: Equi-spaced
 
 The integration points used are the following:
-#qpoints=1: Lobatto
-#qpoints=2: Legendre
+qpoints=1: Lobatto
+qpoints=2: Legendre
 -------------------------------------------------------------------------------------------------------------
 =#
 
@@ -42,25 +45,26 @@ include("ti_LSRK.jl")
 DFloat = Float64
 machine_zero=eps(DFloat)
 
-#{{{ Main
 function main()
 
-    #Fix Interpolation and Integration Order
+    #-----------------------------Only Change these Input parameters---------------------------------#
+    Ne=21
     N=6
     Q=N
-    Np=N+1
-    Nq=Q+1
     ipoints=1
     qpoints=1
-    #space_method="CG" #time_final=0.4
-    space_method="DG" #time_final=0.4
+    space_method="CG" #time_final=0.4
+    #space_method="DG" #time_final=0.4
     case=1 #1=exponential, 2=square wave
-    Ne=21
+    time_final=DFloat(0.4)
+    plot_movie=true
+    #-----------------------------Only Change these Input parameters---------------------------------#
+
+    Np=N+1
+    Nq=Q+1
     Npoin_dg=Ne*Np
     Npoin_cg=Ne*N + 1
     dt=DFloat(0.0001)
-    time_final=DFloat(0.4)
-    plot_movie=true
     Courant_max=0.5
     ntime = ceil(Int64, time_final / dt)
     @show(N,Q,Ne,Npoin_cg,Npoin_dg,dt,ntime,case)
@@ -126,7 +130,11 @@ function main()
     println("Courant = ",courant," dt = ",dt," ntime = ",ntime)
 
     #Time Integration
+    #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
     (q0,time) = ti_LSRK!(q0,coord,M,Dwe,intma,periodicity,time,ntime,dt,space_method,plot_movie,DFloat)
+    #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
+    
+    #Print Time and Extrema
     println(" ntime = ",ntime," time = ",time," qmax = ",maximum(q0)," qmin = ",minimum(q0))
 
     #Compute L2 Norm
@@ -143,7 +151,6 @@ function main()
 #    savefig(plot_handle,"Project2.png")
     println("**Simulation Finished**") #output
 end
-#}}} Main
 
 #----------------------------------#
 # Run the main function

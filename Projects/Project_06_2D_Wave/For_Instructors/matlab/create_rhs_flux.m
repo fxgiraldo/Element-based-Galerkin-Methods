@@ -1,12 +1,12 @@
 %----------------------------------------------------------------------%
-%This subroutine builds the FLUX vector for the Weak Form CG/DG
+%This subroutine constructs the flux integral contribution for the Weak Form CG/DG
 %on Quadrilateral Elements for the 2D Advection Equation.
 %Written by Francis X. Giraldo on 1/2001
 %           Naval Postgraduate School
 %           Department of Applied Mathematics
 %           Monterey, CA 93943-5216
 %----------------------------------------------------------------------%
-function rhs = compute_rhs_flux(rhs,q,u,v,face,normals,jac_face, ...
+function rhs = create_rhs_flux(rhs,q,u,v,face,normals,jac_face, ...
                wnq,nface,ngl,mapL,mapR,intma,flux_method)
 
 %local arrays
@@ -20,7 +20,7 @@ if strcmp(flux_method,'rusanov')
     flag=1;
 end
     
-%Construct FVM-type Operators
+%Construct flux integral
 for is=1:nface
 
    %Store Left Side Variables

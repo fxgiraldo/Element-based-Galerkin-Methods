@@ -1,8 +1,14 @@
 %---------------------------------------------------------------------%
-%This code computes the 1D Burgers Equations using either CG or 
-%DG method with either LG or LGL points for interpolation and integration.
+%This code contains the Student template for solving the 1D Burgers Equations 
+%using either CG or DG method with either LG or LGL points for interpolation and integration.
+%
 %The time-integration is accomplished via 2nd, 3rd Order, or 3rd Order 4-stage
 %RK.
+%
+%The strategy followed is very similar to that described in Alg. 7.6 except 
+%that we do not build the Flux matrix explicitly. This is all done in 
+%CREATE_RHS_VOLUME and CREATE_RHS_FLUX.
+%
 %Written by F.X. Giraldo on 10/2003
 %           Department of Applied Mathematics
 %           Naval Postgraduate School
@@ -14,22 +20,24 @@ close all;
 tic
 
 %Input Data
+%--------------------------ONLY CHANGE THESE--------------------------%
 nelem=21; %Number of Elements
 nop=6;    %Polynomial Order
+time_final=0.4; %final time in revolutions
+integration_points=1; %=1 for LGL and =2 for LG
+integration_type=1; %=1 is inexact and =2 is exact
+space_method='dg'; %cgc=CGc; cgd=CGd; dg=DG
+%--------------------------ONLY CHANGE THESE--------------------------%
 %For nop=2,4,6 works upto Time=10 (nop*nelem=120) dt=0.001. 
 
 kstages=4; %RK1, RK2, RK3, or RK4
 dt=0.001;
-time_final=0.4; %final time in revolutions
 nplots=10; %plotting variable - Number of Frames ploted
 iplot_movie=0;
 store_movie=0;
 iplot_figures=1;
 iplot_elements=1;
 iplot_modes=1;
-integration_points=1; %=1 for LGL and =2 for LG
-integration_type=1; %=1 is inexact and =2 is exact
-space_method='dg'; %cgc=CGc; cgd=CGd; dg=DG
 %alpha=2.0/3.0; %1=conservative, 0=non-conservative
 alpha=1; %1=conservative, 0=non-conservative
 limit=0; %=0 no limiting, =1 Krivodonova Limiter, =2 Bound-Preserving Limiter
@@ -136,6 +144,7 @@ q_init=qe;
 [mass0,energy0] = compute_Mass_and_Energy(qe,intma,coord,wnq,psi,nelem,ngl,nq);
 
 %Create Periodic BC Pointer
+iperiodic=zeros(npoin,1);
 for i=1:npoin
    iperiodic(i)=i;
 end
@@ -172,15 +181,15 @@ for itime=1:ntime
    %disp(['itime =  ',num2str(itime),' time = ', num2str(time),' courant = ', num2str(courant)]);
    for ik=1:kstages
       
-      %Create RHS Matrix
-      
+      %Create RHS vector for Inviscid Operators
       %-----------------------------------------------------------------------------%
       %-------------------Student add your RHS functions here ----------------------%
-      rhs = create_rhs_volume(qp,intma,coord,npoin,nelem,ngl,nq,wnq,psi,dpsi,alpha);
-      rhs = create_rhs_flux(rhs,qp,intma,nelem,ngl,diss,flux_method);
+      %rhs = create_rhs_volume(qp,intma,coord,npoin,nelem,ngl,nq,wnq,psi,dpsi,alpha);
+      %rhs = create_rhs_flux(rhs,qp,intma,nelem,ngl,diss,flux_method);
       %-----------------------------------------------------------------------------%
       %-----------------------------------------------------------------------------%
-       
+      
+      %Create RHS vector for Viscous Operators
       if (strcmp(elliptic_method,'SIP') > 0 )
           rhs = create_Lmatrix_SIPDG(rhs,intma,coord,npoin,nelem,ngl,nq,wnq,psi,dpsi,qp,tau,visc);
       elseif (strcmp(elliptic_method,'LDG') > 0 )
@@ -188,7 +197,11 @@ for itime=1:ntime
       end
       
       %Apply Communicator
-      rhs = create_rhs_communicator(rhs,space_method,intma,intma_cg,coord,Mmatrix,npoin,npoin_cg,nelem,ngl,nq,wnq,psi,dpsi,alpha,0);
+      %-----------------------------------------------------------------------------%
+      %-------------------Student add your RHS functions here ----------------------%
+      %rhs = create_rhs_communicator(rhs,space_method,intma,intma_cg,coord,Mmatrix,npoin,npoin_cg,nelem,ngl,nq,wnq,psi,dpsi,alpha,0);
+      %-----------------------------------------------------------------------------%
+      %-------------------Student add your RHS functions here ----------------------%
       
       %Solve System
       qp=a0(ik)*q0 + a1(ik)*q1 + dt*beta(ik)*rhs;
@@ -248,6 +261,10 @@ if (iplot_movie == 1)
     figure;
     for i=1:iframe
         subplot(3,1,1); %H Solution
+%         hmax=max(p_movie(:,i));
+%         hmin=min(p_movie(:,i));
+%         xmax=max(max(coord));
+%         xmin=min(min(coord));
         for e=1:nelem
             for j=1:ngl
                 jp=intma(j,e);

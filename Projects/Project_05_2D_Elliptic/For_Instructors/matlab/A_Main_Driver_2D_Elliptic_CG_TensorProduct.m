@@ -1,5 +1,11 @@
 %---------------------------------------------------------------------%
-%This code computes the 2D Elliptic Equation using the CG method.
+%This driver cntains the solution to Project 5: the 2D Poisson Equation using the CG method.
+%
+%The approached follows Algorithm 12.18 in the book whereby the global matrices
+%are constructed by combining the element matrices (Alg. 12.9 and 12.10)
+%and the DSS (Alg. 12.11) to construct the global Mass and global Laplacian 
+%matrices.
+%
 %Written by F.X. Giraldo on 10/2003
 %           Department of Applied Mathematics
 %           Naval Postgraduate School 
@@ -47,10 +53,12 @@ eps=1e-8;
 [ksi_x,ksi_y,eta_x,eta_y,jac] = metrics(coord,intma,psi,dpsi,nelem,ngl,nq);
 
 %------------------------Ask Students to add these functions---------%
+%------------------------Ask Students to add these functions---------%
 %Create Mass and Laplacian Matrices
 Mmatrix = create_Mmatrix(intma,jac,wnq,psi,iperiodic,npoin,nelem,ngl,nq);
 Lmatrix = create_Lmatrix(intma,jac,wnq,ksi_x,ksi_y,eta_x,eta_y,psi,dpsi,...
           iperiodic,npoin,nelem,ngl,nq);
+%------------------------Ask Students to add these functions---------%
 %------------------------Ask Students to add these functions---------%
 
 %Compute Exact Solution

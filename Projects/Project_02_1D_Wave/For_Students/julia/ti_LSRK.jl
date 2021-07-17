@@ -1,13 +1,18 @@
-#---------------------------------------------------------------------#
-#This function computes the LSRK Method by Carpenter-Kennedy 1994.
-#Written by F.X. Giraldo on April 19, 2019
-#           Department of Applied Mathematics
-#           Naval Postgraduate School
-#           Monterey; CA 93943-5216
-#---------------------------------------------------------------------#
-include("create_rhs.jl")
+#=
+---------------------------------------------------------------------
+This function advances the solution in time using the LSRK45 Method by Carpenter-Kennedy 1994.
 
-function ti_LSRK!(q0,u,Dhat,Fhat,intma,periodicity,time,ntime,dt,DFloat)
+Written by F.X. Giraldo on July 12, 2021
+           Department of Applied Mathematics
+           Naval Postgraduate School
+           Monterey; CA 93943-5216
+---------------------------------------------------------------------
+=#
+
+include("create_rhs.jl")
+include("plot_solution.jl")
+
+function ti_LSRK!(q0,u,coord,M,Dwe,intma,periodicity,time,ntime,dt,space_method,plot_movie,DFloat)
 
     #Initialize RK coefficients
     RKA = (DFloat(0),
@@ -38,9 +43,12 @@ function ti_LSRK!(q0,u,Dhat,Fhat,intma,periodicity,time,ntime,dt,DFloat)
         time=time + dt
         #RK Stages
         for s = 1:stages
-            #Create RHS Matrix
-#            R=-Dhat*qp*u #only valid for CG
-            R=create_rhs(qp,u,Dhat,Fhat,intma,DFloat)
+            #Create RHS vector
+            #= -----------Students add your CREATE_RHS routine here-----------=#
+            #= -----------Students add your CREATE_RHS routine here-----------=#
+            #R=create_rhs(qp,u,M,Dwe,intma,periodicity,DFloat)
+            #= -----------Students add your CREATE_RHS routine here-----------=#
+            #= -----------Students add your CREATE_RHS routine here-----------=#
 
             #Solve System
             @inbounds for I=1:Npoin
@@ -51,10 +59,20 @@ function ti_LSRK!(q0,u,Dhat,Fhat,intma,periodicity,time,ntime,dt,DFloat)
                 qp[Npoin]=qp[1] #periodicity
             end
         end #s
-#        println(" itime = ",itime," time = ",time," qmax = ",maximum(qp)," qmin = ",minimum(qp))
 
         #Update Q
         q0 .= qp
+
+        #Plot Solution
+        if (plot_movie)
+            plot_solution(q0,coord,space_method,time)
+        end
+
+         #Print to Screen
+         if ( mod(itime,100) == 0 )
+            println(" itime = ",itime," time = ",time," qmax = ",maximum(q0)," qmin = ",minimum(q0))
+        end
+
     end #itime
 
     return(q0)

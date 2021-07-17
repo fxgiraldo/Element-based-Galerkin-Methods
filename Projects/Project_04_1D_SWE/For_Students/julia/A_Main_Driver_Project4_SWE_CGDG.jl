@@ -1,10 +1,13 @@
 #=
 -------------------------------------------------------------------------------------------------------------
-This file runs the 1D Shallow Water Equations using a unified CG/DG method using the AGGP storage 
+This file contains the Student template for solving the 1D Shallow Water Equations using a unified CG/DG method using the AGGP storage 
 introduced in F.X. Giraldo's Introduction to Element-based Galerkin Methods using 
 Tensor-Product Bases: Analysis, Algorithms, and Applications.
 Note that it only requires the storage of a global mass matrix, inside of TI_LSRK, 
 the CREATE_RHS routine builds the RHS without using global matrices.
+
+The strategy followed is very similar to that described in Alg. 7.6 except that we do not build the 
+Flux matrix explicitly. This is all done in CREATE_RHS.jl.
 
 Written by F.X. Giraldo on July 6, 2021.
 Department of Applied Mathematics
@@ -12,18 +15,18 @@ Naval Postgraduate School
 Monterey, CA 93943
 
 For time-integration, we use LSRK45 (4th order, 5-stage). 
-For CG it runs OK until Time=0.5. For CG, it will blow up after but for DG it works for
-quite a while longer.
+The linearized shallow water equations run indefinitely using either CG or DG. For the nonlinear 
+equations, we would need some form of stabilization.
 
 The interpolation points used are the following:
-#ipoints=1: Lobatto
-#ipoints=2: Legendre
-#ipoints=3: Chebyshev
-#ipoints=4: Equi-spaced
+ipoints=1: Lobatto
+ipoints=2: Legendre
+ipoints=3: Chebyshev
+ipoints=4: Equi-spaced
 
 The integration points used are the following:
-#qpoints=1: Lobatto
-#qpoints=2: Legendre
+qpoints=1: Lobatto
+qpoints=2: Legendre
 -------------------------------------------------------------------------------------------------------------
 =#
 
@@ -46,24 +49,26 @@ machine_zero=eps(DFloat)
 #Main function
 function main()
 
-    #Fix Interpolation and Integration Order
+    #-----------------------------Only Change these Input parameters---------------------------------#
+    Ne=20
     N=4
     Q=N
-    Np=N+1
-    Nq=Q+1
     ipoints=1
     qpoints=1
     #space_method="CG" #time_final=0.4
     space_method="DG" #time_final=0.4
     case=1 #1=exponential, 2=square wave
     Δ_NL=0
-    Ne=20
-    Npoin_dg=Ne*Np
-    Npoin_cg=Ne*N + 1
-    dt=DFloat(0.0001)
     time_final=DFloat(1.0)
     plot_movie=true
     plot_solution=false
+    #-----------------------------Only Change these Input parameters---------------------------------#
+
+    Np=N+1
+    Nq=Q+1
+    Npoin_dg=Ne*Np
+    Npoin_cg=Ne*N + 1
+    dt=DFloat(0.0001)
     Courant_max=0.5
     ntime = ceil(Int64, time_final / dt)
     @show(N,Q,Ne,Npoin_cg,Npoin_dg,dt,ntime,case)
@@ -131,10 +136,11 @@ function main()
     println("Courant = ",courant," dt = ",dt," ntime = ",ntime)
 
     #Time Integration
-    #-------------Students Should create CREATE_RHS function inside of ti_LSRK----------------#
+    #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
     (q0,time) = ti_LSRK!(q0,qb,coord,M,Dwe,intma,periodicity,time,ntime,dt,gravity,Δ_NL,space_method,plot_movie,case,DFloat)
-    #-------------Students Should create CREATE_RHS function inside of ti_LSRK----------------#
+    #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
 
+    #Print Time and Extrema
     println(" ntime = ",ntime," time = ",time," qmax = ",maximum(q0)," qmin = ",minimum(q0))
 
     #Compute L2 Norm

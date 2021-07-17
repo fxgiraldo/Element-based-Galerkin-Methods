@@ -1,8 +1,12 @@
 #=
 -------------------------------------------------------------------------------------------------------------
-This file runs the 2D Wave Equation using the unified CG/DG method with AGGP storage 
+This file contains the student template for Project 6: 2D Wave Equation using the unified CG/DG method with AGGP storage 
 introduced in F.X. Giraldo's Introduction to Element-based Galerkin Methods using 
 Tensor-Product Bases: Analysis, Algorithms, and Applications.
+
+The solution is obtained using Algorithm 17.7 whereby the RHS vector is constructed at each time stage. 
+The volume integral contribution is constructed using Algorithm 16.11 except that the element differentiation matrix is computed and stored.
+The flux integral contribution is constructed using Algorithm 16.12 (all in weak form).
 
 It uses the LSRK45 method as the time-integrator and Rusanov fluxes for DG.
 
@@ -12,14 +16,14 @@ Naval Postgraduate School
 Monterey, CA 93943
 
 The interpolation points used are the following:
-#ipoints=1: Lobatto
-#ipoints=2: Legendre
-#ipoints=3: Chebyshev
-#ipoints=4: Equi-spaced
+ipoints=1: Lobatto
+ipoints=2: Legendre
+ipoints=3: Chebyshev
+ipoints=4: Equi-spaced
 
 The integration points used are the following:
-#qpoints=1: Lobatto
-#qpoints=2: Legendre
+qpoints=1: Lobatto
+qpoints=2: Legendre
 -------------------------------------------------------------------------------------------------------------
 =#
 
@@ -140,12 +144,14 @@ function main()
     ntime = ceil(Int64, time_final / dt)
     println("Courant = ",courant," dt = ",dt," ntime = ",ntime)
 
-    #--------------------------------------------------------------------------------------------------------
-    #Students Add their Contributions in CREATE_RHS which is called inside of ti_LSRK
-    #--------------------------------------------------------------------------------------------------------
-
     #Time Integration
+    #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
+    #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
     (q0,time) = ti_LSRK!(q0,ue,coord,M,De_x,De_y,intma,periodicity,face,mapL,mapR,normals,jac_face,ωq,time,ntime,dt,space_method,plot_movie,Nx,Ny,coord_CG,periodicity_CG,DG_to_CG,DFloat)
+    #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
+    #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
+
+    #Print Time and Extrema
     println(" itime = ",ntime," time = ",time," qmax = ",maximum(q0)," qmin = ",minimum(q0))
 
     #Compute L2 Norm
@@ -195,7 +201,6 @@ function main()
     println("Done") #output
 
 end
-#}}} Main
 
 #----------------------------------#
 # Run the main function

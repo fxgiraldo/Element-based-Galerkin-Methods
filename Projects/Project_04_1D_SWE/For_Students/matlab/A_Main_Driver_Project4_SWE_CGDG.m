@@ -4,9 +4,11 @@
 %"Introduction to Element-based Galerkin Methods using Tensor-Product Bases"
 %
 %It can use either LG or LGL points for interpolation and integration.
-%The time-integration is accomplished via 2nd, 3rd, or 4th Order RK.
+%The time-integration is accomplished via LSRK45.
 %
-%This is the solution set to Project 4: 1D Shallow Water
+%This is the student template for Project 4: 1D Shallow Water
+%The strategy followed is very similar to that described in Alg. 7.6 except 
+%that we do not build the Flux matrix explicitly. This is all done in CREATE_RHS.jl.
 %
 %Written by F.X. Giraldo on 10/2003
 %           Department of Applied Mathematics
@@ -19,9 +21,9 @@ close all;
 tic
 
 %Input Data
+%---------------------------------------------------------------------%
 nelem=64; %Number of Elements
 nop=4;    %Interpolation Order
-
 dt=0.002;
 time_final=1; %final time in revolutions
 nplots=10; %plotting variable - Number of Frames ploted
@@ -32,8 +34,7 @@ plot_elements=0;
 plot_modes=0;
 integration_points=1; %=1 for LGL and =2 for LG
 integration_type=2; %=1 is inexact and =2 is exact
-space_method='dg'; %cgc=CGc; cgd=CGd; dg=DG
-                              
+space_method='dg'; %cgc=CGc; cgd=CGd; dg=DG                              
 icase=4; %=1 is a Gaussian with flat bottom; 
          %2 is Gaussian with linear bottom;
          %3 is Gaussian with Parabolic bottom; 
@@ -41,11 +42,14 @@ icase=4; %=1 is a Gaussian with flat bottom;
          %5 is FXG Riemann problem;
          %6 is Simone Riemann problem
          %7 is Rupert Klein's linear multiscale problem (Ch. 7 in FXG book)
+%---------------------------------------------------------------------%
+
 mu=1.0; %filtering strength: 1 is full strength and 0 is no filter
 ifilter=0; %time-step frequency that the filter is applied.
 filter_type=2; %=1 is Modal Hierarchical and =2 is regular Legendre
 diss=1; %=1 dissipation (Rusanov Flux) and =0 no dissipation (Central Flux)
 delta_nl=1; %=0 linear and =1 nonlinear
+
 if (icase == 4 || icase == 7)
     delta_nl=0;
 end
@@ -57,7 +61,7 @@ iplot=round(ntime/nplots);
 
 %Store Constants
 ngl=nop + 1;
-method_text = [space_method];
+method_text = space_method;
 
 %Compute i,e -> I pointer
 I=0;
@@ -72,7 +76,7 @@ end
 %Compute Interpolation and Integration Points
 [xgl,wgl]=legendre_gauss_lobatto(ngl);
 if (integration_points == 1)
-    integration_text=['LGL'];
+    integration_text='LGL';
     if (integration_type == 1)
         noq=nop;
     elseif (integration_type == 2)
@@ -81,7 +85,7 @@ if (integration_points == 1)
     nq=noq + 1;
     [xnq,wnq]=legendre_gauss_lobatto(nq);
 elseif (integration_points == 2)
-    integration_text=['LG'];
+    integration_text='LG';
     noq=nop;
     nq=noq + 1;
     [xnq,wnq]=legendre_gauss(nq);
@@ -187,12 +191,12 @@ for itime=1:ntime
        %Create RHS vector: volume, flux, and communicator
        %----------------------------------------------------------------------------------------------%
        %---------------------Students add these Functions---------------------------------------------%
-       R = create_rhs_volume(qp,qb,intma,coord,npoin,nelem,ngl,nq,wnq,psi,dpsi,gravity,delta_nl);
-       R = create_rhs_flux(R,qp,qb,intma,nelem,ngl,diss,gravity,delta_nl);
-       R = create_rhs_communicator(R,space_method,intma,intma_cg,coord,Mmatrix,npoin,npoin_cg,nelem,ngl,nq,wnq,psi,periodicity,0);
+       %R = create_rhs_volume(qp,qb,intma,coord,npoin,nelem,ngl,nq,wnq,psi,dpsi,gravity,delta_nl);
+       %R = create_rhs_flux(R,qp,qb,intma,nelem,ngl,diss,gravity,delta_nl);
+       %R = create_rhs_communicator(R,space_method,intma,intma_cg,coord,Mmatrix,npoin,npoin_cg,nelem,ngl,nq,wnq,psi,periodicity,0);
        %---------------------Students add these Functions---------------------------------------------%
        %----------------------------------------------------------------------------------------------%
-       
+
        %Solve System
        for I=1:npoin
            dq(I,:) = RKA(s)*dq(I,:) + dt*R(I,:);

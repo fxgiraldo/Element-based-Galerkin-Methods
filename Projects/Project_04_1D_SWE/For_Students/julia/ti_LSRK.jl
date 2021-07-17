@@ -1,10 +1,14 @@
-#---------------------------------------------------------------------#
-#This function computes the LSRK Method by Carpenter-Kennedy 1994.
-#Written by F.X. Giraldo on April 19, 2019
-#           Department of Applied Mathematics
-#           Naval Postgraduate School
-#           Monterey; CA 93943-5216
-#---------------------------------------------------------------------#
+#=
+---------------------------------------------------------------------
+This function advances the solution in time using the LSRK45 Method by Carpenter-Kennedy 1994.
+
+Written by F.X. Giraldo on July 12, 2021
+           Department of Applied Mathematics
+           Naval Postgraduate School
+           Monterey; CA 93943-5216
+---------------------------------------------------------------------
+=#
+
 include("create_rhs.jl")
 include("plot_solution.jl")
 
@@ -40,9 +44,11 @@ function ti_LSRK!(q0,qb,coord,M,Dwe,intma,periodicity,time,ntime,dt,gravity,Δ_N
         #RK Stages
         for s = 1:stages
             #Create RHS Matrix
-            #-------------Students add CREATE_RHS function here-----------------------------#
-            R=create_rhs(qp,qb,M,Dwe,intma,periodicity,gravity,Δ_NL,DFloat)
-            #-------------Students add CREATE_RHS function here-----------------------------#
+            #= -----------Students add your CREATE_RHS routine here-----------=#
+            #= -----------Students add your CREATE_RHS routine here-----------=#
+            #R=create_rhs(qp,qb,M,Dwe,intma,periodicity,gravity,Δ_NL,DFloat)
+            #= -----------Students add your CREATE_RHS routine here-----------=#
+            #= -----------Students add your CREATE_RHS routine here-----------=#
             
             #Solve System
             @inbounds for I=1:Npoin

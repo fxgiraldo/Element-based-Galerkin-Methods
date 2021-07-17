@@ -1,10 +1,17 @@
-#---------------------------------------------------------------------#
-#This code computes the element mass and differentiation matrices
-#Written by F.X. Giraldo on April 24, 2019
-#           Department of Applied Mathematics
-#           Naval Postgraduate School
-#           Monterey; CA 93943-5216
-#---------------------------------------------------------------------#
+#=
+---------------------------------------------------------------------
+This function computes the element mass and Laplacian matrices.
+
+The strategy follows Algorithm 12.7 in F.X. Giraldo's Introduction to Element-based 
+Galerkin Methods using Tensor-Product Bases: Analysis, Algorithms, and Applications.
+
+Written by F.X. Giraldo on 5/2019
+           Department of Applied Mathematics
+           Naval Postgraduate School
+           Monterey; CA 93943-5216
+---------------------------------------------------------------------
+=#
+
 function element_matrices(ψ,dψ,ξ_x,ξ_y,η_x,η_y,jac,ωq,Ne,Np,Nq,DFloat)
 
     #Initialize Matrices

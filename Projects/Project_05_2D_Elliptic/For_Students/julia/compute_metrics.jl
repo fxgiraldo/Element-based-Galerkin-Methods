@@ -1,12 +1,19 @@
+#=
+---------------------------------------------------------------------
+This function computes the Metric Terms for General 2D Quad Grids.
+
+The strategy follows Algorithm 12.3 in F.X. Giraldo's Introduction to Element-based 
+Galerkin Methods using Tensor-Product Bases: Analysis, Algorithms, and Applications.
+
+Written by F.X. Giraldo on 5/2019
+           Department of Applied Mathematics
+           Naval Postgraduate School
+           Monterey; CA 93943-5216
+---------------------------------------------------------------------
+=#
+
 include("map_deriv.jl")
 
-#---------------------------------------------------------------------#
-#This function computes the Metric Terms for General 2D Quad Grids.
-#Written by F.X. Giraldo on 5/2019
-#           Department of Applied Mathematics
-#           Naval Postgraduate School
-#           Monterey; CA 93943-5216
-#---------------------------------------------------------------------#
 function compute_metrics(coord,intma,ψ,dψ,Ne,Np,Nq,DFloat)
 
     #Initialize Global Arrays

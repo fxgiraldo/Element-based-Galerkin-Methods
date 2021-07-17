@@ -1,14 +1,29 @@
+#=
+-----------------------------------------------------------------------------------------------
+This program  constructs points and weights using:
+ 1) Chebyshev, 
+ 2) Legendre, 
+ 3) Lobatto, and
+ 4) Equi-spaced points
+
+ This constitutes Project 1 and the results are described in Secs. 3.4 and 4.4 in the textbook.
+ Written by F.X. Giraldo
+            Department of Applied Mathematics
+            Naval Postgraduate School
+            Monterey, California 93943-5216
+-----------------------------------------------------------------------------------------------
+=#
+
 using Plots
+include("QuadraturePoints.jl")
 
-include("QuadraturePoints_students.jl")
-
-N=1
+#Some Constants
+DFloat = Float64
+#----------------------------------------Only Change this---------------------------------------
+N=4
+#-----------------------------------------------------------------------------------------------
 
 function main()
-
-    #Some Constants
-    DFloat = Float64
-    N=4
 
     #Allocate arrays
     ξarray=zeros(DFloat,N+1,4)
@@ -46,7 +61,6 @@ function main()
     ωarray[:,4]=ω
 
     #Plot Example
-    #    plot_handle=plot(ξarray,ωarray,xlabel="Root",ylabel="Weight",legend=true,lw=3,label=["Chebyshev" "Legendre" "Lobatto" "Equispaced"],title="Roots and Weights",seriestype=:scatter)
     plot_handle=plot(ξarray,ωarray,xlabel="Root",ylabel="Weight",legend=true,lw=3,label=["Chebyshev" "Legendre" "Lobatto" "Equispaced"],title="Roots and Weights")
     display(plot_handle)
     savefig(plot_handle,"QuadraturePoints.png")

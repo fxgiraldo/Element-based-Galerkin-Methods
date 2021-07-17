@@ -1,8 +1,10 @@
 %---------------------------------------------------------------------%
 %This code computes the 1D Advection Equation using the 
 %CG and DG methods with LSRK 4th Order 5-stage time-integrator.
-%This version constructs the Global Matrices which are good for 
+%
+%This version using Algorithm 7.5 to construct the Global Matrices which are good for 
 %comparing CG and DG and looking at the eigen-values of the RHS matrix.
+%
 %Written by F.X. Giraldo on April 22, 2021
 %           Department of Applied Mathematics
 %           Naval Postgraduate School
@@ -14,6 +16,7 @@ close all;
 tic
 
 %Input Data
+%---------------------------------------------------------------------%
 %-------------------------Only Change These Lines------------------%
 nelem=32; %Number of Elements
 nop=4;    %Interpolation Order
@@ -32,6 +35,7 @@ icase=1; %case number: 1 is a Gaussian, 2 is a square wave, 3 is
 xmu=0.05; %filtering strength: 1 is full strength and 0 is no filter
 ifilter=0; %time-step frequency that the filter is applied. 0=never, 1=every time-step
 %-------------------------Only Change These Lines------------------%
+%---------------------------------------------------------------------%
 
 %Store Constants
 ngl=nop + 1;
@@ -42,7 +46,7 @@ npoin_dg=ngl*nelem;
 %Compute Interpolation and Integration Points
 [xgl,wgl]=legendre_gauss_lobatto(ngl);
 if (integration_points == 1)
-    integration_text=['LGL'];
+    integration_text='LGL';
     if (integration_type == 1)
         noq=nop;
     elseif (integration_type == 2)
@@ -51,7 +55,7 @@ if (integration_points == 1)
     nq=noq + 1;
     [xnq,wnq]=legendre_gauss_lobatto(nq);
 elseif (integration_points == 2)
-    integration_text=['LG'];
+    integration_text='LG';
     noq=nop;
     nq=noq + 1;
     [xnq,wnq]=legendre_gauss(nq);
@@ -87,15 +91,14 @@ dt=Courant_max*dx/u;
 ntime=round(time_final/dt);
 dt=time_final/ntime;
 Courant=u*dt/dx;
-q0=qe;
 disp(['Courant = ',num2str(Courant),' dt = ',num2str(dt),' ntime = ',num2str(ntime),' time_final = ',num2str(time_final)])
 
 %------------------------Ask Students to add these functions---------%
-% % Create Local/Element Mass and Differentiation Matrices
-% Me = create_mass_matrix(intma,coord,nelem,ngl,nq,wnq,psi);
-% De = create_diff_matrix(ngl,nq,wnq,psi,dpsi);
-% %Form Global Mass and Differentiation Matrices
-% [Mmatrix,Dmatrix] = Matrix_DSS(Me,De,u,intma,periodicity,ngl,nelem,npoin);
+% Create Local/Element Mass and Differentiation Matrices
+%Me = create_mass_matrix(intma,coord,nelem,ngl,nq,wnq,psi);
+%De = create_diff_matrix(ngl,nq,wnq,psi,dpsi);
+%Form Global Mass and Differentiation Matrices
+%[Mmatrix,Dmatrix] = Matrix_DSS(Me,De,u,intma,periodicity,ngl,nelem,npoin);
 %------------------------Ask Students to add these functions---------%
 
 %Apply BCs

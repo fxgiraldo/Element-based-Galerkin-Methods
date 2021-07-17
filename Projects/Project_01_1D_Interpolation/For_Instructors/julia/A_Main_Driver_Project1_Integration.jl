@@ -1,29 +1,42 @@
-using Plots
+#=
+-------------------------------------------------------------------------------------------------------------
+This file runs the 1D Integration using 
+The interpolation points used are the following:
+ipoints=1: Lobatto
+ipoints=2: Legendre
+ipoints=3: Chebyshev
+ipoints=4: Equi-spaced
+
+This is part of Project 1 described in Sec. 4.4 (Eq. 4.13) in F.X. Giraldo's Introduction to Element-based Galerkin Methods using 
+Tensor-Product Bases: Analysis, Algorithms, and Applications.
+
+Written by F.X. Giraldo on July 6, 2021.
+Department of Applied Mathematics
+Naval Postgraduate School
+Monterey, CA 93943
+-------------------------------------------------------------------------------------------------------------
+=#
+
+using Plots, LinearAlgebra
 
 include("QuadraturePoints.jl")
 
 #Some Constants
 DFloat = Float64
-Quadrature_type = "fxg" #fxg or julia
+Quadrature_type = "fxg"
 Nmin=1
 Nmax=64
-Ns=51
+Ns=101
 c=π/2
 iplot_interp=1
 Npoints=4
 machine_zero=eps(DFloat)
-
-#ipoints=1: Lobatto
-#ipoints=2: Legendre
-#ipoints=3: Chebyshev
-#ipoints=4: Equi-spaced
 
 #Allocate Arrays
 Narray=zeros(Int64,Nmax)
 l1_norm_integration=zeros(DFloat,Nmax,Npoints)
 l2_norm_integration=zeros(DFloat,Nmax,Npoints)
 
-#{{{ Main
 function main()
 
     @show(DFloat,Quadrature_type)
@@ -108,7 +121,6 @@ function main()
     println("Done") #output
 
 end
-#}}} Main
 
 #----------------------------------#
 # Run the main function

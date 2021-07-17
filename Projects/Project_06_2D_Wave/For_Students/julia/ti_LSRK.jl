@@ -44,13 +44,13 @@ function ti_LSRK!(q0,u,coord,M,De_x,De_y,intma,periodicity,face,mapL,mapR,normal
         #RK Stages
         for s = 1:stages
 
-            #--------------------------------------------------------------------------------------------------------
-            #Students Add their Contributions in CREATE_RHS 
-            #--------------------------------------------------------------------------------------------------------
-
             #Create RHS Matrix
+            #-----------------------------Students Add their Functions inside CREATE_RHS--------------------------#
+            #-----------------------------Students Add their Functions inside CREATE_RHS--------------------------#
             R=create_rhs(qp,u,M,De_x,De_y,intma,periodicity,face,mapL,mapR,normals,jac_face,ωq,space_method,DFloat)
- 
+            #-----------------------------Students Add their Functions inside CREATE_RHS--------------------------#
+            #-----------------------------Students Add their Functions inside CREATE_RHS--------------------------#
+
             #Solve System
             @inbounds for I=1:Npoin
                 dq[I] = RKA[s]*dq[I] + dt*R[I]

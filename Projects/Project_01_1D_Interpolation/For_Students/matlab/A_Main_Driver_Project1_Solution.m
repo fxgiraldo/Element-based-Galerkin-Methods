@@ -4,6 +4,9 @@
 %Chebyshev points.
 %
 %This is the solution template to Project 1 in Element-based Galerkin Methods
+%The algorithms here are used in Secs. 3.4 (Algorithms 3.1 and 3.2) and 
+%4.4 (Eq. 4.13) in F.X. Giraldo's Introduction to Element-based Galerkin 
+%Methods using Tensor-Product Bases: Analysis, Algorithms, and Applications.
 %
 %Written by F.X. Giraldo on 7/2021
 %           Department of Applied Mathematics

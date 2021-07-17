@@ -1,10 +1,14 @@
-#---------------------------------------------------------------------#
-#This function computes the LSRK Method by Carpenter-Kennedy 1994.
-#Written by F.X. Giraldo on April 19, 2019
-#           Department of Applied Mathematics
-#           Naval Postgraduate School
-#           Monterey; CA 93943-5216
-#---------------------------------------------------------------------#
+#=
+---------------------------------------------------------------------
+This function advances the solution in time using the LSRK45 Method by Carpenter-Kennedy 1994.
+
+Written by F.X. Giraldo on July 12, 2021
+           Department of Applied Mathematics
+           Naval Postgraduate School
+           Monterey; CA 93943-5216
+---------------------------------------------------------------------
+=#
+
 include("create_rhs.jl")
 include("plot_solution.jl")
 
@@ -56,7 +60,6 @@ function ti_LSRK!(q0,coord,M,Dwe,intma,periodicity,time,ntime,dt,space_method,pl
                 qp[Npoin]=qp[1] #periodicity
             end
         end #s
-#        println(" itime = ",itime," time = ",time," qmax = ",maximum(qp)," qmin = ",minimum(qp))
 
         #Update Q
         q0 .= qp
@@ -64,6 +67,11 @@ function ti_LSRK!(q0,coord,M,Dwe,intma,periodicity,time,ntime,dt,space_method,pl
         #Plot Solution
         if (plot_movie)
             plot_solution(q0,coord,space_method,time)
+        end
+
+         #Print to Screen
+         if ( mod(itime,10) == 0 )
+            println(" itime = ",itime," time = ",time," qmax = ",maximum(q0)," qmin = ",minimum(q0))
         end
 
     end #itime

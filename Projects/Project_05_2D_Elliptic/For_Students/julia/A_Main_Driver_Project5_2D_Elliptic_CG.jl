@@ -1,8 +1,10 @@
 #=
 -------------------------------------------------------------------------------------------------------------
-This file runs the 2D Poisson Equation using the CG method with GGP storage 
+This file contains the Student template for solving Project 5: the 2D Poisson Equation using the CG method with GGP storage 
 introduced in F.X. Giraldo's Introduction to Element-based Galerkin Methods using 
 Tensor-Product Bases: Analysis, Algorithms, and Applications.
+
+The approached follows Algorithm 12.18 in the book.  
 
 Written by F.X. Giraldo on July 10, 2021.
 Department of Applied Mathematics
@@ -10,14 +12,14 @@ Naval Postgraduate School
 Monterey, CA 93943
 
 The interpolation points used are the following:
-#ipoints=1: Lobatto
-#ipoints=2: Legendre
-#ipoints=3: Chebyshev
-#ipoints=4: Equi-spaced
+ipoints=1: Lobatto
+ipoints=2: Legendre
+ipoints=3: Chebyshev
+ipoints=4: Equi-spaced
 
 The integration points used are the following:
-#qpoints=1: Lobatto
-#qpoints=2: Legendre
+qpoints=1: Lobatto
+qpoints=2: Legendre
 -------------------------------------------------------------------------------------------------------------
 =#
 
@@ -40,27 +42,29 @@ machine_zero=eps(DFloat)
 #Main Function
 function main()
 
-    #Fix Interpolation and Integration Order
+    #-----------------------------Only Change these Input parameters---------------------------------#
+    Nex=4
+    Ney=4
     N=4
     Q=N+1
-    Np=N+1
-    Nq=Q+1
-    Npts=Np^2
-    Nqs=Nq^2
     ipoints=1
     qpoints=1
     space_method="CG"
     c=DFloat(1) #Constant in Exact solution
-    Nex=4
-    Ney=4
+    plot_grid=true
+    plot_solution=true
+    warp_grid=false
+    #-----------------------------Only Change these Input parameters---------------------------------#
+
+    Np=N+1
+    Nq=Q+1
+    Npts=Np^2
+    Nqs=Nq^2
     Ne=Nex*Ney
     Nx=Nex*N+1
     Ny=Ney*N+1
     Npoin=Nx*Ny
-    Nboun=2*Nx + 2*(Ny-2);
-    plot_grid=true
-    plot_solution=true
-    warp_grid=false
+    Nboun=2*Nx + 2*(Ny-2)
     @show(N,Q,Ne,Npoin,Nboun,c)
 
     #Select Interpolation Points
@@ -90,17 +94,15 @@ function main()
     #Construct Metric Terms
     (ξ_x,ξ_y,η_x,η_y,jac) = compute_metrics(coord,intma,ψ,dψ,Ne,Np,Nq,DFloat)
 
-    #=
-    ----------------------------------------------------------------------------------------------
-    Students create these two functions below for the Element and Global mass and Laplacian matrices
-    
+    #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
+    #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
     #Construct Element Matrices
-    (Me,Le) = element_matrices(ψ,dψ,ξ_x,ξ_y,η_x,η_y,jac,ωq,Ne,Np,Nq,DFloat)
+    #(Me,Le) = element_matrices(ψ,dψ,ξ_x,ξ_y,η_x,η_y,jac,ωq,Ne,Np,Nq,DFloat)
 
     #Construct Global Matrices
-    (M,L) = global_matrices(Me,Le,intma,Ne,Np,Npoin,DFloat)
-    ----------------------------------------------------------------------------------------------
-    =#
+    #(M,L) = global_matrices(Me,Le,intma,Ne,Np,Npoin,DFloat)
+    #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
+    #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
 
     #Compute Exact Solution
     (qe,fe) = exact_solution(coord,Npoin,c,DFloat)
@@ -147,7 +149,6 @@ function main()
     println("Done") #output
 
 end
-#Main
 
 #----------------------------------#
 # Run the main function

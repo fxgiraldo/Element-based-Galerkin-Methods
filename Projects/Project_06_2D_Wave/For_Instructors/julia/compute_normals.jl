@@ -2,7 +2,10 @@
 ---------------------------------------------------------------------
 This function computes the normal vectors and Jacobian of each FACE.
 
-Written by F.X. Giraldo on July 14, 2021
+The strategy follows Equation 12.33 in F.X. Giraldo's Introduction to Element-based 
+Galerkin Methods using Tensor-Product Bases: Analysis, Algorithms, and Applications.
+
+Written by F.X. Giraldo on 5/2019
            Department of Applied Mathematics
            Naval Postgraduate School
            Monterey; CA 93943-5216

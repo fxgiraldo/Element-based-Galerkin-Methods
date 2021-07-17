@@ -1,7 +1,14 @@
 %---------------------------------------------------------------------%
-%This code computes the 2D Advection Equation using the CG/DG methods
-%with 3rd Order RK and tensor product of 1D basis function with 
-%Inexact Integration and Using an NPOIN based data-structure
+%This file contains the solution for Project 6: 2D Wave Equation using the unified CG/DG method with AGGP storage 
+%introduced in F.X. Giraldo's Introduction to Element-based Galerkin Methods using 
+%Tensor-Product Bases: Analysis, Algorithms, and Applications.
+%
+%The solution is obtained using Algorithm 17.7 whereby the RHS vector is constructed at each time stage. 
+%The volume integral contribution is constructed using Algorithm 16.11 except that the element differentiation matrix is computed and stored.
+%The flux integral contribution is constructed using Algorithm 16.12 (all in weak form).
+%
+%It uses the LSRK45 method as the time-integrator and Rusanov fluxes for DG.
+%
 %Written by F.X. Giraldo on 5/2021
 %           Department of Applied Mathematics
 %           Naval Postgraduate School 
@@ -17,11 +24,7 @@ tic
 nel=4; %Number of Elements
 nop=8;    %Interpolation Order
 space_method='dg'; %=cg for CG or =dg for DG
-flux_method='rusanov'; %rusanov or centered
-
-Courant_max=0.5;
 time_final=0.25; %final time in revolutions
-nplots=4; %Number of Frames in movie
 plot_movie=1;
 plot_solution=1;
 store_movie=0;
@@ -31,9 +34,13 @@ icase=1; %case number: 1 is a Gaussian in CW;
          %4 is a Gaussian along diagonal
          %5 is a Square in CW:
          %6 is a Square along x
+%-------------------------Only Change These Lines------------------%
+
+Courant_max=0.5;
+nplots=4; %Number of Frames in movie
+flux_method='rusanov'; %rusanov or centered
 xmu=0.05; %filtering strength: 1 is full strength and 0 is no filter
 ifilter=0; %time-step frequency that the filter is applied.
-%-------------------------Only Change These Lines------------------%
 
 %Store Constants
 if (icase ==1)
@@ -137,10 +144,12 @@ for itime=1:ntime
     for s=1:stages
        
         %------------Students Add Your Routines Here---------------%
+        %------------Students Add Your Routines Here---------------%
         %Construct RHS vector
-        rhs = construct_RHS_vector(qp,ue,ve,ksi_x,ksi_y,eta_x,eta_y,jac,...
+        rhs = create_rhs(qp,ue,ve,ksi_x,ksi_y,eta_x,eta_y,jac,...
         wnq,dpsi,intma,iperiodic,Mmatrix,face,normals,jac_face,...
         mapL,mapR,npoin,nelem,nface,ngl,space_method,flux_method);
+        %------------Students Add Your Routines Here---------------%
         %------------Students Add Your Routines Here---------------%
 
         %Evolve forward in Time

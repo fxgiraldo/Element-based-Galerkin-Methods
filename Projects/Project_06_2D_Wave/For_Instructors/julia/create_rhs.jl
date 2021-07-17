@@ -15,12 +15,8 @@ include("create_rhs_flux.jl")
 
 function create_rhs(q,u,M,De_x,De_y,intma,periodicity,face,mapL,mapR,normals,jac_face,ωq,space_method,DFloat)
  
-    #--------------------------------------------------------------------------------------------------------
-    #Students Add their Contributions Here: They should construct one function for the Volume Integral 
-    #contribution and a separate one for the Flux Integral contribution. This way they can optimize each one 
-    #separately
-    #--------------------------------------------------------------------------------------------------------
-
+    #---------------------------Students Add their Contributions Here----------------------------------------
+    #---------------------------Students Add their Contributions Here----------------------------------------
     #Construct Volume integral contribution
     rhs = create_rhs_volume(q,u,De_x,De_y,intma,periodicity,DFloat)
 
@@ -28,6 +24,8 @@ function create_rhs(q,u,M,De_x,De_y,intma,periodicity,face,mapL,mapR,normals,jac
     if (space_method == "DG")
         rhs = create_rhs_flux!(rhs,q,u,face,normals,jac_face,ωq,mapL,mapR,intma,periodicity,DFloat)
     end
+    #---------------------------Students Add their Contributions Here----------------------------------------
+    #---------------------------Students Add their Contributions Here----------------------------------------
 
     #Multiply by inverse Mass matrix
     rhs=M\rhs

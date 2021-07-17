@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------#
-#This function computes the Grid and Elements in 1D.
+#This function computes the norm of 2 vectors
 #Written by F.X. Giraldo on April 19, 2019
 #           Department of Applied Mathematics
 #           Naval Postgraduate School
