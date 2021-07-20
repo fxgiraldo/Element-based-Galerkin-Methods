@@ -1,0 +1,204 @@
+\documentclass[10pt]{article}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\input{epsf}
+%\usepackage{a4}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}[theorem]{Acknowledgement}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{case}[theorem]{Case}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{condition}[theorem]{Condition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{criterion}[theorem]{Criterion}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{solution}[theorem]{Solution}
+\newtheorem{summary}[theorem]{Summary}
+\newenvironment{proof}[1][Proof]{\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+%\input{tcilatex}
+
+%FXG Commands
+\newtheorem{guess}{Definition}
+%\newcommand{\diff2}[2] {\frac{\partial^2 #1}{ \partial {#2}^2}}
+%\newcommand{\diff2}[2] {\frac{\partial #1}{\partial #2}}
+\newcommand{\Norder} {N}
+\newcommand{\order}{\mathcal{O}}
+\newcommand{\Npoints} {N_p}
+\newcommand{\diff}[2] {\frac{\partial #1}{\partial #2}}
+\newcommand{\dxx}[2] {\frac{\partial^2 #1}{\partial {#2}^2}}
+\newcommand{\difft}[2] {\frac{d #1}{d #2}}
+\newcommand{\lagrange}[1] {\frac{d #1}{dt}}
+\newcommand{\lebesgue}{\parallel I \parallel}
+\newcommand{\polysp}{\mathcal{P}_N}
+\newcommand{\vc}[1]{\mbox{\boldmath$#1$\unboldmath}}
+\newcommand{\grad}{\vc{\nabla}}
+\newcommand{\inte}{\int_{\mbox{\footnotesize ${\Omega_e}$}}}
+\newcommand{\intce}{\int_{\mbox{\footnotesize ${\widehat{\Omega}_e}$}}}
+\newcommand{\intb}{\int_{\mbox{\footnotesize ${\Gamma_e}$}}}
+\newcommand{\intcb}{\int_{\mbox{\footnotesize ${\widehat{\Gamma}_e}$}}}
+\newcommand{\inth}{\int_{\mbox{\footnotesize ${\Omega}$}}}
+\newcommand{\inthb}{\int_{\mbox{\footnotesize ${\Gamma}$}}}
+\newcommand{\intv}{\int_{\mbox{\footnotesize ${\sigma}$}}}
+\newcommand{\sumv}{\sum_{K=1}^{N_{\mathrm{lev}}}}
+\newcommand{\sumk}{\sum_{L=1}^{K}}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\inti}{\int_{\mbox{\footnotesize\sf I}}}
+\newcommand{\intbd}{\oint_{\mbox{\footnotesize ${\delta}$\sf D}}}
+\newcommand{\intbi}{\oint_{\mbox{\footnotesize ${\delta}$\sf I}}}
+\newcommand{\ldnorm}[1]{\left\| #1 \right\|_{\mbox{\footnotesize \sf D}} }
+\newcommand{\lonorm}[1]{\left\| #1 \right\|_{\Omega}}
+\newcommand{\spc}[1]{\mbox{\sf #1}}
+\newcommand{\ope}[1]{{\cal #1}}
+\newcommand{\mt}[1]{{\rm #1}}
+\newcommand{\dis}{\displaystyle}
+\newcommand{\ve}{\varepsilon}
+\newcommand{\ov}{\overline}
+\newcommand{\wt}{\widetilde}
+\newcommand{\wh}{\widehat}
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\def\bepsilon{\mbox{\boldmath $\epsilon $}}
+\def\bpsi{\mbox{\boldmath $\psi $}}
+\def\bphi{\mbox{\boldmath $\phi $}}
+\def\bmu{\mbox{\boldmath $\mu $}}
+\def\Et{ \tilde{E} }
+\def\Ht{ \tilde{H} }
+\def\sdot{ \dot{\sigma} }
+\newcommand{\innerd}[2]{\left( #1,#2 \right)_{\mbox{\footnotesize \sf D}}}
+\newcommand{\inners}[2]{\left( #1,#2 \right)_{\mbox{\footnotesize
+${\delta}$\sf D}}}
+\newcommand{\innerbd}[2]{\left( #1,#2 \right)_{\mbox{\footnotesize ${\delta}$\sf
+ D}}}
+\newcommand{\innerO}[2]{\left( #1,#2 \right)_{\Omega}}
+\newcommand{\innerOs}[2]{\left( #1,#2 \right)_{\delta \Omega}}
+\newcommand{\innerdk}[2]{\left( #1,#2 \right)_{\mbox{\footnotesize \sf D}^k}}
+\newcommand{\intbdk}{\oint_{\mbox{\footnotesize ${\delta}$\sf D}^k}}
+\newcommand{\ldnormk}[1]{\left\| #1 \right\|_{\mbox{\footnotesize \sf D}^k}}
+\newcommand{\intdk}{\int_{\mbox{\footnotesize \sf D}^k}}
+\newcommand{\epsD}{\varepsilon_{\mbox{\footnotesize \sf D}}}
+\newcommand{\ldnormsob}[2]{\left\| #2 \right\|_{W^{#1}(\mbox{\footnotesize \sf D
+})}}
+\newcommand{\lbdnorm}[1]{\left\| #1 \right\|_{\mbox{\footnotesize \sf $\delta$D}
+}}
+\renewcommand{\thetable}{\Roman{table}}
+\newcommand{\qvector}{\vc{q}}
+
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\Dim}{dim}
+
+\newcommand{\polyquad}{\mathcal{Q}_{N}}
+\newcommand{\polyP}{\mathcal{P}_{N}}
+\newcommand{\polyPnpm}{\mathcal{P}_{(N+M)}}
+\newcommand{\polyPd}{\mathcal{P}_{d}}
+\newcommand{\polyPnm}{\mathcal{P}_{N,M}}
+\newcommand{\polyPn}{\mathcal{P}_{N,0}}
+\newcommand{\transpose}{^{\mathcal{T}}}
+
+\begin{document}
+\title{MA4245 Mathematical Principles of Galerkin Methods \\
+Project 3: 2D Poisson Equation}
+\author{Prof. Frank Giraldo \\
+Department of Applied Mathematics \\
+Naval Postgraduate School \\
+Monterey, CA 93943-5216}
+\date{Due: May, 20 2021 at 1pm}
+\maketitle
+
+\section{Continuous Problem}
+The governing partial differential equation (PDE) is
+\[
+\grad^2 q(x,y) = f(x,y) \qquad \forall (x,y) \in [-1,1]^2
+\]
+where $f=-2 \pi^2 \sin \pi x \sin \pi y$ which yields the analytic solution $q(x,y) = \sin \pi x \sin \pi y$. 
+Clearly, this problem represents a Poisson problem which is a generalized elliptic equation and is, therefore, a boundary value problem. 
+
+\section{Simulations}
+Use the CG  method to solve this equation. 
+You need to write the code to handle arbitrarily-sized elements, polynomial orders, and integration formulas. What I mean by arbitrarily-sized elements is that you should not assume that each element is of the same size. 
+You can, however, assume that each element uses the same polynomial and integration orders.
+
+\subsection{Results You Need to Show}
+You must show results for linear elements $N=1$ with increasing number of elements $N_e$ and then show results for 
+$N=2$, $N=4$ , $N=8$, and $N=16$ with increasing numbers of elements. Plot $L^2$ error norms (defined below) versus number of points ($N_P$) and show all 5 curves on one plot. Remember that you must use 
+a log plot for the error to capture the spectral convergence. To confirm that you have not assumed anything specific about the geometry, use the rotate\_grid (matlab) or warp\_grid (julia) in the driver files to rotate the grid.  You should expect similar results to the unrotated grid but will not be identical.  Show me a plot with the error for one grid configuration (e.g., $N=4, \,Q=5, \, N_e=4$).
+
+For the following simulations, you must turn in two plots: one for exact integration and another for inexact. Write a discussion 
+on your findings.
+
+\paragraph{N=1 Simulations}
+For $N=1$ use $N_e=4, 8, 16, 24$, and 32 elements.
+
+\paragraph{N=2 Simulations}
+For $N=2$ use $N_e=2, 4, 8, 12$ and 16 elements.
+
+\paragraph{N=4 Simulations}
+For $N=4$ use $N_e=1, 2, 4, 6$, and 8 elements.
+
+\paragraph{N=8 Simulations}
+For $N=8$ use $N_e=1, 2, 3$, and 4 elements.
+
+\paragraph{N=16 Simulations}
+For $N=16$ use $N_e=1$ and 2 elements.
+
+Here is what the analytic and numerical solutions should look like:
+\begin{figure}[h]
+\begin{center}
+\begin{minipage}{2.20in}
+\includegraphics[width=2.20in]{../../Figures/2d_elliptic_cg/CG_2d_elliptic_analytic_n04p16.eps}
+a) Analytic Solution
+\end{minipage} \ \hspace{0.125in} \
+\begin{minipage}{2.20in}
+\includegraphics[width=2.20in]{../../Figures/2d_elliptic_cg/CG_2d_elliptic_num_n04p16.eps}
+b) CG Numerical Solution
+\end{minipage} 
+\caption{The 2D Elliptic equation solutions for a) analytic and b) CG numerical solutions using $n_r=4$ elements in each direction ($N_e=16$) and $N=16$ order 
+polynomials.}
+\end{center}
+\end{figure}
+
+Here is an example of the kind of plot you should show me:
+\begin{figure}[h]
+\begin{center}
+\begin{minipage}{2.20in}
+\includegraphics[width=2.20in]{../../Figures/2d_elliptic_cg/CG_2d_elliptic_exact_ConvergenceRates.eps}
+a) Exact Integration 
+\end{minipage} \ \hspace{0.125in} \
+\begin{minipage}{2.20in}
+\includegraphics[width=2.20in]{../../Figures/2d_elliptic_cg/CG_2d_elliptic_inexact_ConvergenceRates.eps}
+b) Inexact Integration
+\end{minipage} 
+\caption{The Convergence Rates for CG using a) exact and b) inexact integration.}
+\end{center}
+\end{figure}
+
+\clearpage
+
+\section{The Write-Up}
+In your write-up, please include the convergence rate plots as above and give a detailed discussion of how you solved the 
+problem. E.g, how did you construct the basis functions, mass matrix, and Laplacian matrix, and how you imposed the 
+homogeneous Dirichlet boundary conditions. Tell me what you learned about using CG for elliptic problems. Also include a complexity analysis 
+of your code (i.e., how many mathematical floating point operations the code required between exact and inexact integration). Assuming 
+that you could write the code only for inexact integration, how much cheaper would that be?
+
+\section{Helpful Relations}
+
+\paragraph{Error Norm}
+The normalized L2 error norm that you should use is:
+\be
+||error||_{L^2} = \sqrt{ \frac{ \sum_{k=1}^{N_P}  \left( q^{numerical}_k - q^{exact}_k \right)^2}{ \sum_{k=1}^{N_P} \left( q^{exact}_k \right) ^2} }
+\ee
+where $k=1,...,N_P$ are $N_p=(N_e N + 1)^2 $ global gridpoints and $q^{numerical}$ and $q^{exact}$ are the numerical and exact solutions.
+
+\end{document}

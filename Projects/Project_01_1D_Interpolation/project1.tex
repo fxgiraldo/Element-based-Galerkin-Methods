@@ -1,0 +1,202 @@
+\documentclass[10pt]{article}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\input{epsf}
+%\usepackage{a4}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}[theorem]{Acknowledgement}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{case}[theorem]{Case}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{condition}[theorem]{Condition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{criterion}[theorem]{Criterion}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{solution}[theorem]{Solution}
+\newtheorem{summary}[theorem]{Summary}
+\newenvironment{proof}[1][Proof]{\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+%\input{tcilatex}
+
+%FXG Commands
+\newtheorem{guess}{Definition}
+%\newcommand{\diff2}[2] {\frac{\partial^2 #1}{ \partial {#2}^2}}
+%\newcommand{\diff2}[2] {\frac{\partial #1}{\partial #2}}
+\newcommand{\Norder} {N}
+\newcommand{\order}{\mathcal{O}}
+\newcommand{\Npoints} {N_p}
+\newcommand{\diff}[2] {\frac{\partial #1}{\partial #2}}
+\newcommand{\dxx}[2] {\frac{\partial^2 #1}{\partial {#2}^2}}
+\newcommand{\difft}[2] {\frac{d #1}{d #2}}
+\newcommand{\lagrange}[1] {\frac{d #1}{dt}}
+\newcommand{\lebesgue}{\parallel I \parallel}
+\newcommand{\polysp}{\mathcal{P}_N}
+\newcommand{\vc}[1]{\mbox{\boldmath$#1$\unboldmath}}
+\newcommand{\grad}{\vc{\nabla}}
+\newcommand{\inte}{\int_{\mbox{\footnotesize ${\Omega_e}$}}}
+\newcommand{\intce}{\int_{\mbox{\footnotesize ${\widehat{\Omega}_e}$}}}
+\newcommand{\intb}{\int_{\mbox{\footnotesize ${\Gamma_e}$}}}
+\newcommand{\intcb}{\int_{\mbox{\footnotesize ${\widehat{\Gamma}_e}$}}}
+\newcommand{\inth}{\int_{\mbox{\footnotesize ${\Omega}$}}}
+\newcommand{\inthb}{\int_{\mbox{\footnotesize ${\Gamma}$}}}
+\newcommand{\intv}{\int_{\mbox{\footnotesize ${\sigma}$}}}
+\newcommand{\sumv}{\sum_{K=1}^{N_{\mathrm{lev}}}}
+\newcommand{\sumk}{\sum_{L=1}^{K}}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\inti}{\int_{\mbox{\footnotesize\sf I}}}
+\newcommand{\intbd}{\oint_{\mbox{\footnotesize ${\delta}$\sf D}}}
+\newcommand{\intbi}{\oint_{\mbox{\footnotesize ${\delta}$\sf I}}}
+\newcommand{\ldnorm}[1]{\left\| #1 \right\|_{\mbox{\footnotesize \sf D}} }
+\newcommand{\lonorm}[1]{\left\| #1 \right\|_{\Omega}}
+\newcommand{\spc}[1]{\mbox{\sf #1}}
+\newcommand{\ope}[1]{{\cal #1}}
+\newcommand{\mt}[1]{{\rm #1}}
+\newcommand{\dis}{\displaystyle}
+\newcommand{\ve}{\varepsilon}
+\newcommand{\ov}{\overline}
+\newcommand{\wt}{\widetilde}
+\newcommand{\wh}{\widehat}
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\def\bepsilon{\mbox{\boldmath $\epsilon $}}
+\def\bpsi{\mbox{\boldmath $\psi $}}
+\def\bphi{\mbox{\boldmath $\phi $}}
+\def\bmu{\mbox{\boldmath $\mu $}}
+\def\Et{ \tilde{E} }
+\def\Ht{ \tilde{H} }
+\def\sdot{ \dot{\sigma} }
+\newcommand{\innerd}[2]{\left( #1,#2 \right)_{\mbox{\footnotesize \sf D}}}
+\newcommand{\inners}[2]{\left( #1,#2 \right)_{\mbox{\footnotesize
+${\delta}$\sf D}}}
+\newcommand{\innerbd}[2]{\left( #1,#2 \right)_{\mbox{\footnotesize ${\delta}$\sf
+ D}}}
+\newcommand{\innerO}[2]{\left( #1,#2 \right)_{\Omega}}
+\newcommand{\innerOs}[2]{\left( #1,#2 \right)_{\delta \Omega}}
+\newcommand{\innerdk}[2]{\left( #1,#2 \right)_{\mbox{\footnotesize \sf D}^k}}
+\newcommand{\intbdk}{\oint_{\mbox{\footnotesize ${\delta}$\sf D}^k}}
+\newcommand{\ldnormk}[1]{\left\| #1 \right\|_{\mbox{\footnotesize \sf D}^k}}
+\newcommand{\intdk}{\int_{\mbox{\footnotesize \sf D}^k}}
+\newcommand{\epsD}{\varepsilon_{\mbox{\footnotesize \sf D}}}
+\newcommand{\ldnormsob}[2]{\left\| #2 \right\|_{W^{#1}(\mbox{\footnotesize \sf D
+})}}
+\newcommand{\lbdnorm}[1]{\left\| #1 \right\|_{\mbox{\footnotesize \sf $\delta$D}
+}}
+\renewcommand{\thetable}{\Roman{table}}
+\newcommand{\qvector}{\vc{q}}
+
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\Dim}{dim}
+
+\newcommand{\polyquad}{\mathcal{Q}_{N}}
+\newcommand{\polyP}{\mathcal{P}_{N}}
+\newcommand{\polyPnpm}{\mathcal{P}_{(N+M)}}
+\newcommand{\polyPd}{\mathcal{P}_{d}}
+\newcommand{\polyPnm}{\mathcal{P}_{N,M}}
+\newcommand{\polyPn}{\mathcal{P}_{N,0}}
+\newcommand{\transpose}{^{\mathcal{T}}}
+
+\begin{document}
+\title{MA4245 Mathematical Principles of Galerkin Methods \\
+Project 1: Interpolation and Integration}
+\author{Prof. Frank Giraldo \\
+Department of Applied Mathematics \\
+Naval Postgraduate School \\
+Monterey, CA 93943-5216}
+\date{Due: April 23, 2021 at 1pm}
+
+\maketitle
+
+This project has three parts:
+\begin{enumerate}
+\item Interpolate a known function using specific sampled points, 
+\item Compute the derivative of the function using the basis functions, and
+\item Integrate the function within the domain $x\in [-1,+1]$.
+\end{enumerate}
+
+\section{Interpolation}
+Let us use the function:
+
+\be
+f(x)=\cos \left( \frac{\pi}{2} x \right)\; \; x \in [-1,+1].
+\ee
+
+Using nodal basis functions $L_i(x)$ construct an interpolant of $f(x)$ as follows:
+\be
+f_N(x_k)=\sum_{i=0}^N L_i(x_k) f_i
+\ee
+where $x_k$ are $k=1,...,50$ evenly spaced points and the Nth order interpolation points are:
+\begin{enumerate}
+\item equally-spaced points, 
+\item the roots of the Lobatto polynomials (these are called the Legendre-Gauss-Lobatto points),
+\item the roots of the Legendre polynomials (these are called the Legendre-Gauss points).
+\end{enumerate}
+M-files to compute LGL and LG roots are provided for your use (Legendre\_Gauss\_Lobatto.m and Legendre\_Gauss.m, respectively, but both m-files require Legendre\_Poly.m which is 
+also provided).
+
+Once you construct the Lagrange polynomials $L_i(x)$ check to see how accurate your interpolation becomes as you increase $N$. Run values of 
+$N=1,...,64$.
+To determine how well your interpolant is, use the normalized error norms defined at the end of this document.
+Plot the error as a function of order $N$.  
+
+\section{Derivative}
+For the same analytic function
+
+\be
+f(x)=\cos \left( \frac{\pi}{2} x \right)\; \; x \in [-1,+1].
+\ee
+using the Lagrange polynomials evaluate the derivative of $f(x)$ and compare with the exact solution using error norms. Use all three types of points as above.
+
+\section{Integration}
+Using the interpolation functions from the previous part, sample the basis functions at LGL and LG integration points in order to perform the Gauss quadrature:
+\be
+\int_{-1}^{+1} f_N(x) dx = \int_{-1}^{+1} \sum_{i=0}^N L_i(x) f_i dx = \sum_{k=0}^{N} w_k \left( \sum_{i=0}^N L_i(x_k) f_i \right)
+\ee
+where $x_k$ are the Nth order Gauss quadrature points and compare against the exact integral of $f(x)$ for $x \in [-1,+1]$. 
+
+\section{Write-Up}
+Turn in a few pages (enough to cover all the points) discussing what you see for each of the three interpolation points. Which points allow you to construct a good 
+solution and which do not. Corroborate your arguments with error norm plots and show me a figure or two showing what happens when one of the interpolation point sets 
+breaks-down. Please append your matlab code (m-files) at the end of your report. 
+
+Be sure to build a routine (I call it Lagrange\_basis or something like that) that gives you a 
+matrix $L_{ij}$ of Lagrange polynomials for the interpolation points (i) evaluated at the integration or sampling points (j). This will make it easier to use for Project 2 where you will need all this 
+machinery again.
+
+
+\section{Helpful Relations}
+The normalized error norms that you should use are:
+\be
+||error||_{L^1} = \frac{ \sum_{k=1}^{N_s}  \mid f_N(x_k) - f(x_k) \mid }{ \sum_{k=1}^{N_s} \mid f(x_k) \mid },
+\ee
+\be
+||error||_{L^2} = \sqrt{ \frac{ \sum_{k=1}^{N_s}  \left( f_N(x_k) - f(x_k) \right)^2}{ \sum_{k=1}^{N_s} f(x_k) ^2} },
+\ee
+and
+\be
+||error||_{L^{\infty}} = \frac{ \max_{1\leq k \leq N_s} \mid f_N(x_k) - f(x_k) \mid }{ \max_{1\leq k \leq N_s} \mid f(x_k) \mid }
+\ee
+where $k=1,...,N_s$ are the number of points for which you are computing the error norms (it differs whether you are doing the interpolation and derivatives or the integration).
+Note that you will not be able to compute an $L^{\infty}$ error for the integration since the integration only gives you one value.
+
+Recall that the equation for the Lagrange polynomials is
+\be
+L_i(x)=\prod_{\substack{ j=0  \\ j\neq i }}^N \frac{ (x - x_j) }{ (x_i - x_j) }.
+\ee
+
+Differentiating this expression yields
+\be
+\frac{dL_i}{dx} (x)=\sum_{\substack{ k=0  \\ k \neq i}}^N \left( \frac{1}{x_i - x_k} \right) \prod_{\substack{ j=0  \\ j\neq i \\ j \neq k }}^N \frac{ (x - x_j) }{ (x_i - x_j) }.
+\ee
+
+\end{document}

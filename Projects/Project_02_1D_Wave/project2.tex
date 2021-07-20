@@ -1,0 +1,193 @@
+\documentclass[10pt]{article}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\input{epsf}
+%\usepackage{a4}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}[theorem]{Acknowledgement}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{case}[theorem]{Case}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{condition}[theorem]{Condition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{criterion}[theorem]{Criterion}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{solution}[theorem]{Solution}
+\newtheorem{summary}[theorem]{Summary}
+\newenvironment{proof}[1][Proof]{\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+%\input{tcilatex}
+
+%FXG Commands
+\newtheorem{guess}{Definition}
+%\newcommand{\diff2}[2] {\frac{\partial^2 #1}{ \partial {#2}^2}}
+%\newcommand{\diff2}[2] {\frac{\partial #1}{\partial #2}}
+\newcommand{\Norder} {N}
+\newcommand{\order}{\mathcal{O}}
+\newcommand{\Npoints} {N_p}
+\newcommand{\diff}[2] {\frac{\partial #1}{\partial #2}}
+\newcommand{\dxx}[2] {\frac{\partial^2 #1}{\partial {#2}^2}}
+\newcommand{\difft}[2] {\frac{d #1}{d #2}}
+\newcommand{\lagrange}[1] {\frac{d #1}{dt}}
+\newcommand{\lebesgue}{\parallel I \parallel}
+\newcommand{\polysp}{\mathcal{P}_N}
+\newcommand{\vc}[1]{\mbox{\boldmath$#1$\unboldmath}}
+\newcommand{\grad}{\vc{\nabla}}
+\newcommand{\inte}{\int_{\mbox{\footnotesize ${\Omega_e}$}}}
+\newcommand{\intce}{\int_{\mbox{\footnotesize ${\widehat{\Omega}_e}$}}}
+\newcommand{\intb}{\int_{\mbox{\footnotesize ${\Gamma_e}$}}}
+\newcommand{\intcb}{\int_{\mbox{\footnotesize ${\widehat{\Gamma}_e}$}}}
+\newcommand{\inth}{\int_{\mbox{\footnotesize ${\Omega}$}}}
+\newcommand{\inthb}{\int_{\mbox{\footnotesize ${\Gamma}$}}}
+\newcommand{\intv}{\int_{\mbox{\footnotesize ${\sigma}$}}}
+\newcommand{\sumv}{\sum_{K=1}^{N_{\mathrm{lev}}}}
+\newcommand{\sumk}{\sum_{L=1}^{K}}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\inti}{\int_{\mbox{\footnotesize\sf I}}}
+\newcommand{\intbd}{\oint_{\mbox{\footnotesize ${\delta}$\sf D}}}
+\newcommand{\intbi}{\oint_{\mbox{\footnotesize ${\delta}$\sf I}}}
+\newcommand{\ldnorm}[1]{\left\| #1 \right\|_{\mbox{\footnotesize \sf D}} }
+\newcommand{\lonorm}[1]{\left\| #1 \right\|_{\Omega}}
+\newcommand{\spc}[1]{\mbox{\sf #1}}
+\newcommand{\ope}[1]{{\cal #1}}
+\newcommand{\mt}[1]{{\rm #1}}
+\newcommand{\dis}{\displaystyle}
+\newcommand{\ve}{\varepsilon}
+\newcommand{\ov}{\overline}
+\newcommand{\wt}{\widetilde}
+\newcommand{\wh}{\widehat}
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\def\bepsilon{\mbox{\boldmath $\epsilon $}}
+\def\bpsi{\mbox{\boldmath $\psi $}}
+\def\bphi{\mbox{\boldmath $\phi $}}
+\def\bmu{\mbox{\boldmath $\mu $}}
+\def\Et{ \tilde{E} }
+\def\Ht{ \tilde{H} }
+\def\sdot{ \dot{\sigma} }
+\newcommand{\innerd}[2]{\left( #1,#2 \right)_{\mbox{\footnotesize \sf D}}}
+\newcommand{\inners}[2]{\left( #1,#2 \right)_{\mbox{\footnotesize
+${\delta}$\sf D}}}
+\newcommand{\innerbd}[2]{\left( #1,#2 \right)_{\mbox{\footnotesize ${\delta}$\sf
+ D}}}
+\newcommand{\innerO}[2]{\left( #1,#2 \right)_{\Omega}}
+\newcommand{\innerOs}[2]{\left( #1,#2 \right)_{\delta \Omega}}
+\newcommand{\innerdk}[2]{\left( #1,#2 \right)_{\mbox{\footnotesize \sf D}^k}}
+\newcommand{\intbdk}{\oint_{\mbox{\footnotesize ${\delta}$\sf D}^k}}
+\newcommand{\ldnormk}[1]{\left\| #1 \right\|_{\mbox{\footnotesize \sf D}^k}}
+\newcommand{\intdk}{\int_{\mbox{\footnotesize \sf D}^k}}
+\newcommand{\epsD}{\varepsilon_{\mbox{\footnotesize \sf D}}}
+\newcommand{\ldnormsob}[2]{\left\| #2 \right\|_{W^{#1}(\mbox{\footnotesize \sf D
+})}}
+\newcommand{\lbdnorm}[1]{\left\| #1 \right\|_{\mbox{\footnotesize \sf $\delta$D}
+}}
+\renewcommand{\thetable}{\Roman{table}}
+\newcommand{\qvector}{\vc{q}}
+
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\Dim}{dim}
+
+\newcommand{\polyquad}{\mathcal{Q}_{N}}
+\newcommand{\polyP}{\mathcal{P}_{N}}
+\newcommand{\polyPnpm}{\mathcal{P}_{(N+M)}}
+\newcommand{\polyPd}{\mathcal{P}_{d}}
+\newcommand{\polyPnm}{\mathcal{P}_{N,M}}
+\newcommand{\polyPn}{\mathcal{P}_{N,0}}
+\newcommand{\transpose}{^{\mathcal{T}}}
+
+\begin{document}
+\title{MA4245 Mathematical Principles of Galerkin Methods \\
+Project 2: 1D Wave Equation}
+\author{Prof. Frank Giraldo \\
+Department of Applied Mathematics \\
+Naval Postgraduate School \\
+Monterey, CA 93943-5216}
+\date{Due: May 6, 2021 at 1pm}
+\maketitle
+
+\section{Continuous Problem}
+The governing partial differential equation (PDE) is
+\[
+\diff{q}{t} + \diff{f}{x} = 0 \qquad \forall x \in [-1,+1]
+\]
+where $f=qu$ and $u=2$ is a constant. Thus, an initial wave $q(x,0)$ will take exactly $t=1$ time in order to 
+complete one full revolution (loop) of the domain. 
+
+\subsection{Initial Condition}
+Since the governing PDE is a hyperbolic system, then this problem represents an initial value problem (IVP or Cauchy Problem).  We, therefore, need 
+an initial condition. 
+Let it be the following Gaussian
+\[
+q(x,0)=e^{ - 64 x^2 }
+\]
+where $x \in [-1,1]$.
+
+\subsection{Boundary Condition}
+This problem also requires a boundary condition: let us impose periodic boundary conditions, meaning that the domain at $x=+1$ should wrap around 
+and back to $x=-1$. Your solution variable $q$ should have the same solution at $x=-1$ and $x=+1$.
+
+\section{Simulations}
+
+Here are the steps you should follow to complete this project.
+
+\begin{enumerate}
+\item Write functions in order to construct the element-wise Mass and (Weak form) Differentiation matrices.  For CG, you can also build the strong form Differentiation matrix which will give you similar answers. Confirm that they are correct.
+\item Write a DSS function in order to construct the global matrices for Mass and Differentiation matrix.  Don't worry about periodicity yet.  Once you have that done, I can show you how to include this for CG. For DG, you don't need this since this will be handled by the Flux matrix (which is already provided for you in the code For Students).
+\item. Using the code For Students, get the problem to run and confirm that it is indeed working.
+\item Once this has been achieved, go ahead and work on improving the efficiency and generalization of your code in order to not have to build and store global matrices for D and F.  It is OK to keep the global matrix for M though (no way around this). This step here will greatly help you be able to make your Project 3 easier to complete.
+\item Perform convergence rates studies as discussed in the next section.
+\end{enumerate}
+Write a code (or two) that uses both CG and DG.  I strongly recommend
+that you code the CG version first. It is better to use the same code
+to do both CG and DG with a switch (if statement) to handle the
+communicator in both CG and DG.
+You need to show results for exact (let Q=N+1 be exact) AND inexact integration (Q=N) so write your codes in a general way. 
+
+\subsection{Results You Need to Show}
+You must show results for linear elements $N=1$ with increasing number of elements $N_e$ and then show results for 
+$N=4$, $N=8$, and $N=16$ with increasing numbers of elements.
+
+\paragraph{N=1 Simulations}
+For linear elements, use $N_e=16, 32$ and 64 elements.
+Plot the normalized $L^2$ error norm versus $N_P$ (given below) for these 3 simulations on one plot.
+
+\paragraph{N=4 Simulations}
+For $N=4$ use $N_e=4, 8$ and 16 elements and plot the norms as above.
+
+\paragraph{N=8 Simulations}
+For $N=8$ use $N_e=2,4$ and 8 elements and plot the norms as above.
+
+\paragraph{N=16 Simulations}
+For $N=16$ use $N_e=1,2$ and 4 elements and plot the norms as above.
+
+\section{Helpful Relations}
+
+\paragraph{Error Norm}
+The normalized L2 error norm that you should use is:
+\be
+||error||_{L^2} = \sqrt{ \frac{ \sum_{k=1}^{N_P}  \left( q^{numerical} - q^{exact}(x_k) \right)^2}{ \sum_{k=1}^{N_P} q^{exact}(x_k) ^2} }
+\ee
+where $k=1,...,N_P$ are $N_p=N_e N + 1 $ global gridpoints and $q^{numerical}$ and $q^{exact}$ are the numerical and exact solutions after one 
+full revolution of the wave. Note that the wave should just stop where it began without changing shape (in a perfect world). Your solution will do that for lots of gridpoints (high resolution). At low resolution, you will see much error.
+
+\paragraph{Time-Integrator}
+The code For Students is equipped with two classes of Runge-Kutta time-integrators. The number of stages is controlled by the variable STAGES.  More stages means that the time-step you can use can be bigger.  Just pick one time-integrator and use it for all of your simulations.
+
+The code For Students is designed to maintain a constant Courant number
+\[
+C=u \frac{\Delta t}{\Delta x}
+\]
+regardless of your $\Delta x$. If you are seeing your convergence rates plateau (not getting smaller for more points) then you will need to decrease the  \emph{Courant max} variable in the code.
+
+\end{document}

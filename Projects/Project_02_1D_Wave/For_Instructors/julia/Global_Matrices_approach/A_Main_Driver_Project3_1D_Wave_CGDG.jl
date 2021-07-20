@@ -14,14 +14,14 @@ Monterey, CA 93943
 For time-integration, we use SSP methods of order 2 and 3; and LSRK45 (4th order, 5-stage). 
 
 The interpolation points used are the following:
-#ipoints=1: Lobatto
-#ipoints=2: Legendre
-#ipoints=3: Chebyshev
-#ipoints=4: Equi-spaced
+ipoints=1: Lobatto
+ipoints=2: Legendre
+ipoints=3: Chebyshev
+ipoints=4: Equi-spaced
 
 The integration points used are the following:
-#qpoints=1: Lobatto
-#qpoints=2: Legendre
+qpoints=1: Lobatto
+qpoints=2: Legendre
 -------------------------------------------------------------------------------------------------------------
 =#
 

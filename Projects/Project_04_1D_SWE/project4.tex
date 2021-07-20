@@ -1,0 +1,251 @@
+\documentclass[10pt]{article}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\input{epsf}
+%\usepackage{a4}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}[theorem]{Acknowledgement}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{case}[theorem]{Case}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{condition}[theorem]{Condition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{criterion}[theorem]{Criterion}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{solution}[theorem]{Solution}
+\newtheorem{summary}[theorem]{Summary}
+\newenvironment{proof}[1][Proof]{\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+%\input{tcilatex}
+
+%FXG Commands
+\newtheorem{guess}{Definition}
+%\newcommand{\diff2}[2] {\frac{\partial^2 #1}{ \partial {#2}^2}}
+%\newcommand{\diff2}[2] {\frac{\partial #1}{\partial #2}}
+\newcommand{\Norder} {N}
+\newcommand{\order}{\mathcal{O}}
+\newcommand{\Npoints} {N_p}
+\newcommand{\diff}[2] {\frac{\partial #1}{\partial #2}}
+\newcommand{\dxx}[2] {\frac{\partial^2 #1}{\partial {#2}^2}}
+\newcommand{\difft}[2] {\frac{d #1}{d #2}}
+\newcommand{\lagrange}[1] {\frac{d #1}{dt}}
+\newcommand{\lebesgue}{\parallel I \parallel}
+\newcommand{\polysp}{\mathcal{P}_N}
+\newcommand{\vc}[1]{\mbox{\boldmath$#1$\unboldmath}}
+\newcommand{\grad}{\vc{\nabla}}
+\newcommand{\inte}{\int_{\mbox{\footnotesize ${\Omega_e}$}}}
+\newcommand{\intce}{\int_{\mbox{\footnotesize ${\widehat{\Omega}_e}$}}}
+\newcommand{\intb}{\int_{\mbox{\footnotesize ${\Gamma_e}$}}}
+\newcommand{\intcb}{\int_{\mbox{\footnotesize ${\widehat{\Gamma}_e}$}}}
+\newcommand{\inth}{\int_{\mbox{\footnotesize ${\Omega}$}}}
+\newcommand{\inthb}{\int_{\mbox{\footnotesize ${\Gamma}$}}}
+\newcommand{\intv}{\int_{\mbox{\footnotesize ${\sigma}$}}}
+\newcommand{\sumv}{\sum_{K=1}^{N_{\mathrm{lev}}}}
+\newcommand{\sumk}{\sum_{L=1}^{K}}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\inti}{\int_{\mbox{\footnotesize\sf I}}}
+\newcommand{\intbd}{\oint_{\mbox{\footnotesize ${\delta}$\sf D}}}
+\newcommand{\intbi}{\oint_{\mbox{\footnotesize ${\delta}$\sf I}}}
+\newcommand{\ldnorm}[1]{\left\| #1 \right\|_{\mbox{\footnotesize \sf D}} }
+\newcommand{\lonorm}[1]{\left\| #1 \right\|_{\Omega}}
+\newcommand{\spc}[1]{\mbox{\sf #1}}
+\newcommand{\ope}[1]{{\cal #1}}
+\newcommand{\mt}[1]{{\rm #1}}
+\newcommand{\dis}{\displaystyle}
+\newcommand{\ve}{\varepsilon}
+\newcommand{\ov}{\overline}
+\newcommand{\wt}{\widetilde}
+\newcommand{\wh}{\widehat}
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\def\bepsilon{\mbox{\boldmath $\epsilon $}}
+\def\bpsi{\mbox{\boldmath $\psi $}}
+\def\bphi{\mbox{\boldmath $\phi $}}
+\def\bmu{\mbox{\boldmath $\mu $}}
+\def\Et{ \tilde{E} }
+\def\Ht{ \tilde{H} }
+\def\sdot{ \dot{\sigma} }
+\newcommand{\innerd}[2]{\left( #1,#2 \right)_{\mbox{\footnotesize \sf D}}}
+\newcommand{\inners}[2]{\left( #1,#2 \right)_{\mbox{\footnotesize
+${\delta}$\sf D}}}
+\newcommand{\innerbd}[2]{\left( #1,#2 \right)_{\mbox{\footnotesize ${\delta}$\sf
+ D}}}
+\newcommand{\innerO}[2]{\left( #1,#2 \right)_{\Omega}}
+\newcommand{\innerOs}[2]{\left( #1,#2 \right)_{\delta \Omega}}
+\newcommand{\innerdk}[2]{\left( #1,#2 \right)_{\mbox{\footnotesize \sf D}^k}}
+\newcommand{\intbdk}{\oint_{\mbox{\footnotesize ${\delta}$\sf D}^k}}
+\newcommand{\ldnormk}[1]{\left\| #1 \right\|_{\mbox{\footnotesize \sf D}^k}}
+\newcommand{\intdk}{\int_{\mbox{\footnotesize \sf D}^k}}
+\newcommand{\epsD}{\varepsilon_{\mbox{\footnotesize \sf D}}}
+\newcommand{\ldnormsob}[2]{\left\| #2 \right\|_{W^{#1}(\mbox{\footnotesize \sf D
+})}}
+\newcommand{\lbdnorm}[1]{\left\| #1 \right\|_{\mbox{\footnotesize \sf $\delta$D}
+}}
+\renewcommand{\thetable}{\Roman{table}}
+\newcommand{\qvector}{\vc{q}}
+
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\Dim}{dim}
+
+\newcommand{\polyquad}{\mathcal{Q}_{N}}
+\newcommand{\polyP}{\mathcal{P}_{N}}
+\newcommand{\polyPnpm}{\mathcal{P}_{(N+M)}}
+\newcommand{\polyPd}{\mathcal{P}_{d}}
+\newcommand{\polyPnm}{\mathcal{P}_{N,M}}
+\newcommand{\polyPn}{\mathcal{P}_{N,0}}
+\newcommand{\transpose}{^{\mathcal{T}}}
+
+\begin{document}
+\title{MA4245 Mathematical Principles of Galerkin Methods \\
+Project 3: 1D Linearized Shallow Water Equations}
+\author{Prof. Frank Giraldo \\
+Department of Applied Mathematics \\
+Naval Postgraduate School \\
+Monterey, CA 93943-5216}
+
+\maketitle
+
+\emph{Due at 12pm Friday May 24, 2019}
+
+\section{Continuous Problem}
+The governing partial differential equation (PDE) is
+\begin{equation}
+\diff{}{t}
+\left(
+\begin{array}{c}
+h_S \\
+U
+\end{array}
+\right)
++
+\diff{}{x}
+\left(
+\begin{array}{c}
+U \\
+g h_B h_S 
+\end{array}
+\right)
+=
+\left(
+\begin{array}{c}
+0 \\
+h_S \difft{h_B}{x}
+\end{array}
+\right)
+\label{eq:1d_cgdg/1d_linearized_swe}
+\end{equation}
+
+\subsection{Initial Condition}
+Since the governing PDE is a hyperbolic system, then this problem represents an initial value problem (IVP or Cauchy Problem).  We, therefore, need 
+an initial condition. 
+Let it be the following sinusoidal
+\begin{equation}
+h_S(x,0)=\frac{1}{2} \cos 2 \pi x \; 
+\;  \;
+U(x,0)=0
+\label{eq:1d_cgdg/initial_condition}
+\end{equation}
+where $(x,t) \in [0,1]^2$. The exact solution to this system of equations is 
+\begin{equation}
+h_S(x,t)=\frac{1}{2} \cos 2 \pi x \cos 2 \pi t \; \; \;
+U(x,t)=\frac{1}{2} \sin 2 \pi x \sin 2 \pi t
+\label{eq:1d_cgdg/analytic_solution}
+\end{equation}
+when we let $g=h_B=1$.
+
+\subsection{Boundary Condition}
+This problem also requires a boundary condition: let us impose no-flux
+boundary conditions at the endpoints. That is at $x=0$ and $x=1$ we
+let $U=0$.
+
+\section{Simulations}
+
+Write one code (will accept two but prefer one) that uses both CG and
+DG.  
+It is better to use the same code
+to do both CG and DG with a switch (if statement) to handle the
+communicator in both CG and DG.
+You need to show results for exact (let Q=N+1 be exact) AND inexact integration (Q=N) so write your codes in a general way. 
+
+\subsection{Results You Need to Show}
+You must show results for linear elements $N=1$ with increasing number of elements $N_e$ and then show results for 
+$N=4$, $N=8$, and $N=16$ with increasing numbers of elements. Plot all
+the convergence rates on one plot (That is, N=1, 2, 4, 8, and 16 each
+produce one curve).
+I used a time-step of $\Delta t=1 \times 10^{-4}$ with an RK3 method
+to get the rates in my manuscript.
+
+\paragraph{N=1 Simulations}
+For linear elements, use $N_e=32, 64, 96, 128$ elements.
+
+\paragraph{N=2 Simulations}
+For $N=2$, use $N_e=16, 32, 48, 64$ elements.
+
+\paragraph{N=4 Simulations}
+For $N=4$ use $N_e=8,16,24,32$ elements.
+
+\paragraph{N=8 Simulations}
+For $N=8$ use $N_e=4,8,12,16,$ elements.
+
+\paragraph{N=16 Simulations}
+For $N=16$ use $N_e=2,4,6,8$ elements.
+
+\section{Helpful Relations}
+
+\paragraph{Error Norm}
+The following expressions may be helpful
+\be
+L^2 = \sqrt{ \sum_{e=1}^{N_e} \sum_{i=0}^{N}  \left(
+      q_{N,i}^{(e)} - q_{E,i}^{(e)} \right)^2}
+\ee
+where $e=1,...,N_e$ are the number of elements and $i=0,...,N$ are the
+interpolation points and $q_{N}$ and $q_{E}$ denote the numerical and exact solutions.
+
+In addition, let us define the mass conservation measure as follows
+\[
+\Delta M = \mid \mathrm{Mass(t)} - \mathrm{Mass(0)} \mid.
+\]
+where $\mathrm{Mass(t)}$ is the total mass at time $t$ and
+$\mathrm{M(0)}$ the mass at the initial time. The mass is defined as
+follows:
+\[
+\mathrm{Mass(t)}=\sum_{e=1}^{N_e} \sum_{i=0}^{N}  \sum_{k=0}^{Q} w_k \left( h_{S,i}^{(e)}
+(t) +
+h_{B,i}^{(e)} \right) \psi_j(x_k).
+\]
+
+\paragraph{Time-Integrator}
+To solve the time-dependent portion of the problem use the 2nd order RK method: for $\diff{q}{t}=R(q)$ let
+\[
+q^{n+1/2}=q^n + \frac{\Delta t}{2} R(q^n) 
+\]
+\[
+q^{n+1}=q^n + \Delta t R(q^{n+1/2}) 
+\]
+or a better time-integrator of your choice (DO NOT USE FORWARD EULER);
+feel free to use ODE45 in Matlab if you know how to use it.
+
+Make sure that your time-step $\Delta t$ is small enough to ensure stability. Recall that the Courant number
+\[
+C=u \frac{\Delta t}{\Delta x}
+\]
+must be within a certain value for stability. For the 2nd order RK method I give you, it should be below $\frac{1}{4}$.
+For $\Delta x$ take the difference of the first point in your domain
+$x_1=0$ and the next point $x_2$ since this will be the tightest
+clustering of points in your model.  
+
+\section{Extra Credit}
+Vary the initial conditions to make the simulation more interesting. Show me plots of the results (no convergence rates since you don't know the exact solution!).  For example, make $h_B \ne 0$. Perhaps make it parabolic or triangular. Make $h_S$ initially a Gaussian bump (with $U=0$) and see how this bump is affected by the submarine ridge defined by $h_B \ne 0$. Again, show me plots of the solution and give a brief discussion of the pros of CG versus DG.
+
+\end{document}

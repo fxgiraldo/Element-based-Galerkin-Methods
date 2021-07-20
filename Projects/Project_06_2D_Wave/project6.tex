@@ -1,0 +1,238 @@
+\documentclass[10pt]{article}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\input{epsf}
+%\usepackage{a4}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}[theorem]{Acknowledgement}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{case}[theorem]{Case}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{condition}[theorem]{Condition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{criterion}[theorem]{Criterion}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{solution}[theorem]{Solution}
+\newtheorem{summary}[theorem]{Summary}
+\newenvironment{proof}[1][Proof]{\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+%\input{tcilatex}
+
+%FXG Commands
+\newtheorem{guess}{Definition}
+%\newcommand{\diff2}[2] {\frac{\partial^2 #1}{ \partial {#2}^2}}
+%\newcommand{\diff2}[2] {\frac{\partial #1}{\partial #2}}
+\newcommand{\Norder} {N}
+\newcommand{\order}{\mathcal{O}}
+\newcommand{\Npoints} {N_p}
+\newcommand{\diff}[2] {\frac{\partial #1}{\partial #2}}
+\newcommand{\dxx}[2] {\frac{\partial^2 #1}{\partial {#2}^2}}
+\newcommand{\difft}[2] {\frac{d #1}{d #2}}
+\newcommand{\lagrange}[1] {\frac{d #1}{dt}}
+\newcommand{\lebesgue}{\parallel I \parallel}
+\newcommand{\polysp}{\mathcal{P}_N}
+\newcommand{\vc}[1]{\mbox{\boldmath$#1$\unboldmath}}
+\newcommand{\grad}{\vc{\nabla}}
+\newcommand{\inte}{\int_{\mbox{\footnotesize ${\Omega_e}$}}}
+\newcommand{\intce}{\int_{\mbox{\footnotesize ${\widehat{\Omega}_e}$}}}
+\newcommand{\intb}{\int_{\mbox{\footnotesize ${\Gamma_e}$}}}
+\newcommand{\intcb}{\int_{\mbox{\footnotesize ${\widehat{\Gamma}_e}$}}}
+\newcommand{\inth}{\int_{\mbox{\footnotesize ${\Omega}$}}}
+\newcommand{\inthb}{\int_{\mbox{\footnotesize ${\Gamma}$}}}
+\newcommand{\intv}{\int_{\mbox{\footnotesize ${\sigma}$}}}
+\newcommand{\sumv}{\sum_{K=1}^{N_{\mathrm{lev}}}}
+\newcommand{\sumk}{\sum_{L=1}^{K}}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\inti}{\int_{\mbox{\footnotesize\sf I}}}
+\newcommand{\intbd}{\oint_{\mbox{\footnotesize ${\delta}$\sf D}}}
+\newcommand{\intbi}{\oint_{\mbox{\footnotesize ${\delta}$\sf I}}}
+\newcommand{\ldnorm}[1]{\left\| #1 \right\|_{\mbox{\footnotesize \sf D}} }
+\newcommand{\lonorm}[1]{\left\| #1 \right\|_{\Omega}}
+\newcommand{\spc}[1]{\mbox{\sf #1}}
+\newcommand{\ope}[1]{{\cal #1}}
+\newcommand{\mt}[1]{{\rm #1}}
+\newcommand{\dis}{\displaystyle}
+\newcommand{\ve}{\varepsilon}
+\newcommand{\ov}{\overline}
+\newcommand{\wt}{\widetilde}
+\newcommand{\wh}{\widehat}
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\def\bepsilon{\mbox{\boldmath $\epsilon $}}
+\def\bpsi{\mbox{\boldmath $\psi $}}
+\def\bphi{\mbox{\boldmath $\phi $}}
+\def\bmu{\mbox{\boldmath $\mu $}}
+\def\Et{ \tilde{E} }
+\def\Ht{ \tilde{H} }
+\def\sdot{ \dot{\sigma} }
+\newcommand{\innerd}[2]{\left( #1,#2 \right)_{\mbox{\footnotesize \sf D}}}
+\newcommand{\inners}[2]{\left( #1,#2 \right)_{\mbox{\footnotesize
+${\delta}$\sf D}}}
+\newcommand{\innerbd}[2]{\left( #1,#2 \right)_{\mbox{\footnotesize ${\delta}$\sf
+ D}}}
+\newcommand{\innerO}[2]{\left( #1,#2 \right)_{\Omega}}
+\newcommand{\innerOs}[2]{\left( #1,#2 \right)_{\delta \Omega}}
+\newcommand{\innerdk}[2]{\left( #1,#2 \right)_{\mbox{\footnotesize \sf D}^k}}
+\newcommand{\intbdk}{\oint_{\mbox{\footnotesize ${\delta}$\sf D}^k}}
+\newcommand{\ldnormk}[1]{\left\| #1 \right\|_{\mbox{\footnotesize \sf D}^k}}
+\newcommand{\intdk}{\int_{\mbox{\footnotesize \sf D}^k}}
+\newcommand{\epsD}{\varepsilon_{\mbox{\footnotesize \sf D}}}
+\newcommand{\ldnormsob}[2]{\left\| #2 \right\|_{W^{#1}(\mbox{\footnotesize \sf D
+})}}
+\newcommand{\lbdnorm}[1]{\left\| #1 \right\|_{\mbox{\footnotesize \sf $\delta$D}
+}}
+\renewcommand{\thetable}{\Roman{table}}
+\newcommand{\qvector}{\vc{q}}
+
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\Dim}{dim}
+
+\newcommand{\polyquad}{\mathcal{Q}_{N}}
+\newcommand{\polyP}{\mathcal{P}_{N}}
+\newcommand{\polyPnpm}{\mathcal{P}_{(N+M)}}
+\newcommand{\polyPd}{\mathcal{P}_{d}}
+\newcommand{\polyPnm}{\mathcal{P}_{N,M}}
+\newcommand{\polyPn}{\mathcal{P}_{N,0}}
+\newcommand{\transpose}{^{\mathcal{T}}}
+
+\begin{document}
+\title{MA4245 Mathematical Principles of Galerkin Methods \\
+Project 4: 2D Wave Equation}
+\author{Prof. Frank Giraldo \\
+Department of Applied Mathematics \\
+Naval Postgraduate School \\
+Monterey, CA 93943-5216}
+\date{Due on Friday June 11 at 5pm}
+
+\maketitle
+
+
+\section{Continuous Problem}
+The governing partial differential equation (PDE) is
+\[
+\diff{q}{t} + \vc{u} \cdot \grad q = 0 \qquad \forall (x,y) \in [-1,1]^2
+\]
+where $q=q(x,y,t)$ and $\vc{u}=\vc{u}(x,y)$ with $\vc{u}=(u,v)^T$. Let the velocity field be 
+\[
+u(x,y)=y \qquad \mathrm{and} \qquad v(x,y)=-x
+\]
+which forms a velocity field that rotates fluid particles in a clockwise direction. Note that this velocity field is divergence free, that is, 
+that the following condition is satisfied
+\[
+\grad \cdot \vc{u}=0.
+\]
+
+The reason why this condition is important is that the identity
+\[
+\grad \cdot ( q \vc{u} ) = \vc{u} \cdot \grad q + q \grad \cdot \vc{u} 
+\]
+simplifies to 
+\[
+\grad \cdot ( q \vc{u} ) = \vc{u} \cdot \grad q
+\]
+which means that we can rewrite the initial problem statement in the conservation form
+\[
+\diff{q}{t} + \grad \cdot \vc{f} = 0 \qquad \forall (x,y) \in [-1,1]^2
+\]
+where $\vc{f}=q \vc{u}$ is the flux. This form is now ready for use with the DG method.
+
+Clearly, this problem represents a 2D wave equation that is hyperbolic and is thereby an initial value problem that requires an initial condition. 
+Let that initial condition be the Gaussian
+\[
+q(x,y,0)= e ^{ - \sigma\left[ (x-x_c)^2 + (y-y_c)^2 \right] }
+\]
+where $(x_c,y_c)=(-0.5,0)$ is the initial center of the Gaussian and $\sigma=32$ controls the shape (steepness) of the Gaussian wave.
+Use periodic boundary conditions for all four sides (i.e., you are solving flow on the surface of a torus; the iperiodic array will take care of this for you if you are using CG, for DG you have to do it via the fluxes).
+
+\section{Simulations}
+Use both CG AND DG methods to solve this equation using the same code base. I
+recommend you try CG first and then move on to DG. For DG you will
+need additional maps 
+for the faces (given in the GitHub site). 
+You need to write the code to handle arbitrarily-sized elements and polynomial orders, and use inexact integration formulas. What I mean by arbitrarily-sized elements is that you should not assume that each element is of the same size. You can, however, assume that each element uses the same polynomial and integration orders.
+
+\subsection{Skeleton Code Provided}
+In the GitHub site under Project 4, you will see code to help you get started with the project. The file "A$\_$Main$\_$Driver..." is the driver file.  Go there and see where it says "Students Add your Code here".  Open up "Construct$\_$RHS$\_$Vector" and see where you need to add code. You need to construct a RHS vector that includes both the contribution from the differentiation matrix and the flux matrix as discussed in the class lectures. 
+
+\subsection{Streamline}
+Once your code works, be sure to streamline it in order to make it as fast as possible - this is the fun stuff and take advantage of all you have learned. 
+
+\subsection{Results You Need to Show}
+You must show results for $N=1,2,4,8,16$ with increasing number of elements $N_e=nel^2$ where $nel$ denotes the number of quadrilaterals in 
+the $x$ and $y$ directions. 
+Plot broken $L^2$ error norms (defined below) versus number of points ($N_P$) and show all 5 curves on one plot. Remember that you must use 
+a log plot for the error to capture the spectral convergence. 
+
+For the following simulations, you must turn in four plots (one set of four for CG and another set of four for DG): two plots showing convergence rates (for inexact integration only) and another two plots showing 2-norm errors versus wallclock time. Write a discussion on your findings. 
+
+Also, give me a complexity analysis of your code (operation count) to
+see exactly how many operations your code is performing.
+
+\paragraph{N=1 Simulations}
+For $N=1$ use $nel=8, 16, 24, 32, 40, 48$ elements.
+
+\paragraph{N=2 Simulations}
+For $N=2$ use $nel=4, 8, 12, 16, 20, 24$ elements.
+
+\paragraph{N=4 Simulations}
+For $N=4$ use $nel=2, 4, 6, 8, 10, 12$ elements.
+
+\paragraph{N=8 Simulations}
+For $N=8$ use $nel=1, 2, 3, 4, 5, 6$ elements.
+
+\paragraph{N=16 Simulations}
+For $N=16$ use $nel=1,2,3$ elements.
+
+Here is an example of the Convergence rates plot you should show me:
+\begin{figure}[h]
+\begin{center}
+\begin{minipage}{2.20in}
+\includegraphics[width=2.20in]{Matlab_Files/CG/figures/CG_exact_NonTensorProduct_NoFilter_ConvergenceRates.eps}
+a) Exact Integration 
+\end{minipage} \ \hspace{0.125in} \
+\begin{minipage}{2.20in}
+\includegraphics[width=2.20in]{Matlab_Files/CG/figures/CG_inexact_TensorProduct_NoFilter_ConvergenceRates.eps}
+b) Inexact Integration
+\end{minipage} 
+\caption{The Convergence Rates for CG using a) exact and b) inexact integration using $C=0.25$ with RK3.}
+\end{center}
+\end{figure}
+
+Here is an example of the Computational Cost plot you should show me:
+\begin{figure}[h]
+\begin{center}
+\begin{minipage}{2.20in}
+\includegraphics[width=2.20in]{Matlab_Files/CG/figures/CG_exact_NonTensorProduct_NoFilter_ConvergenceRates_CPU.eps}
+a) Exact Integration 
+\end{minipage} \ \hspace{0.125in} \
+\begin{minipage}{2.20in}
+\includegraphics[width=2.20in]{Matlab_Files/CG/figures/CG_inexact_TensorProduct_NoFilter_ConvergenceRates_CPU.eps}
+b) Inexact Integration
+\end{minipage} 
+\caption{The Computational Cost for CG using a) exact and b) inexact integration using $C=0.25$ with RK3.}
+\end{center}
+\end{figure}
+
+
+
+\section{Helpful Relations}
+Make sure that your time-step $\Delta t$ is small enough to ensure stability. Recall that the Courant number
+\[
+C=u \frac{\Delta t}{\Delta x}
+\]
+must be within a certain value for stability. 
+For the 4th order RK method I gave you, I used $C=0.5$ for all the simulations;
+however, for stability purposes, the time-step can be much bigger.
+
+\end{document}
