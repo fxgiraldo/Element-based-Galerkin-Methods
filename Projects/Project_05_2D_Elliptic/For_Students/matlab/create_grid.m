@@ -5,7 +5,7 @@
 %           Naval Postgraduate School 
 %           Monterey, CA 93943-5216
 %---------------------------------------------------------------------%
-function [coord,intma,iboun,iperiodic] = create_grid(npoin,nelem,nboun,nelx,nely,ngl,xgl,plot_grid,rotate_grid)
+function [coord,intma,iboun,iperiodic] = create_grid(npoin,nelem,nboun,nelx,nely,ngl,xgl,plot_grid,lwarp_grid)
 
 %Initialize Global Arrays
 coord=zeros(2,npoin);
@@ -131,9 +131,9 @@ for i=1:nx
    %iperiodic(i2)=i1;
 end
 
-%Rotate Grid
-if (rotate_grid == 1)
-    coord = rotate_grid_function(coord,npoin,ngl);
+%Warp Grid
+if (lwarp_grid == 1)
+    coord = warp_grid(coord,npoin);
 end
 
 %Plot Grid

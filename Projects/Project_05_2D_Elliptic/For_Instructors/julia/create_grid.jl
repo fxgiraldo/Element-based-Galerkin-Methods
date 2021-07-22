@@ -1,7 +1,3 @@
-using Plots
-include("warp_grid.jl")
-include("rotate_grid.jl")
-
 #---------------------------------------------------------------------#
 #This function computes the high-order grid & elements in 2D.
 #Written by F.X. Giraldo on 5/2019
@@ -9,6 +5,10 @@ include("rotate_grid.jl")
 #           Naval Postgraduate School
 #           Monterey; CA 93943-5216
 #---------------------------------------------------------------------#
+
+using Plots
+include("warp_grid.jl")
+
 function create_grid(Np,Npoin,Ne,Nboun,Nex,Ney,ξ,plot_grid,warp_grid,DFloat)
 
     #Initialize Global Arrays
@@ -110,8 +110,7 @@ function create_grid(Np,Npoin,Ne,Nboun,Nex,Ney,ξ,plot_grid,warp_grid,DFloat)
 
     #Warp Grid
     if (warp_grid)
-        #        warp_grid!(coord,Npoin,DFloat)
-        rotate_grid!(coord,Npoin,DFloat)
+        warp_grid!(coord,Npoin,DFloat)
     end
 
     #Plot Grid

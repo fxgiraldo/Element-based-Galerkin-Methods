@@ -23,7 +23,7 @@ nop=8;    %Interpolation Order
 noq=nop + 1; %Integration Order
 c=1; %exact solution variable
 plot_grid=0; %=0 Don't plot, =1 Plot Grid
-rotate_grid=0; %1=yes, 0=no
+lwarp_grid=0; %1=yes, 0=no
 plot_solution=1;
 plot_matrices=0;
 %-------------------------Only Change These Lines------------------%
@@ -47,7 +47,7 @@ eps=1e-8;
 [psi,dpsi,xnq,wnq] = lagrange_basis(ngl,nq,xgl);
 
 %Create Grid
-[coord,intma,iboun,iperiodic]=create_grid(npoin,nelem,nboun,nelx,nely,ngl,xgl,plot_grid,rotate_grid);
+[coord,intma,iboun,iperiodic]=create_grid(npoin,nelem,nboun,nelx,nely,ngl,xgl,plot_grid,lwarp_grid);
 
 %Compute Metric Terms
 [ksi_x,ksi_y,eta_x,eta_y,jac] = metrics(coord,intma,psi,dpsi,nelem,ngl,nq);

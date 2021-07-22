@@ -11,10 +11,8 @@ function coord = warp_grid(coord,npoin)
 for i=1:npoin
     x=coord(1,i);
     y=coord(2,i);
-    z=coord(3,i);
-    coord(1,i)=x + sin(pi * x) * sin(2 * pi * y) * sin(2 * pi * z) / 15;
-    coord(2,i)=y + sin(2 * pi * x) * sin(pi * y) * sin(2 * pi * z) / 15;
-    coord(3,i)=z + sin(2 * pi * x) * sin(2 * pi * y) * sin(pi * z) / 15;
+    coord(1,i)=x + sin(pi * x) * sin(2 * pi * y)/15;
+    coord(2,i)=y + sin(2 * pi * x) * sin(pi * y)/15;
 end
 
 

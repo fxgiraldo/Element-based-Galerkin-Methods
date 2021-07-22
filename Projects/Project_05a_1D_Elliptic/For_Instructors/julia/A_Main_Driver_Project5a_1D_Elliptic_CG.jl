@@ -45,7 +45,6 @@ function main()
     Q=N+1 #Quadrature Order
     ipoints=1 #interpolation point type
     qpoints=1 #integration point type
-    space_method="CG"
     case=1 
     #-----------------------------Only Change these Input parameters---------------------------------#
 
@@ -53,6 +52,7 @@ function main()
     Nq=Q+1
     Npoin_dg=Ne*Np
     Npoin_cg=Ne*N + 1
+    space_method="CG" #only capable of doing CG
     @show(N,Q,Ne,Npoin_cg,Npoin_dg,case)
 
     #Select Interpolation Points

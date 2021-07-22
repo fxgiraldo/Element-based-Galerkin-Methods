@@ -25,7 +25,7 @@ c=1; %exact solution variable
 plot_grid=1; %=0 Don't plot, =1 Plot Grid
 plot_solution=0;
 plot_matrices=0;
-lwarp_grid=1; %0=don't, 1=do
+lwarp_grid=0; %0=don't, 1=do
 %-------------------------Only Change These Lines------------------%
 
 ngl=nop + 1;

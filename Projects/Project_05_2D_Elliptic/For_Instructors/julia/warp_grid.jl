@@ -9,8 +9,8 @@ function warp_grid!(coord,Npoin,DFloat)
 
     for i=1:Npoin
         x, y = coord[1,i], coord[2,i]
-        coord[1,i]=x + sin(π * x) * sin(2 * π * y) / 50
-        coord[2,i]=y + sin(2 * π * x) * sin(π * y) / 50
+        coord[1,i]=x + sin(π * x) * sin(2 * π * y) / 15
+        coord[2,i]=y + sin(2 * π * x) * sin(π * y) / 15
     end
 
 end

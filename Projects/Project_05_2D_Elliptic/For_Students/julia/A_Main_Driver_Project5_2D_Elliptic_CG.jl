@@ -49,13 +49,13 @@ function main()
     Q=N+1
     ipoints=1
     qpoints=1
-    space_method="CG"
     c=DFloat(1) #Constant in Exact solution
     plot_grid=true
     plot_solution=true
     warp_grid=false
     #-----------------------------Only Change these Input parameters---------------------------------#
 
+    space_method="CG" #only CG
     Np=N+1
     Nq=Q+1
     Npts=Np^2
