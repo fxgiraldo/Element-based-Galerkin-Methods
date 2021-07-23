@@ -1,5 +1,5 @@
 %---------------------------------------------------------------------%
-%This driver contains the student template for Project 7: the 3D Poisson Equation using the CG method.
+%This driver contains the solution to Project 7: the 3D Poisson Equation using the CG method.
 %
 %The approached follows Algorithm 12.18 in the book whereby the global matrices
 %are constructed by combining the element matrices (Alg. 12.9 and 12.10)
@@ -19,13 +19,13 @@ tic
 %Input Data
 %-------------------------Only Change These Lines------------------%
 nel=2;
-nop=4;    %Interpolation Order
+nop=6;    %Interpolation Order
 noq=nop + 1; %Integration Order
 c=1; %exact solution variable
 plot_grid=1; %=0 Don't plot, =1 Plot Grid
 plot_solution=0;
 plot_matrices=0;
-lwarp_grid=1; %0=don't, 1=do
+lwarp_grid=0; %0=don't, 1=do
 %-------------------------Only Change These Lines------------------%
 
 ngl=nop + 1;

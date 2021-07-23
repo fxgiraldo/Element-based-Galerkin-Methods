@@ -19,7 +19,7 @@ tic
 %Input Data
 %-------------------------Only Change These Lines------------------%
 nel=2;
-nop=4;    %Interpolation Order
+nop=6;    %Interpolation Order
 noq=nop + 1; %Integration Order
 c=1; %exact solution variable
 plot_grid=1; %=0 Don't plot, =1 Plot Grid

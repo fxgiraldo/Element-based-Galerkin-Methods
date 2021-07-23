@@ -44,14 +44,14 @@ function main()
     Nex=2
     Ney=2
     Nez=2
-    N=4
+    N=6
     Q=N+1
     ipoints=1
     qpoints=1
     c=DFloat(1) #Constant in Exact solution
     plot_grid=true
     plot_solution=false
-    warp_grid=true
+    warp_grid=false
     #-----------------------------Only Change these Input parameters---------------------------------#
 
     space_method="CG" #only CG
@@ -92,12 +92,16 @@ function main()
     #Construct Metric Terms
     (ξ_x,ξ_y,ξ_z,η_x,η_y,η_z,ζ_x,ζ_y,ζ_z,jac) = compute_metrics(coord,intma,ψ,dψ,Ne,Np,Nq,DFloat)
 
+    @time begin
     #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
     #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
     #Construct Global Matrices
-    (M,L) = global_matrices(ψ,dψ,ξ_x,ξ_y,ξ_z,η_x,η_y,η_z,ζ_x,ζ_y,ζ_z,jac,ωq,intma,Ne,Np,Nq,Npoin,DFloat)
+    M=zeros(DFloat,Npoin,Npoin)
+    L=zeros(DFloat,Npoin,Npoin)
+    (M,L) = global_matrices!(M,L,ψ,dψ,ξ_x,ξ_y,ξ_z,η_x,η_y,η_z,ζ_x,ζ_y,ζ_z,jac,ωq,intma,Ne,Np,Nq,Npoin,DFloat)
     #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
     #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
+    end
 
     #Compute Exact Solution
     (qe,fe) = exact_solution(coord,Npoin,c,DFloat)
