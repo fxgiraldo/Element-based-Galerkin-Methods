@@ -11,8 +11,11 @@ Project3: contains the files that the student needs to solve the 1D Burgers equa
 
 Project4: contains the files that the student needs to solve the 1D shallow water equations. 
 
+Project5a: contains the files that the student needs to solve the 1D Poisson equation.
+
 Project5: contains the files that the student needs to solve the 2D Poisson equation. 
 
 Project6: contains the files that the student needs to solve the 2D wave equation. There are sub-folders with files on animation files, data structures, filters, and rotation of the grid to check if the student algorithms are general and do not assume that the reference element coordinate are not aligned with the physical coordinate system.
 
+Project7: contains the files that the student needs to solve the 3D Poisson equation. This is the only 3D problem that we solve in the book and the course. However, by doing this project the student will understand how to build metric terms (which is the trickiest stuff for 3D). The construction of derivatives is similar to the 2D case so nothing new there.
 %-------------------------------------------------------------------------------------------------%
