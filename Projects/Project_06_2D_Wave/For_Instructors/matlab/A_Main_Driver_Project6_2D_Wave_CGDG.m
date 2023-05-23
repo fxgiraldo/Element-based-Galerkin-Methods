@@ -34,6 +34,8 @@ icase=1; %case number: 1 is a Gaussian in CW;
          %4 is a Gaussian along diagonal
          %5 is a Square in CW:
          %6 is a Square along x
+warp_grid=1;
+plot_grid=1;
 %-------------------------Only Change These Lines------------------%
 
 Courant_max=0.5;
@@ -81,7 +83,7 @@ f = filter_init(ngl,xgl,xmu);
 
 %Create CG-Storage Grid
 [coord_CG,intma_CG,bsido_CG,iperiodic_CG] = create_grid_2d(npoin_CG,nelem,nboun, ...
-                                nelx,nely,ngl,xgl);
+                                nelx,nely,ngl,xgl,warp_grid,plot_grid);
                          
 %Create CGDG-Storage Grid
 [coord,intma,iperiodic,DG_to_CG,npoin] = create_CGDG_Storage(space_method,npoin_CG,npoin_DG,coord_CG, ...
