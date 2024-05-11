@@ -5,7 +5,7 @@
 %
 %The solution is obtained using Algorithm 17.7 whereby the RHS vector is constructed at each time stage. 
 %The volume integral contribution is constructed using Algorithm 16.11 except that the element differentiation matrix is computed and stored.
-%The flux integral contribution is constructed using Algorithm 16.12 (all in weak form).
+%The flux integral contribution is constructed using Algorithm 16.12 (both in weak and strong forms).
 %
 %It uses the LSRK45 method as the time-integrator and Rusanov fluxes for DG.
 %
@@ -24,6 +24,7 @@ tic
 nel=4; %Number of Elements
 nop=8;    %Interpolation Order
 space_method='dg'; %=cg for CG or =dg for DG
+form_method='strong'; %strong or weak
 time_final=0.25; %final time in revolutions
 plot_movie=1;
 plot_solution=1;
@@ -34,8 +35,6 @@ icase=1; %case number: 1 is a Gaussian in CW;
          %4 is a Gaussian along diagonal
          %5 is a Square in CW:
          %6 is a Square along x
-warp_grid=1;
-plot_grid=1;
 %-------------------------Only Change These Lines------------------%
 
 Courant_max=0.5;
@@ -73,7 +72,8 @@ nface=2*nelem + nelx + nely;
 [xgl,wgl]=legendre_gauss_lobatto(ngl);
 noq=nop;
 nq=noq + 1;
-main_text=space_method;
+main_text=[space_method ', ' form_method];
+
 
 %Compute Legendre Cardinal functions and derivatives
 [psi,dpsi,xnq,wnq] = lagrange_basis(ngl,nq,xgl);
@@ -83,7 +83,7 @@ f = filter_init(ngl,xgl,xmu);
 
 %Create CG-Storage Grid
 [coord_CG,intma_CG,bsido_CG,iperiodic_CG] = create_grid_2d(npoin_CG,nelem,nboun, ...
-                                nelx,nely,ngl,xgl,warp_grid,plot_grid);
+                                nelx,nely,ngl,xgl);
                          
 %Create CGDG-Storage Grid
 [coord,intma,iperiodic,DG_to_CG,npoin] = create_CGDG_Storage(space_method,npoin_CG,npoin_DG,coord_CG, ...
@@ -149,8 +149,8 @@ for itime=1:ntime
         %------------Students Add Your Routines Here---------------%
         %Construct RHS vector
         rhs = create_rhs(qp,ue,ve,ksi_x,ksi_y,eta_x,eta_y,jac,...
-        wnq,dpsi,intma,iperiodic,Mmatrix,face,normals,jac_face,...
-        mapL,mapR,npoin,nelem,nface,ngl,space_method,flux_method);
+        wnq,psi,dpsi,intma,iperiodic,Mmatrix,face,normals,jac_face,...
+        mapL,mapR,npoin,nelem,nface,ngl,space_method,flux_method,form_method);
         %------------Students Add Your Routines Here---------------%
         %------------Students Add Your Routines Here---------------%
 
@@ -215,7 +215,7 @@ if (plot_solution == 1)
     xlabel('X','FontSize',18);
     ylabel('Y','FontSize',18);
     axis image
-    title_text=[space_method ', Ne = ' num2str(nelem) ', N = ' num2str(nop) ', Q = ' num2str(noq) ', L2 Norm = ' num2str(l2_norm)];
+    title_text=[main_text ', Ne = ' num2str(nelem) ', N = ' num2str(nop) ', Q = ' num2str(noq) ', L2 Norm = ' num2str(l2_norm)];
     title([title_text],'FontSize',18);
     set(gca, 'FontSize', 18);
     %file_ps=['se_n' num2str(nelem) 'p' num2str(nop)];
@@ -228,7 +228,7 @@ if (plot_movie == 1)
         mesh(xi,yi,qi_movie(:,:,i));
         colorbar('SouthOutside');
         axis([-1 +1 -1 +1 0 1]);
-        title_text=[space_method ', Ne = ' num2str(nelem) ', N = ' num2str(nop) ', Q = ' num2str(noq) ', Time = ' num2str(time_movie(i))];
+        title_text=[main_text ', Ne = ' num2str(nelem) ', N = ' num2str(nop) ', Q = ' num2str(noq) ', Time = ' num2str(time_movie(i))];
         title([title_text],'FontSize',18);
         set(gca, 'FontSize', 18);
         M_i=getframe(gcf);

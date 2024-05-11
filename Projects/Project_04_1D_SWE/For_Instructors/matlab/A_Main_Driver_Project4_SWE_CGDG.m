@@ -25,7 +25,7 @@ tic
 nelem=64; %Number of Elements
 nop=4;    %Interpolation Order
 dt=0.002;
-time_final=1; %final time in revolutions
+time_final=0.5; %final time in revolutions
 nplots=10; %plotting variable - Number of Frames ploted
 plot_movie=1;
 store_movie=0;
@@ -33,9 +33,9 @@ plot_figures=0;
 plot_elements=0;
 plot_modes=0;
 integration_points=1; %=1 for LGL and =2 for LG
-integration_type=2; %=1 is inexact and =2 is exact
-space_method='dg'; %cgc=CGc; cgd=CGd; dg=DG                              
-icase=4; %=1 is a Gaussian with flat bottom; 
+integration_type=1; %=1 is inexact and =2 is exact
+space_method='cgc'; %cgc=CGc; cgd=CGd; dg=DG                              
+icase=1; %=1 is a Gaussian with flat bottom; 
          %2 is Gaussian with linear bottom;
          %3 is Gaussian with Parabolic bottom; 
          %4 is Standing Wave (linear) with Analytic Solution
@@ -48,7 +48,7 @@ mu=1.0; %filtering strength: 1 is full strength and 0 is no filter
 ifilter=0; %time-step frequency that the filter is applied.
 filter_type=2; %=1 is Modal Hierarchical and =2 is regular Legendre
 diss=1; %=1 dissipation (Rusanov Flux) and =0 no dissipation (Central Flux)
-delta_nl=1; %=0 linear and =1 nonlinear
+delta_nl=0; %=0 linear and =1 nonlinear
 
 if (icase == 4 || icase == 7)
     delta_nl=0;

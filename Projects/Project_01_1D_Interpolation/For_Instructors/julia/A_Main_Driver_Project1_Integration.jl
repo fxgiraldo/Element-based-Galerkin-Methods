@@ -17,13 +17,14 @@ Monterey, CA 93943
 -------------------------------------------------------------------------------------------------------------
 =#
 
-using Plots, LinearAlgebra
+using Plots, LinearAlgebra, FastGaussQuadrature
 
 include("QuadraturePoints.jl")
 
 #Some Constants
 DFloat = Float64
-Quadrature_type = "fxg"
+#Quadrature_type = "fxg"
+Quadrature_type = "julia"
 Nmin=1
 Nmax=64
 Ns=101

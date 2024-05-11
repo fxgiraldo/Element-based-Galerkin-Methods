@@ -40,7 +40,6 @@ for e=1:nelem
            dhdx_i=h_e*e_x + h_n*n_x;
            dhdy_i=h_e*e_y + h_n*n_y;
            
-           
            %Loop through J points
            for n=1:ngl
            for m=1:ngl
@@ -58,7 +57,7 @@ for e=1:nelem
    end %l
 end %e
 
-%Periodicity
+%Boundary Conditions
 for i=1:npoin
     j=iperiodic(i);
     if (i ~= j) 

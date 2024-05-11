@@ -1,0 +1,12 @@
+%-------------------------------------------------------------------------------------------------%
+This folder contains the files (matlab and julia) for Project 6 (2D Wave Equation) in the book
+"An Introduction to Element-based Galerkin Methods on Tensor-Product Bases: Analysis, Algorithms, and Applications"
+by Francis X. Giraldo
+
+The directory:
+For_Students contains the files that the students should have in order to do the project.
+For_Instructors contains the solutions (without convergence rates).
+A sample Project description is given in the PDF Project6.pdf
+
+You can reach the author by writing to him at frank.giraldo@gmail.com
+%-------------------------------------------------------------------------------------------------%

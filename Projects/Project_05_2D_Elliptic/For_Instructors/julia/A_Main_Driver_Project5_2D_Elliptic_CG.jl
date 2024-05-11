@@ -27,11 +27,11 @@ using Plots
 using LinearAlgebra
 
 include("QuadraturePoints.jl")
-include("element_matrices.jl")
-include("global_matrices.jl")
 include("create_grid.jl")
 include("compute_metrics.jl")
+include("element_matrices.jl")
 include("global_matrices.jl")
+include("global_matrices_v2.jl")
 include("exact_solution.jl")
 include("compute_norm.jl")
 
@@ -43,19 +43,24 @@ machine_zero=eps(DFloat)
 function main()
 
     #-----------------------------Only Change these Input parameters---------------------------------#
-    Nex=8
-    Ney=8
-    N=4
-    Q=N+1
-    ipoints=1
-    qpoints=1
-    c=DFloat(1) #Constant in Exact solution
+    Nel=8
+    N=8
+    integration_type="inexact" #exact or inexact
+    c=1.0 #Constant in Exact solution
     plot_grid=true
     plot_solution=true
     warp_grid=false
     #-----------------------------Only Change these Input parameters---------------------------------#
     
-    space_method="CG" #only capable of doing CG
+    ipoints=1 #keep it at 1 (LGL)
+    qpoints=1 #keep it at 1 (LGL) but can also do 2 (LG)
+    #space_method="CG" #only capable of doing CG
+    Q=N
+    if integration_type == "exact"
+        Q=N+1;
+    end
+    Nex=Nel
+    Ney=Nel
     Np=N+1
     Nq=Q+1
     Npts=Np^2
@@ -65,7 +70,7 @@ function main()
     Ny=Ney*N+1
     Npoin=Nx*Ny
     Nboun=2*Nx + 2*(Ny-2)
-    @show(N,Q,Ne,Npoin,Nboun,c)
+    @show(N,Q,Nel,Ne,Npoin,Nboun,c)
 
     #Select Interpolation Points
     if ipoints == 1
@@ -94,15 +99,20 @@ function main()
     #Construct Metric Terms
     (ξ_x,ξ_y,η_x,η_y,jac) = compute_metrics(coord,intma,ψ,dψ,Ne,Np,Nq,DFloat)
 
-    #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
-    #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
+    @time begin
+    #-----------------------------Students Add their Functions Here--------------------------#
+    #-----------------------------Students Add their Functions Here--------------------------#
+    #Can do Element Matrices followed by Global:
     #Construct Element Matrices
-    (Me,Le) = element_matrices(ψ,dψ,ξ_x,ξ_y,η_x,η_y,jac,ωq,Ne,Np,Nq,DFloat)
-
+    #(Me,Le) = element_matrices(ψ,dψ,ξ_x,ξ_y,η_x,η_y,jac,ωq,Ne,Np,Nq,DFloat)
     #Construct Global Matrices
-    (M,L) = global_matrices(Me,Le,intma,Ne,Np,Npoin,DFloat)
-    #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
-    #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
+    #(M,L) = global_matrices(Me,Le,intma,Ne,Np,Npoin,DFloat)
+    
+    #OR, do the Global directly - Much Faster Code!!
+    #Construct Element and Global Matrices all at once
+    (M,L) = global_matrices_v2(ψ,dψ,ξ_x,ξ_y,η_x,η_y,jac,ωq,intma,Ne,Np,Nq,Npoin,DFloat)
+    #-----------------------------Students Add their Functions Here--------------------------#
+    #-----------------------------Students Add their Functions Here--------------------------#
 
     #Compute Exact Solution
     (qe,fe) = exact_solution(coord,Npoin,c,DFloat)
@@ -112,12 +122,13 @@ function main()
     for i=1:Nboun
         I=iboun[i]
         L[I,:] = zeros(DFloat,Npoin)
-        L[I,I] = DFloat(-1)
+        L[I,I] = DFloat(1)
         R[I]=qe[I]
     end#i
 
     #Solve Matrix problem
-    q=-L\R
+    q=L\R
+    end
 
     #Compute L2 Norm
     norm2 = compute_norm(q,qe,Npoin,DFloat)
@@ -146,7 +157,7 @@ function main()
         display(figure_1)
     end
 
-    println("Done") #output
+    println("*Done*") #output
 
 end
 

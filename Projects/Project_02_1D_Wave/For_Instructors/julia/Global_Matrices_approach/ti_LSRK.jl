@@ -8,7 +8,7 @@
 include("create_rhs.jl")
 include("plot_solution.jl")
 
-function ti_LSRK!(q0,u,coord,Dhat,Fhat,intma,periodicity,time,ntime,dt,space_method,plot_movie,DFloat)
+function ti_LSRK!(q0,u,coord,Dhat,Fhat,intma,periodicity,time,time_final,ntime,dt,space_method,plot_movie,DFloat)
 
     #Initialize RK coefficients
     RKA = (DFloat(0),
@@ -35,8 +35,13 @@ function ti_LSRK!(q0,u,coord,Dhat,Fhat,intma,periodicity,time,ntime,dt,space_met
     stages=length(RKA)
 
     #Time Integration
-    for itime=1:ntime
+    while time < time_final
         time=time + dt
+        if time > time_final
+            time=time - dt
+            dt=time_final-time
+            time=time + dt
+        end
         #RK Stages
         for s = 1:stages
             #Create RHS Matrix
@@ -51,7 +56,7 @@ function ti_LSRK!(q0,u,coord,Dhat,Fhat,intma,periodicity,time,ntime,dt,space_met
                 qp[Npoin]=qp[1] #periodicity
             end
         end #s
-#        println(" itime = ",itime," time = ",time," qmax = ",maximum(qp)," qmin = ",minimum(qp))
+        #println(" itime = ",itime," time = ",time," qmax = ",maximum(qp)," qmin = ",minimum(qp))
 
         #Update Q
         q0 .= qp
@@ -63,6 +68,6 @@ function ti_LSRK!(q0,u,coord,Dhat,Fhat,intma,periodicity,time,ntime,dt,space_met
 
     end #itime
 
-    return(q0)
+    return(q0,time)
 
 end

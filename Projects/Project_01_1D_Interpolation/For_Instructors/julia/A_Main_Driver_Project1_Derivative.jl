@@ -17,13 +17,14 @@ Monterey, CA 93943
 -------------------------------------------------------------------------------------------------------------
 =#
 
-using Plots, LinearAlgebra
+using Plots, LinearAlgebra, FastGaussQuadrature
 
 include("QuadraturePoints.jl")
 
 #Some Constants
 DFloat = Float64
 Quadrature_type = "fxg"
+#Quadrature_type = "julia"
 Nmin=1
 Nmax=64
 Ns=51
@@ -78,9 +79,9 @@ function main()
             #Interpolation
             #--------------------------------------------------#
             #Compute Sample Space
-            xs=zeros(Ns)
-            xs=range(-1,length=Ns,stop=1)
-            (ψ,dψ) = QuadraturePoints.lagrange_basis(Np,Ns,ξ,xs)
+            ξs=zeros(Ns)
+            ξs=range(-1,length=Ns,stop=1)
+            (ψ,dψ) = QuadraturePoints.lagrange_basis(Np,Ns,ξ,ξs)
 
             #Compute Expansion Coefficients
             q_coeff=zeros(DFloat,Np)
@@ -102,7 +103,7 @@ function main()
             #Compute Exact Solution
             qe=zeros(DFloat,Ns)
             for i=1:Ns
-                x=xs[i]
+                x=ξs[i]
                 qe[i]=-c*sin(c*x)
             end #i
 

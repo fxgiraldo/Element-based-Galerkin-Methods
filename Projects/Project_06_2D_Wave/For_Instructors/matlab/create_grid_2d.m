@@ -5,7 +5,7 @@
 %           Naval Postgraduate School 
 %           Monterey, CA 93943-5216
 %---------------------------------------------------------------------%
-function [coord,intma,bsido,iperiodic] = create_grid_2d(npoin,nelem,nboun,nelx,nely,ngl,xgl,warp_grid,plot_grid)
+function [coord,intma,bsido,iperiodic] = create_grid_2d(npoin,nelem,nboun,nelx,nely,ngl,xgl,lwarp_grid,lrotate_grid)
 
 %Initialize Global Arrays
 coord=zeros(2,npoin);
@@ -159,52 +159,6 @@ for i=1:nx
    iperiodic(i2)=iperiodic(i1);
 end
 
-%Warp Grid
-if (warp_grid == 1)
-    coord = warp_grid_function(coord,npoin);
-end
-
-%Plot Grid
-if (plot_grid == 1)
-    x=zeros(5,1);
-    y=zeros(5,1);
-    figure;
-    hold on;
-    for e=1:nelem
-        for j=1:ngl-1
-            for i=1:ngl-1
-                i1=intma(i,j,e);
-                i2=intma(i+1,j,e);
-                i3=intma(i+1,j+1,e);
-                i4=intma(i,j+1,e);
-                x(1)=coord(1,i1); y(1)=coord(2,i1);
-                x(2)=coord(1,i2); y(2)=coord(2,i2);
-                x(3)=coord(1,i3); y(3)=coord(2,i3);
-                x(4)=coord(1,i4); y(4)=coord(2,i4);
-                x(5)=coord(1,i1); y(5)=coord(2,i1);
-                plot_handle=plot(x,y,'-r');
-                set(plot_handle,'LineWidth',1);
-            end
-        end
-        i1=intma(1,1,e);
-        i2=intma(ngl,1,e);
-        i3=intma(ngl,ngl,e);
-        i4=intma(1,ngl,e);
-        x(1)=coord(1,i1); y(1)=coord(2,i1);
-        x(2)=coord(1,i2); y(2)=coord(2,i2);
-        x(3)=coord(1,i3); y(3)=coord(2,i3);
-        x(4)=coord(1,i4); y(4)=coord(2,i4);
-        x(5)=coord(1,i1); y(5)=coord(2,i1);
-        plot_handle=plot(x,y,'-b');
-        set(plot_handle,'LineWidth',2);
-    end
-    title_text=['Grid Plot For: Ne = ' num2str(nelem) ', N = ' num2str(nop)];
-    title([title_text],'FontSize',18);      
-
-    xlabel('X','FontSize',18);
-    ylabel('Y','FontSize',18);
-    axis image
-end 
 
       
 

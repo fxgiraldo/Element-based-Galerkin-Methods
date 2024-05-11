@@ -47,7 +47,7 @@ for e=1:nelem
    end %l
 end %e
 
-%Periodicity
+%Boundary Conditions
 for i=1:npoin
     j=iperiodic(i);
     if (i ~= j) 

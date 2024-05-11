@@ -5,13 +5,13 @@
 %           Naval Postgraduate School 
 %           Monterey, CA 93943-5216
 %---------------------------------------------------------------------%
-function [coord,intma,iboun,iperiodic] = create_grid(npoin,nelem,nboun,nelx,nely,ngl,xgl,plot_grid,lwarp_grid)
+function [coord,intma,iboun,periodicity] = create_grid(npoin,nelem,nboun,nelx,nely,ngl,xgl,plot_grid,lwarp_grid)
 
 %Initialize Global Arrays
 coord=zeros(2,npoin);
 intma=zeros(ngl,ngl,nelem);
 iboun=zeros(nboun,1);
-iperiodic=zeros(npoin,1);
+periodicity=zeros(npoin,1);
 
 %Initialize Local Arrays
 node=zeros(npoin,npoin);
@@ -114,21 +114,21 @@ end
 
 %Periodicity
 for i=1:npoin
-   iperiodic(i)=i;
+   periodicity(i)=i;
 end
 
 %X-Periodicity
 for i=1:ny
    i1=node(1,i);
    i2=node(nx,i);
-   %iperiodic(i2)=i1;
+   %periodicity(i2)=i1;
 end
 
 %Y-Periodicity
 for i=1:nx
    i1=node(i,1);
    i2=node(i,ny);
-   %iperiodic(i2)=i1;
+   %periodicity(i2)=i1;
 end
 
 %Warp Grid

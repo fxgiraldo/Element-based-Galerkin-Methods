@@ -7,12 +7,16 @@
 %---------------------------------------------------------------------%
 function coord = warp_grid(coord,npoin)
 
+c=1/15;
+
 %Warp Grid
 for i=1:npoin
     x=coord(1,i);
     y=coord(2,i);
-    coord(1,i)=x + sin(pi * x) * sin(2 * pi * y)/15;
-    coord(2,i)=y + sin(2 * pi * x) * sin(pi * y)/15;
+%     coord(1,i)=x + sin(pi * x) * sin(2 * pi * y)*c;
+%     coord(2,i)=y + sin(2 * pi * x) * sin(pi * y)*c;
+    coord(1,i)=x + sin(pi * x) * cos(2 * pi * y)*c;
+    coord(2,i)=y + sin(pi * y) * cos(2 * pi * x)*c;
 end
 
 

@@ -17,13 +17,14 @@ Monterey, CA 93943
 -------------------------------------------------------------------------------------------------------------
 =#
 
-using Plots, LinearAlgebra
+using Plots, LinearAlgebra, FastGaussQuadrature
 
 include("QuadraturePoints.jl")
 
 #Some Constants
 DFloat = Float64
 Quadrature_type = "fxg"
+#Quadrature_type = "julia"
 Nmin=1
 Nmax=64
 Ns=101
@@ -85,7 +86,11 @@ function main()
             #Integration
             #--------------------------------------------------#
             #Compute Sample Space
-            (ψ,dψ) = QuadraturePoints.lagrange_basis(Np,Np,ξ,ξq)
+            
+            #=-------------------------------------------------
+            Students Include the Lagrange Basis Function
+            (ψ,dψ) = QuadraturePoints.lagrange_basis(Np,Ns,ξ,ξq)
+            ----------------------------------------------------=#
 
             #Compute Expansion Coefficients
             q_coeff=zeros(DFloat,Np)

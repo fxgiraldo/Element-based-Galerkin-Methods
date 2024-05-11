@@ -18,7 +18,7 @@ function global_matrices(Me,Le,intma,Ne,Np,Npoin,DFloat)
             for j=1:Np, i=1:Np
                 I=intma[i,j,e]
                 M[I,J] += Me[i,j,k,l,e]
-                L[I,J] += Le[i,j,k,l,e]
+                L[I,J] -= Le[i,j,k,l,e]
             end #j,i
         end #k,l
     end #e

@@ -7,7 +7,7 @@
 %           Monterey, CA 93943-5216
 %----------------------------------------------------------------------%
 function rhs = create_rhs_flux(rhs,q,u,v,face,normals,jac_face, ...
-               wnq,nface,ngl,mapL,mapR,intma,flux_method)
+               wnq,nface,ngl,mapL,mapR,intma,flux_method,form_method)
 
 %local arrays
 ql=zeros(ngl,1);
@@ -19,7 +19,12 @@ flag=0;
 if strcmp(flux_method,'rusanov') 
     flag=1;
 end
-    
+
+delta=0;
+if strcmp(form_method,'strong') 
+    delta=1;
+end
+
 %Construct flux integral
 for is=1:nface
 
@@ -101,14 +106,14 @@ for is=1:nface
           il=mapL(1,l,ilocl);
           jl=mapL(2,l,ilocl);
           IL=intma(il,jl,el);
-          rhs(IL)=rhs(IL) - wq*flux_q;
+          rhs(IL)=rhs(IL) - wq*(flux_q - delta*flux_ql);
 
           %--------------Right Side------------------%
           if (er > 0)
              ir=mapR(1,l,ilocr);
              jr=mapR(2,l,ilocr);
              IR=intma(ir,jr,er);
-             rhs(IR)=rhs(IR) + wq*flux_q;
+             rhs(IR)=rhs(IR) + wq*(flux_q + delta*flux_qr);
           end %if 
       end %l   
    end %if el      
