@@ -1,6 +1,6 @@
 #=
 -------------------------------------------------------------------------------------------------------------
-This file contains the student template for Project 6: 2D Wave Equation using the unified CG/DG method with AGGP storage 
+This file contains the solution to Project 6: 2D Wave Equation using the unified CG/DG method with AGGP storage 
 introduced in F.X. Giraldo's Introduction to Element-based Galerkin Methods using 
 Tensor-Product Bases: Analysis, Algorithms, and Applications.
 
@@ -54,11 +54,11 @@ function main()
 
     #------------------------Only Change stuff here-------------------#
     N=8 #polynomial order
-    Nex=4 #number of elements along x (ξ)
-    Ney=4 #number of elements along y (η)
-    space_method="DG" #CG or DG
-    time_final=DFloat(0.25) #in revolutions
-    plot_grid=false
+    Nel=4 #number of elements along x (ξ)
+    
+    space_method="cg" #cg or dg
+    time_final=0.25 #in revolutions
+    plot_grid=true
     plot_solution=true
     plot_movie=false
     warp_grid=false
@@ -71,8 +71,10 @@ function main()
     Nqs=Nq^2
     ipoints=1 #lobatto
     qpoints=1 #lobatto
-    Courant_max=DFloat(0.5)
+    Courant_max=0.5
     icase=1 #CCW moving Gaussian
+    Nex=Nel #number of elements along x (ξ)
+    Ney=Nel #number of elements along y (η)
     Ne=Nex*Ney
     Nx=Nex*N+1
     Ny=Ney*N+1
@@ -132,7 +134,7 @@ function main()
     M = global_matrices(Me,intma,periodicity,Ne,Np,Npoin,DFloat)
 
     #Compute Exact Solution
-    time=DFloat(0.0)
+    time=0.0
     (qe,ue) = exact_solution(coord,Npoin,time,icase,DFloat)
     q0=copy(qe)
 
@@ -147,12 +149,12 @@ function main()
     #Time Integration
     #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
     #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
-    (q0,time) = ti_LSRK!(q0,ue,coord,M,De_x,De_y,intma,periodicity,face,mapL,mapR,normals,jac_face,ωq,time,ntime,dt,space_method,plot_movie,Nx,Ny,coord_CG,periodicity_CG,DG_to_CG,DFloat)
+    (q0,time) = ti_LSRK!(q0,ue,coord,M,De_x,De_y,intma,periodicity,face,mapL,mapR,normals,jac_face,ωq,time,time_final,c,ntime,dt,space_method,plot_movie,Nx,Ny,coord_CG,periodicity_CG,DG_to_CG,DFloat)
     #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
     #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
 
     #Print Time and Extrema
-    println(" itime = ",ntime," time = ",time," qmax = ",maximum(q0)," qmin = ",minimum(q0))
+    println(" itime = ",ntime," time = ",time/c," qmax = ",maximum(q0)," qmin = ",minimum(q0))
 
     #Compute L2 Norm
     (qe,ue) = exact_solution(coord,Npoin,time,icase,DFloat)

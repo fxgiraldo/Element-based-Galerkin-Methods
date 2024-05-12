@@ -18,12 +18,14 @@ function create_rhs(q,u,M,De_x,De_y,intma,periodicity,face,mapL,mapR,normals,jac
     #---------------------------Students Add their Contributions Here----------------------------------------
     #---------------------------Students Add their Contributions Here----------------------------------------
     #Construct Volume integral contribution
-    #rhs = create_rhs_volume(q,u,De_x,De_y,intma,periodicity,DFloat)
+    #=
+    rhs = create_rhs_volume(q,u,De_x,De_y,intma,periodicity,DFloat)
 
     #Construct Flux integral contribution (will also work for CG but cancels completely due to periodicity)
-    #if (space_method == "DG")
-    #    rhs = create_rhs_flux!(rhs,q,u,face,normals,jac_face,ωq,mapL,mapR,intma,periodicity,DFloat)
-    #end
+    if (space_method == "dg")
+        rhs = create_rhs_flux!(rhs,q,u,face,normals,jac_face,ωq,mapL,mapR,intma,periodicity,DFloat)
+    end
+    =#
     #---------------------------Students Add their Contributions Here----------------------------------------
     #---------------------------Students Add their Contributions Here----------------------------------------
 

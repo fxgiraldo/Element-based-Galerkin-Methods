@@ -5,7 +5,7 @@
 %           Naval Postgraduate School 
 %           Monterey, CA 93943-5216
 %---------------------------------------------------------------------%
-function [coord,intma,bsido,iperiodic] = create_grid_2d(npoin,nelem,nboun,nelx,nely,ngl,xgl)
+function [coord,intma,bsido,iperiodic] = create_grid_2d(npoin,nelem,nboun,nelx,nely,ngl,xgl,lwarp_grid,lrotate_grid)
 
 %Initialize Global Arrays
 coord=zeros(2,npoin);
@@ -158,7 +158,6 @@ for i=1:nx
    i2=node(i,ny);
    iperiodic(i2)=iperiodic(i1);
 end
-
 
 
       

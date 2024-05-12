@@ -1,11 +1,11 @@
 %---------------------------------------------------------------------%
-%This file contains the student template for Project 6: 2D Wave Equation using the unified CG/DG method with AGGP storage 
+%This file contains the solution for Project 6: 2D Wave Equation using the unified CG/DG method with AGGP storage 
 %introduced in F.X. Giraldo's Introduction to Element-based Galerkin Methods using 
 %Tensor-Product Bases: Analysis, Algorithms, and Applications.
 %
 %The solution is obtained using Algorithm 17.7 whereby the RHS vector is constructed at each time stage. 
 %The volume integral contribution is constructed using Algorithm 16.11 except that the element differentiation matrix is computed and stored.
-%The flux integral contribution is constructed using Algorithm 16.12 (all in weak form).
+%The flux integral contribution is constructed using Algorithm 16.12 (both in weak and strong forms).
 %
 %It uses the LSRK45 method as the time-integrator and Rusanov fluxes for DG.
 %
@@ -23,9 +23,10 @@ tic
 %-------------------------Only Change These Lines------------------%
 nel=4; %Number of Elements
 nop=8;    %Interpolation Order
-space_method='dg'; %=cg for CG or =dg for DG
+space_method='cg'; %=cg for CG or =dg for DG
+form_method='weak'; %strong or weak
 time_final=0.25; %final time in revolutions
-plot_movie=1;
+plot_movie=0;
 plot_solution=1;
 store_movie=0;
 icase=1; %case number: 1 is a Gaussian in CW;
@@ -71,7 +72,7 @@ nface=2*nelem + nelx + nely;
 [xgl,wgl]=legendre_gauss_lobatto(ngl);
 noq=nop;
 nq=noq + 1;
-main_text=space_method;
+main_text=[space_method ', ' form_method];
 
 %Compute Legendre Cardinal functions and derivatives
 [psi,dpsi,xnq,wnq] = lagrange_basis(ngl,nq,xgl);
@@ -132,9 +133,15 @@ dq=zeros(npoin,1);
 stages=length(RKA);
 
 %Time Integration
-for itime=1:ntime
-    itime;
+itime=0;
+while time<time_final
+    itime=itime + 1;
     time=time + dt;
+    if time > time_final
+        time=time - dt;
+        dt=time_final - time;
+        time=time + dt;
+    end
     timec=time/(c);
     timec;
     if (mod(itime,iplot) == 0 )
@@ -143,14 +150,14 @@ for itime=1:ntime
     
     for s=1:stages
        
-        %------------Students Add Your Routines inside CREATE_RHS---------%
-        %------------Students Add Your Routines inside CREATE_RHS---------%
+        %------------Students Add Your Routines Here---------------%
+        %------------Students Add Your Routines Here---------------%
         %Construct RHS vector
         rhs = create_rhs(qp,ue,ve,ksi_x,ksi_y,eta_x,eta_y,jac,...
-        wnq,dpsi,intma,iperiodic,Mmatrix,face,normals,jac_face,...
-        mapL,mapR,npoin,nelem,nface,ngl,space_method,flux_method);
-        %------------Students Add Your Routines inside CREATE_RHS---------%
-        %------------Students Add Your Routines inside CREATE_RHS---------%
+        wnq,psi,dpsi,intma,iperiodic,Mmatrix,face,normals,jac_face,...
+        mapL,mapR,npoin,nelem,nface,ngl,space_method,flux_method,form_method);
+        %------------Students Add Your Routines Here---------------%
+        %------------Students Add Your Routines Here---------------%
 
         %Evolve forward in Time
         dq = RKA(s)*dq + dt*rhs;
@@ -181,7 +188,7 @@ for itime=1:ntime
     end %iplot
 
 end %itime
-
+disp(['*Finished* itime time courant = ',num2str(itime),' ',num2str(timec),' ',num2str(Courant)]);
 %Compute Exact Solution
 [qe,ue,ve] = exact_solution(coord,npoin,time,icase);
 
@@ -213,7 +220,7 @@ if (plot_solution == 1)
     xlabel('X','FontSize',18);
     ylabel('Y','FontSize',18);
     axis image
-    title_text=[space_method ', Ne = ' num2str(nelem) ', N = ' num2str(nop) ', Q = ' num2str(noq) ', L2 Norm = ' num2str(l2_norm)];
+    title_text=[main_text ', Ne = ' num2str(nelem) ', N = ' num2str(nop) ', Q = ' num2str(noq) ', L2 Norm = ' num2str(l2_norm)];
     title([title_text],'FontSize',18);
     set(gca, 'FontSize', 18);
     %file_ps=['se_n' num2str(nelem) 'p' num2str(nop)];
@@ -226,7 +233,7 @@ if (plot_movie == 1)
         mesh(xi,yi,qi_movie(:,:,i));
         colorbar('SouthOutside');
         axis([-1 +1 -1 +1 0 1]);
-        title_text=[space_method ', Ne = ' num2str(nelem) ', N = ' num2str(nop) ', Q = ' num2str(noq) ', Time = ' num2str(time_movie(i))];
+        title_text=[main_text ', Ne = ' num2str(nelem) ', N = ' num2str(nop) ', Q = ' num2str(noq) ', Time = ' num2str(time_movie(i))];
         title([title_text],'FontSize',18);
         set(gca, 'FontSize', 18);
         M_i=getframe(gcf);

@@ -21,7 +21,7 @@ function create_rhs(q,u,M,De_x,De_y,intma,periodicity,face,mapL,mapR,normals,jac
     rhs = create_rhs_volume(q,u,De_x,De_y,intma,periodicity,DFloat)
 
     #Construct Flux integral contribution (will also work for CG but cancels completely due to periodicity)
-    if (space_method == "DG")
+    if (space_method == "dg")
         rhs = create_rhs_flux!(rhs,q,u,face,normals,jac_face,ωq,mapL,mapR,intma,periodicity,DFloat)
     end
     #---------------------------Students Add their Contributions Here----------------------------------------

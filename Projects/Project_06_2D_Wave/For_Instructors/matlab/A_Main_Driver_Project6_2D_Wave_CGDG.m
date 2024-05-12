@@ -23,10 +23,10 @@ tic
 %-------------------------Only Change These Lines------------------%
 nel=4; %Number of Elements
 nop=8;    %Interpolation Order
-space_method='dg'; %=cg for CG or =dg for DG
-form_method='strong'; %strong or weak
+space_method='cg'; %=cg for CG or =dg for DG
+form_method='weak'; %strong or weak
 time_final=0.25; %final time in revolutions
-plot_movie=1;
+plot_movie=0;
 plot_solution=1;
 store_movie=0;
 icase=1; %case number: 1 is a Gaussian in CW;
@@ -73,7 +73,6 @@ nface=2*nelem + nelx + nely;
 noq=nop;
 nq=noq + 1;
 main_text=[space_method ', ' form_method];
-
 
 %Compute Legendre Cardinal functions and derivatives
 [psi,dpsi,xnq,wnq] = lagrange_basis(ngl,nq,xgl);
@@ -134,9 +133,15 @@ dq=zeros(npoin,1);
 stages=length(RKA);
 
 %Time Integration
-for itime=1:ntime
-    itime;
+itime=0;
+while time<time_final
+    itime=itime + 1;
     time=time + dt;
+    if time > time_final
+        time=time - dt;
+        dt=time_final - time;
+        time=time + dt;
+    end
     timec=time/(c);
     timec;
     if (mod(itime,iplot) == 0 )
@@ -183,7 +188,7 @@ for itime=1:ntime
     end %iplot
 
 end %itime
-
+disp(['*Finished* itime time courant = ',num2str(itime),' ',num2str(timec),' ',num2str(Courant)]);
 %Compute Exact Solution
 [qe,ue,ve] = exact_solution(coord,npoin,time,icase);
 

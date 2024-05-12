@@ -12,7 +12,7 @@ Written by F.X. Giraldo on July 12, 2021
 include("create_rhs.jl")
 include("plot_solution.jl")
 
-function ti_LSRK!(q0,u,coord,M,De_x,De_y,intma,periodicity,face,mapL,mapR,normals,jac_face,ωq,time,ntime,dt,space_method,plot_movie,Nx,Ny,coord_CG,periodicity_CG,DG_to_CG,DFloat)
+function ti_LSRK!(q0,u,coord,M,De_x,De_y,intma,periodicity,face,mapL,mapR,normals,jac_face,ωq,time,time_final,c,ntime,dt,space_method,plot_movie,Nx,Ny,coord_CG,periodicity_CG,DG_to_CG,DFloat)
     
     #Initialize RK coefficients
     RKA = (DFloat(0),
@@ -39,8 +39,16 @@ function ti_LSRK!(q0,u,coord,M,De_x,De_y,intma,periodicity,face,mapL,mapR,normal
     stages=length(RKA)
 
     #Time Integration
-    for itime=1:ntime
+    #for itime=1:ntime
+    itime=0
+    while time<time_final
+        itime=itime+1
         time=time + dt
+        if time > time_final
+            time=time-dt
+            dt=time_final-time
+            time=time+dt
+        end
         #RK Stages
         for s = 1:stages
 
@@ -68,7 +76,7 @@ function ti_LSRK!(q0,u,coord,M,De_x,De_y,intma,periodicity,face,mapL,mapR,normal
 
         #Print to Screen
         if ( mod(itime,100) == 0 )
-            println(" itime = ",itime," time = ",time," qmax = ",maximum(qp)," qmin = ",minimum(qp))
+            println(" itime = ",itime," time = ",time/c," qmax = ",maximum(qp)," qmin = ",minimum(qp))
         end
 
     end #itime

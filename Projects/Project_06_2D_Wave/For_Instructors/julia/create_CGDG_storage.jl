@@ -12,9 +12,9 @@ Written by F.X. Giraldo on 7/14/2021
 
 function create_CGDG_Storage(space_method,Npoin_CG,Npoin_DG,coord_CG,intma_CG,periodicity_CG,Ne,Np,DFloat)
 
-    if (space_method == "CG")
+    if (space_method == "cg")
         Npoin=Npoin_CG
-    elseif (space_method == "DG")
+    elseif (space_method == "dg")
         Npoin=Npoin_DG
     end
     DG_to_CG=zeros(Int64,Npoin)
@@ -24,7 +24,7 @@ function create_CGDG_Storage(space_method,Npoin_CG,Npoin_DG,coord_CG,intma_CG,pe
     intma=zeros(Int64,Np,Np,Ne)
     periodicity=zeros(Int64,Npoin,1)
 
-    if (space_method == "CG")
+    if (space_method == "cg")
         coord=copy(coord_CG)
         intma=copy(intma_CG)
         periodicity = copy(periodicity_CG)
@@ -32,7 +32,7 @@ function create_CGDG_Storage(space_method,Npoin_CG,Npoin_DG,coord_CG,intma_CG,pe
             DG_to_CG[i]=i
         end
         
-    elseif (space_method == "DG")
+    elseif (space_method == "dg")
         Npoin=Npoin_DG
         i_DG=0
 
