@@ -140,9 +140,13 @@ end
 if (plot_grid == 1)
     x=zeros(5,1);
     y=zeros(5,1);
+    xb=zeros(ngl,1);
+    yb=zeros(ngl,1);
     figure;
     hold on;
     for e=1:nelem
+        
+        %Plot Element LGL sub-grid
         for j=1:ngl-1
             for i=1:ngl-1
                 i1=intma(i,j,e);
@@ -158,17 +162,47 @@ if (plot_grid == 1)
                 set(plot_handle,'LineWidth',1);
             end
         end
-        i1=intma(1,1,e);
-        i2=intma(ngl,1,e);
-        i3=intma(ngl,ngl,e);
-        i4=intma(1,ngl,e);
-        x(1)=coord(1,i1); y(1)=coord(2,i1);
-        x(2)=coord(1,i2); y(2)=coord(2,i2);
-        x(3)=coord(1,i3); y(3)=coord(2,i3);
-        x(4)=coord(1,i4); y(4)=coord(2,i4);
-        x(5)=coord(1,i1); y(5)=coord(2,i1);
-        plot_handle=plot(x,y,'-b');
+
+        %Plot Element Boundaries: bottom
+        for j=1:1
+            for i=1:ngl
+                I=intma(i,j,e);
+                xb(i)=coord(1,I); yb(i)=coord(2,I);
+            end
+        end
+        plot_handle=plot(xb,yb,'-b');
         set(plot_handle,'LineWidth',2);
+
+        %Plot Element Boundaries: top
+        for j=ngl:ngl
+            for i=1:ngl
+                I=intma(i,j,e);
+                xb(i)=coord(1,I); yb(i)=coord(2,I);
+            end
+        end
+        plot_handle=plot(xb,yb,'-b');
+        set(plot_handle,'LineWidth',2);
+
+        %Plot Element Boundaries: left
+        for j=1:ngl
+            for i=1:1
+                I=intma(i,j,e);
+                xb(j)=coord(1,I); yb(j)=coord(2,I);
+            end
+        end
+        plot_handle=plot(xb,yb,'-b');
+        set(plot_handle,'LineWidth',2);
+
+        %Plot Element Boundaries: right
+        for j=1:ngl
+            for i=ngl:ngl
+                I=intma(i,j,e);
+                xb(j)=coord(1,I); yb(j)=coord(2,I);
+            end
+        end
+        plot_handle=plot(xb,yb,'-b');
+        set(plot_handle,'LineWidth',2);
+            
     end
     title_text=['Grid Plot For: Ne = ' num2str(nelem) ', N = ' num2str(nop)];
     title([title_text],'FontSize',18);      

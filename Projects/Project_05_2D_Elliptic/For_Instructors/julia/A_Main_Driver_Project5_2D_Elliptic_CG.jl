@@ -6,7 +6,8 @@ Tensor-Product Bases: Analysis, Algorithms, and Applications.
 
 The approached follows Algorithm 12.18 in the book.  
 
-Written by F.X. Giraldo on July 10, 2021.
+Written by F.X. Giraldo on July 10, 2021. 
+Updated on May 30, 2024.
 Department of Applied Mathematics
 Naval Postgraduate School
 Monterey, CA 93943
@@ -31,7 +32,6 @@ include("create_grid.jl")
 include("compute_metrics.jl")
 include("element_matrices.jl")
 include("global_matrices.jl")
-include("global_matrices_v2.jl")
 include("exact_solution.jl")
 include("compute_norm.jl")
 
@@ -43,13 +43,13 @@ machine_zero=eps(DFloat)
 function main()
 
     #-----------------------------Only Change these Input parameters---------------------------------#
-    Nel=8
-    N=8
+    Nel=4
+    N=16
     integration_type="inexact" #exact or inexact
     c=1.0 #Constant in Exact solution
     plot_grid=true
     plot_solution=true
-    warp_grid=false
+    warp_grid=true
     #-----------------------------Only Change these Input parameters---------------------------------#
     
     ipoints=1 #keep it at 1 (LGL)
@@ -107,10 +107,11 @@ function main()
     #(Me,Le) = element_matrices(ψ,dψ,ξ_x,ξ_y,η_x,η_y,jac,ωq,Ne,Np,Nq,DFloat)
     #Construct Global Matrices
     #(M,L) = global_matrices(Me,Le,intma,Ne,Np,Npoin,DFloat)
-    
+    #
     #OR, do the Global directly - Much Faster Code!!
+    #
     #Construct Element and Global Matrices all at once
-    (M,L) = global_matrices_v2(ψ,dψ,ξ_x,ξ_y,η_x,η_y,jac,ωq,intma,Ne,Np,Nq,Npoin,DFloat)
+    (M,L) = global_matrices(ψ,dψ,ξ_x,ξ_y,η_x,η_y,jac,ωq,intma,Ne,Np,Nq,Npoin,DFloat)
     #-----------------------------Students Add their Functions Here--------------------------#
     #-----------------------------Students Add their Functions Here--------------------------#
 

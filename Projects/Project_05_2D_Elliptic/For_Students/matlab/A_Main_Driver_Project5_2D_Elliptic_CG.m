@@ -19,12 +19,12 @@ tic
 
 %Input Data
 %-------------------------Only Change These Lines------------------%
-nel=8;
-nop=8;    %Interpolation Order
-integration_type=1; %=1 is inexact and =2 is exact
+nel=4;
+nop=16;    %Interpolation Order
+integration_type=2; %=1 is inexact and =2 is exact
 c=1; %Wave number of exact solution in each direction
 plot_grid=1; %=0 Don't plot, =1 Plot Grid
-lwarp_grid=0; %1=yes, 0=no
+lwarp_grid=1; %1=yes, 0=no
 plot_solution=1;
 plot_matrices=0;
 %-------------------------Only Change These Lines------------------%
@@ -36,7 +36,6 @@ ny=nely*nop+1;
 npoin=nx*ny;
 nelem=nelx*nely;
 nboun=2*(nx) + 2*(ny-2);
-%eps=1e-8;
 
 %Compute LGL Points
 ngl=nop + 1;
@@ -66,10 +65,12 @@ disp([' N  = ' num2str(nop),' Q  = ' num2str(noq),' nel = ' num2str(nel),' nelem
 % Mmatrix = create_Mmatrix(intma,jac,wnq,psi,periodicity,npoin,nelem,ngl,nq);
 % Lmatrix = create_Lmatrix(intma,jac,wnq,ksi_x,ksi_y,eta_x,eta_y,psi,dpsi,...
 %           periodicity,npoin,nelem,ngl,nq);
-
-%Or can construct them both at once:
-% [Mmatrix,Lmatrix] = create_Global_Matrices(intma,jac,wnq,ksi_x,ksi_y,eta_x,eta_y,psi,dpsi,...
-%           periodicity,npoin,nelem,ngl,nq);
+%
+%Or can construct them both at once: Inside of create_Global_Matrices,
+%write to functions:(1) for Exact and (2) the other for Inexact integration
+%
+[Mmatrix,Lmatrix] = create_Global_Matrices(intma,jac,wnq,ksi_x,ksi_y,eta_x,eta_y,psi,dpsi,...
+          periodicity,npoin,nelem,ngl,nq);
 %------------------------Ask Students to add these functions---------%
 %------------------------Ask Students to add these functions---------%
 

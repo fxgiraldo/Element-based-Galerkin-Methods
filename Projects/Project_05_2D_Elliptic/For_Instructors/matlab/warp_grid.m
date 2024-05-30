@@ -13,10 +13,10 @@ c=1/15;
 for i=1:npoin
     x=coord(1,i);
     y=coord(2,i);
-%     coord(1,i)=x + sin(pi * x) * sin(2 * pi * y)*c;
-%     coord(2,i)=y + sin(2 * pi * x) * sin(pi * y)*c;
-    coord(1,i)=x + sin(pi * x) * cos(2 * pi * y)*c;
-    coord(2,i)=y + sin(pi * y) * cos(2 * pi * x)*c;
+    coord(1,i)=x + sin(pi * x) * sin(2 * pi * y)*c;
+    coord(2,i)=y + sin(2 * pi * x) * sin(pi * y)*c;
+    % coord(1,i)=x + sin(pi * x) * cos(2 * pi * y)*c;
+    % coord(2,i)=y + sin(pi * y) * cos(2 * pi * x)*c;
 end
 
 

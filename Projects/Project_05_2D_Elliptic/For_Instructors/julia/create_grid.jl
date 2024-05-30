@@ -118,6 +118,10 @@ function create_grid(Np,Npoin,Ne,Nboun,Nex,Ney,ξ,plot_grid,warp_grid,DFloat)
     if (plot_grid)
         x=zeros(DFloat,5,1)
         y=zeros(DFloat,5,1)
+        xb=zeros(DFloat,Np,1)
+        yb=zeros(DFloat,Np,1)
+
+        #Plot Domain Boundary
         x[1]=-1; y[1]=-1
         x[2]=+1; y[2]=-1
         x[3]=+1; y[3]=+1
@@ -125,6 +129,7 @@ function create_grid(Np,Npoin,Ne,Nboun,Nex,Ney,ξ,plot_grid,warp_grid,DFloat)
         x[5]=-1; y[5]=-1
         p1=plot(x,y,linecolor="black",legend=false)
 
+        #Plot LGL Sub-cells
         for e=1:Ne
             for j=1:N
                 for i=1:N
@@ -140,16 +145,43 @@ function create_grid(Np,Npoin,Ne,Nboun,Nex,Ney,ξ,plot_grid,warp_grid,DFloat)
                     p1=plot!(p1,x,y,linecolor="red",legend=false)
                 end
             end
-            i1=intma[1,1,e]
-            i2=intma[Np,1,e]
-            i3=intma[Np,Np,e]
-            i4=intma[1,Np,e]
-            x[1]=coord[1,i1]; y[1]=coord[2,i1]
-            x[2]=coord[1,i2]; y[2]=coord[2,i2]
-            x[3]=coord[1,i3]; y[3]=coord[2,i3]
-            x[4]=coord[1,i4]; y[4]=coord[2,i4]
-            x[5]=coord[1,i1]; y[5]=coord[2,i1]
-            p1=plot!(p1,x,y,linecolor="blue",legend=false)
+
+            #Plot Element Boundaries: bottom
+            for j=1:1
+                for i=1:Np
+                    I=intma[i,j,e];
+                    xb[i]=coord[1,I]; yb[i]=coord[2,I];
+                end
+            end
+            p1=plot!(p1,xb,yb,linecolor="blue",legend=false)
+    
+            #Plot Element Boundaries: top
+            for j=Np:Np
+                for i=1:Np
+                    I=intma[i,j,e];
+                    xb[i]=coord[1,I]; yb[i]=coord[2,I];
+                end
+            end
+            p1=plot!(p1,xb,yb,linecolor="blue",legend=false)
+    
+            #Plot Element Boundaries: left
+            for j=1:Np
+                for i=1:1
+                    I=intma[i,j,e];
+                    xb[i]=coord[1,I]; yb[i]=coord[2,I];
+                end
+            end
+            p1=plot!(p1,xb,yb,linecolor="blue",legend=false)
+    
+            #Plot Element Boundaries: right
+            for j=1:Np
+                for i=Np:Np
+                    I=intma[i,j,e];
+                    xb[i]=coord[1,I]; yb[i]=coord[2,I];
+                end
+            end
+            p1=plot!(p1,xb,yb,linecolor="blue",legend=false)
+    
         end
         display(plot(p1))
     end
