@@ -19,16 +19,21 @@ tic
 %Input Data
 %-------------------------Only Change These Lines------------------%
 nel=2;
-nop=6;    %Interpolation Order
-noq=nop + 1; %Integration Order
-c=1; %exact solution variable
+nop=5;    %Interpolation Order
+integration_type=1; %1=inexact, 2=exact
+c=1; %exact solution variable => Wave number in each direction
 plot_grid=1; %=0 Don't plot, =1 Plot Grid
-plot_solution=0;
+plot_solution=0; %3D Plots not working
 plot_matrices=0;
-lwarp_grid=0; %0=don't, 1=do
+lwarp_grid=1; %0=don't, 1=do
 %-------------------------Only Change These Lines------------------%
 
 ngl=nop + 1;
+if (integration_type == 1)
+    noq=nop;
+elseif (integration_type == 2)
+    noq=nop+1;
+end
 nq=noq + 1;
 
 t0=cputime;
@@ -59,6 +64,11 @@ nboun=2*(nx*nz) + 2*(ny-2)*nz + 2*(nx-2)*(ny-2);
 % Lmatrix = create_Lmatrix(intma,jac,wnq,ksi_x,ksi_y,ksi_z,...
 %           eta_x,eta_y,eta_z,zeta_x,zeta_y,zeta_z,psi,dpsi,...
 %           npoin,nelem,ngl,nq);
+
+%Or can construct them both at once:
+[Mmatrix,Lmatrix] = create_Global_Matrices(intma,jac,wnq, ...
+                    ksi_x,ksi_y,ksi_z,eta_x,eta_y,eta_z, ...
+                    zeta_x,zeta_y,zeta_z,psi,dpsi,npoin,nelem,ngl,nq);
 %------------------------Ask Students to add these functions---------%
 %------------------------Ask Students to add these functions---------%
 
@@ -68,10 +78,10 @@ nboun=2*(nx*nz) + 2*(ny-2)*nz + 2*(nx-2)*(ny-2);
 %Impose Homogeneous Dirichlet Boundary Conditions
 Rvector=Mmatrix*fe;
 for i=1:nboun
-    ip=iboun(i);
-    Lmatrix(ip,:)=0;
-    Lmatrix(ip,ip)=1;
-    Rvector(ip)=qe(ip);
+    I=iboun(i);
+    Lmatrix(I,:)=0;
+    Lmatrix(I,I)=1;
+    Rvector(I)=qe(I);
 end %i
 
 %Solve System 
@@ -83,11 +93,19 @@ t1=cputime;
 dt=t1-t0;
 disp([' nop  = ' num2str(nop),' noq  = ' num2str(noq),' nel = ' num2str(nel),' npoin = ' num2str(npoin),' l2 norm = ' num2str(l2_norm), ' cpu = ' num2str(dt) ]);
 
+%Extrema
+q0_max=max(q0(:));
+q0_min=min(q0(:));
+qe_max=max(qe(:));
+qe_min=min(qe(:));
+disp([' q0_{max}  = ' num2str(q0_max),' q0_{min}  = ' num2str(q0_min), ]);
+disp([' qe_{max}  = ' num2str(qe_max),' qe_{min}  = ' num2str(qe_min), ]);
+
 %Plot Exact Solution
 if (plot_solution == 1)
     h=figure;
     figure(h)
-    subplot(1,2,1);
+    %subplot(1,2,1);
     xmin=min(coord(1,:)); xmax=max(coord(1,:));
     ymin=min(coord(2,:)); ymax=max(coord(2,:));
     zmin=min(coord(3,:)); zmax=max(coord(3,:));
@@ -100,10 +118,19 @@ if (plot_solution == 1)
     dy=(ymax-ymin)/ny;
     dz=(zmax-zmin)/nz;
     
-    [xi,yi]=meshgrid(xmin:dx:xmax,ymin:dy:ymax);
-    qi=griddata(xe,ye,ze,qe,xi,yi,zi);
-    surf(xi,yi,zi,qi);
-    %colorbar('SouthOutside');
+    [xi,yi,zi]=meshgrid(xmin:dx:xmax,ymin:dy:ymax,zmin:dz:zmax);
+    qi=griddata(xe,ye,ze,qe,xi,yi,zi,'linear');
+
+    %Extrema
+    qi_max=max(qi(:));
+    qi_min=min(qi(:));
+    disp([' qi_{max}  = ' num2str(qi_max),' qi_{min}  = ' num2str(qi_min), ]);
+
+    xslice=0;
+    yslice=0;
+    zslice=0;
+    slice(xi,yi,zi,qi,xslice,yslice,zslice)
+    colorbar('SouthOutside');
     xlabel('X','FontSize',18);
     ylabel('Y','FontSize',18);
     ylabel('Z','FontSize',18);
@@ -111,34 +138,6 @@ if (plot_solution == 1)
     title_text=['Exact Solution For: Ne = ' num2str(nelem) ', N = ' num2str(nop) ', Q = ' num2str(noq)];
     title([title_text],'FontSize',18);
     set(gca, 'FontSize', 18);
-
-
-%     [xi,yi,zi]=meshgrid(xmin:dx:xmax,ymin:dy:ymax,zmin:dz:zmax);
-%     qi=griddata(xe,ye,ze,qe,xi,yi,zi);
-%     surf(xi,yi,zi,qi);
-%     %colorbar('SouthOutside');
-%     xlabel('X','FontSize',18);
-%     ylabel('Y','FontSize',18);
-%     ylabel('Z','FontSize',18);
-%     axis image
-%     title_text=['Exact Solution For: Ne = ' num2str(nelem) ', N = ' num2str(nop) ', Q = ' num2str(noq)];
-%     title([title_text],'FontSize',18);
-%     set(gca, 'FontSize', 18);
-
-%     %Plot Solution
-%     subplot(1,2,2);
-%     qi=griddata(xe,ye,ze,q0,xi,yi,zi);
-%     surf(xi,yi,zi,qi);
-%     %colorbar('SouthOutside');
-%     xlabel('X','FontSize',18);
-%     ylabel('Y','FontSize',18);
-%     ylabel('Z','FontSize',18);
-%     axis image
-%     title_text=['Numerical Solution: L2 Norm = ' num2str(l2_norm)];
-%     title([title_text],'FontSize',18);
-%     set(gca, 'FontSize', 18);
-%     %file_ps=['se_n' num2str(nelem) 'p' num2str(nop)];
-%     %eval(['print ' file_ps ' -depsc']);
 end
 
 %Plot E-values

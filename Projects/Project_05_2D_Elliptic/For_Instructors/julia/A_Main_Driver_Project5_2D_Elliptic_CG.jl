@@ -49,7 +49,7 @@ function main()
     c=1.0 #Constant in Exact solution
     plot_grid=true
     plot_solution=true
-    warp_grid=true
+    warp_grid=false
     #-----------------------------Only Change these Input parameters---------------------------------#
     
     ipoints=1 #keep it at 1 (LGL)

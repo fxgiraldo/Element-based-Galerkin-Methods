@@ -41,20 +41,25 @@ machine_zero=eps(DFloat)
 function main()
 
     #-----------------------------Only Change these Input parameters---------------------------------#
-    Nex=2
-    Ney=2
-    Nez=2
-    N=6
-    Q=N+1
-    ipoints=1
-    qpoints=1
-    c=DFloat(1) #Constant in Exact solution
+    Nel=1
+    N=8
+    integration_type="exact" #exact or inexact
+    c=1.0 #Constant in Exact solution
     plot_grid=true
     plot_solution=false
     warp_grid=false
     #-----------------------------Only Change these Input parameters---------------------------------#
 
-    space_method="CG" #only CG
+    ipoints=1 #keep it at 1 (LGL)
+    qpoints=1 #keep it at 1 (LGL) but can also do 2 (LG)
+    #space_method="CG" #only capable of doing CG
+    Q=N
+    if integration_type == "exact"
+        Q=N+1;
+    end
+    Nex=Nel
+    Ney=Nel
+    Nez=Nel
     Np=N+1
     Nq=Q+1
     Ne=Nex*Ney*Nez
@@ -98,7 +103,7 @@ function main()
     #Construct Global Matrices
     M=zeros(DFloat,Npoin,Npoin)
     L=zeros(DFloat,Npoin,Npoin)
-    #(M,L) = global_matrices!(M,L,ψ,dψ,ξ_x,ξ_y,ξ_z,η_x,η_y,η_z,ζ_x,ζ_y,ζ_z,jac,ωq,intma,Ne,Np,Nq,Npoin,DFloat)
+    (M,L) = global_matrices(ψ,dψ,ξ_x,ξ_y,ξ_z,η_x,η_y,η_z,ζ_x,ζ_y,ζ_z,jac,ωq,intma,Ne,Np,Nq,Npoin,DFloat)
     #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
     #-----------------------------Students Add their Functions inside ti_LSRK--------------------------#
     end

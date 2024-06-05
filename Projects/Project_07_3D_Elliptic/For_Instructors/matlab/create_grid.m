@@ -13,12 +13,13 @@ intma=zeros(ngl,ngl,ngl,nelem);
 iboun=zeros(nboun,1);
 
 %Set some constants
-xmin=-1;
-xmax=+1;
-ymin=-1;
-ymax=+1;
-zmin=-1;
-zmax=+1;
+cc=1.0;
+xmin=-cc;
+xmax=+cc;
+ymin=-cc;
+ymax=+cc;
+zmin=-cc;
+zmax=+cc;
 dx=(xmax-xmin)/nelx;
 dy=(ymax-ymin)/nely;
 dz=(zmax-zmin)/nelz;
@@ -128,7 +129,6 @@ for k=1:nz
         iboun(B)=I;
     end
 end
-
 
 %Left Face (x=-1)
 i=1;
@@ -333,4 +333,5 @@ if (plot_grid == 1)
     ylabel('Y','FontSize',18);
     zlabel('Z','FontSize',18);
     axis image
+    view(3)
 end 

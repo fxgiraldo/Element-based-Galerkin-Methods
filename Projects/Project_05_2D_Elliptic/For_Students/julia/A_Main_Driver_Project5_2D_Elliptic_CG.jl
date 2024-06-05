@@ -6,7 +6,8 @@ Tensor-Product Bases: Analysis, Algorithms, and Applications.
 
 The approached follows Algorithm 12.18 in the book.  
 
-Written by F.X. Giraldo on July 10, 2021. Updated on May 30, 2024.
+Written by F.X. Giraldo on July 10, 2021. 
+Updated on May 30, 2024.
 Department of Applied Mathematics
 Naval Postgraduate School
 Monterey, CA 93943
@@ -44,11 +45,11 @@ function main()
     #-----------------------------Only Change these Input parameters---------------------------------#
     Nel=4
     N=16
-    integration_type="exact" #exact or inexact
+    integration_type="inexact" #exact or inexact
     c=1.0 #Constant in Exact solution
     plot_grid=true
     plot_solution=true
-    warp_grid=true
+    warp_grid=false
     #-----------------------------Only Change these Input parameters---------------------------------#
     
     ipoints=1 #keep it at 1 (LGL)
