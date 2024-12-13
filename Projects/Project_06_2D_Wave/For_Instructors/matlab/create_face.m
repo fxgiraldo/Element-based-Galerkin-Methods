@@ -33,24 +33,24 @@ for l=1:ngl
    %eta=-1
    mapL(1,l,1)=l;
    mapL(2,l,1)=1;
-   mapR(1,l,1)=ngl+1-l;
+   mapR(1,l,1)=ngl+1-l; %because side 1 on the right is = to side 3 on the left
    mapR(2,l,1)=1;
 
    %ksi=+1
    mapL(1,l,2)=ngl;
    mapL(2,l,2)=l;
    mapR(1,l,2)=ngl;
-   mapR(2,l,2)=ngl+1-l;
+   mapR(2,l,2)=ngl+1-l; %because side 2 on the right is = to side 4 on the left
 
    %eta=+1
-   mapL(1,l,3)=ngl+1-l;
+   mapL(1,l,3)=ngl+1-l; %because side 3 on the left is = to side 1 on the right
    mapL(2,l,3)=ngl;
    mapR(1,l,3)=l;
    mapR(2,l,3)=ngl;
 
    %ksi=-1
    mapL(1,l,4)=1;
-   mapL(2,l,4)=ngl+1-l;
+   mapL(2,l,4)=ngl+1-l; %because side 4 on the left is = to side 2 on the right
    mapR(1,l,4)=1;
    mapR(2,l,4)=l;
 end %l

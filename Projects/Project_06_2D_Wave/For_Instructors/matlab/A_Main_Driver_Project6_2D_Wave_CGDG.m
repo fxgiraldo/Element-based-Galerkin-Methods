@@ -21,7 +21,7 @@ tic
 
 %Input Data
 %-------------------------Only Change These Lines------------------%
-nel=4; %Number of Elements
+nel=6; %Number of Elements
 nop=8;    %Interpolation Order
 space_method='cg'; %=cg for CG or =dg for DG
 form_method='weak'; %strong or weak
@@ -221,7 +221,7 @@ if (plot_solution == 1)
     ylabel('Y','FontSize',18);
     axis image
     title_text=[main_text ', Ne = ' num2str(nelem) ', N = ' num2str(nop) ', Q = ' num2str(noq) ', L2 Norm = ' num2str(l2_norm)];
-    title([title_text],'FontSize',18);
+    title(title_text,'FontSize',18);
     set(gca, 'FontSize', 18);
     %file_ps=['se_n' num2str(nelem) 'p' num2str(nop)];
     %eval(['print ' file_ps ' -depsc']);
@@ -234,7 +234,7 @@ if (plot_movie == 1)
         colorbar('SouthOutside');
         axis([-1 +1 -1 +1 0 1]);
         title_text=[main_text ', Ne = ' num2str(nelem) ', N = ' num2str(nop) ', Q = ' num2str(noq) ', Time = ' num2str(time_movie(i))];
-        title([title_text],'FontSize',18);
+        title(title_text,'FontSize',18);
         set(gca, 'FontSize', 18);
         M_i=getframe(gcf);
         M(i)=M_i;
@@ -242,7 +242,7 @@ if (plot_movie == 1)
     end
 end
 if (store_movie == 1)
-    movie2avi(M,'dg_inexact_TensorProduct_movie.avi','fps',5);
+    %movie2avi(M,'dg_inexact_TensorProduct_movie.avi','fps',5);
 end
 
 disp(['nop = ',num2str(nop),'  nelem = ',num2str(nelem) ]);

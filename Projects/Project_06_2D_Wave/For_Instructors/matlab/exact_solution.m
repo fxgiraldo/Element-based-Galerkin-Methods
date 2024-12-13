@@ -27,7 +27,9 @@ xc=xmin + 0.25*xl;
 yc=ymin + 0.5*yl;
 rc=0.25;
 a=1;
-sigma=32.0;
+%sigma=32.0;
+sigma=64.0;
+sigma=50.0;
 timec=time - floor(time);
 
 %Generate Grid Points
