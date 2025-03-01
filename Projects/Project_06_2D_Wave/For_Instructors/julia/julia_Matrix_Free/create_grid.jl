@@ -84,6 +84,7 @@ function create_grid(Np,Npoin,Ne,Nboun,Nex,Ney,ξ,plot_grid,warp_grid,rotate_gri
 
     #Generate BSIDO
     b=0
+    #Bottom Boundary
     for i=1:Nex
         e=i
         b=b+1

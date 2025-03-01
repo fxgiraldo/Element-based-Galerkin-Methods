@@ -30,10 +30,28 @@ function exact_solution(coord,Npoin,time,icase,DFloat)
         y=coord[2,I]
 
         if (icase == 1)  #Gaussian in CCW direction
-            ue[1,I]=+(y-ym);
-            ue[2,I]=-(x-xm);
+            ue[1,I]=+(y-ym)
+            ue[2,I]=-(x-xm)
             xx=x - xc*cos(time) - yc*sin(time)
             yy=y + xc*sin(time) - yc*cos(time)
+            qe[I]=exp( - σ*(xx^2 + yy^2 ) ) 
+        elseif (icase == 2)  #Gaussian in X-direction
+            ue[1,I]=xl
+            ue[2,I]=0
+            xx=x 
+            yy=y
+            qe[I]=exp( - σ*(xx^2 + yy^2 ) ) 
+        elseif (icase == 3)  #Gaussian in Y-direction
+            ue[1,I]=0
+            ue[2,I]=yl
+            xx=x 
+            yy=y
+            qe[I]=exp( - σ*(xx^2 + yy^2 ) ) 
+        elseif (icase == 4)  #Gaussian in XY-direction
+            ue[1,I]=xl
+            ue[2,I]=yl
+            xx=x 
+            yy=y
             qe[I]=exp( - σ*(xx^2 + yy^2 ) ) 
         end
     end #I

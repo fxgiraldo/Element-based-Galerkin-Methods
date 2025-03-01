@@ -53,15 +53,16 @@ machine_zero=eps(DFloat)
 function main()
 
     #------------------------Only Change stuff here-------------------#
-    N=8 #polynomial order
+    N=4 #polynomial order
     Nel=4 #number of elements along x (ξ)
     
-    space_method="cg" #cg or dg
-    time_final=0.25 #in revolutions
+    space_method="dg" #cg or dg
+    time_final=1.0 #in revolutions
     plot_grid=true
     plot_solution=true
-    plot_movie=false
+    plot_movie=true
     warp_grid=false
+    icase=4 #1=CCW flow, 2=X-flow, 3=Y-flow, 4=XY-flow
     #------------------------Only Change stuff here-------------------#
 
     Q=N #changing this requires modifying CREATE_RHS_FLUX which assumes Q=N
@@ -72,7 +73,6 @@ function main()
     ipoints=1 #lobatto
     qpoints=1 #lobatto
     Courant_max=0.5
-    icase=1 #CCW moving Gaussian
     Nex=Nel #number of elements along x (ξ)
     Ney=Nel #number of elements along y (η)
     Ne=Nex*Ney
@@ -83,12 +83,13 @@ function main()
     Npoin=Npoin_CG
     Nboun=2*Nex + 2*Ney
     Nface=2*Ne + Nex + Ney
+    c=1.0
     if icase == 1
-        c=2*π;
+        c=2*π
     end
     rotate_grid=false #not working with periodicity
     time_final=time_final*c
-    @show(N,Q,Ne,Npoin_CG,Npoin_DG,Nboun,Nface,Nx,Ny)
+    @show(icase,N,Q,Ne,Npoin_CG,Npoin_DG,Nboun,Nface,Nx,Ny)
 
     #Select Interpolation Points
     if ipoints == 1
@@ -122,6 +123,9 @@ function main()
     (face,mapL,mapR) = create_face(iside,intma_CG,Nface,Np)
     (normals,jac_face) = compute_normals(face,intma_CG,coord_CG,Nface,Np,Nq,ψ,dψ)
     (face,iside) = create_face_periodicity!(face,iside,coord_CG,Nface,Nboun)
+    # for f=1:Nface
+    #     println("f = ",f," FACE= ",face[1:4,f])
+    # end
 
     #Construct Element Matrices
     (Me,~,~) = element_matrices(ψ,dψ,ξ_x,ξ_y,η_x,η_y,jac,ωq,Ne,Np,Nq,DFloat)

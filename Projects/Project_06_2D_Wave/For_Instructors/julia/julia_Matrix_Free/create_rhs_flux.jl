@@ -21,6 +21,8 @@ function create_rhs_flux!(rhs,q,u,face,normals,jac_face,ωq,mapL,mapR,intma,peri
     qr=zeros(DFloat,Np,1)
     ul=zeros(DFloat,Np,1)
     vl=zeros(DFloat,Np,1)
+    ur=zeros(DFloat,Np,1)
+    vr=zeros(DFloat,Np,1)
 
     #Construct Flux Integral contribution
     for f=1:Nface
@@ -44,7 +46,7 @@ function create_rhs_flux!(rhs,q,u,face,normals,jac_face,ωq,mapL,mapR,intma,peri
             #Store Right Side Variables
             er=face[4,f]
             if (er > 0) 
-                ilocr=face[2,f];            
+                ilocr=face[2,f]            
                 for l=1:Np
                     #Get Pointers
                     ir=mapR[1,l,ilocr]
@@ -53,8 +55,8 @@ function create_rhs_flux!(rhs,q,u,face,normals,jac_face,ωq,mapL,mapR,intma,peri
                     
                     #Right Element
                     qr[l]=q[IR]
-                    #ur[l]=u[IR]; #Not needed since U is continuous
-                    #vr[l]=v[IR]; #Not needed since V is continuous
+                    ur[l]=u[1,IR]
+                    vr[l]=u[2,IR]
                 end #l
             end #if er
 
@@ -70,13 +72,11 @@ function create_rhs_flux!(rhs,q,u,face,normals,jac_face,ωq,mapL,mapR,intma,peri
 
                 #Interpolate onto Quadrature Points
                 qlq_k=ql[l]
+                ul_k=ul[l]
+                vl_k=vl[l]    
                 qrq_k=qr[l]
-                u_k=ul[l]
-                v_k=vl[l]    
-                ul_k=u_k
-                vl_k=v_k
-                ur_k=u_k
-                vr_k=v_k
+                ur_k=ur[l]
+                vr_k=vr[l]    
                         
                 #Compute Rusanov flux Constant
                 unl=nxl*ul_k + nyl*vl_k
